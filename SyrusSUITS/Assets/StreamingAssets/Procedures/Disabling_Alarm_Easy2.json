@@ -1,0 +1,228 @@
+{
+    "title": "Disabling Alarm Procedure Easy 2",
+    "steps": [
+        {
+            "text": "Locate the E-STOP button and gently press down to temporarily disable the alarm.",
+            "subtext": "",
+            "number": "1",
+            "prompts": [
+				{
+					"type": "highlight",
+					"moduleID": "e_stop",
+					"misc": "",
+					"rotation": 0
+				},
+                {
+					"type": "push",
+					"moduleID": "e_stop",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Locate the FUSIBLE DISCONNECT box and remove the PURPLE CARABINEER.",
+            "subtext": "",
+            "number": "2",
+            "prompts": [
+				{
+                    "type": "highlight",
+					"moduleID": "fuse_box",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Transfer the PURPLE CARABINEER to STORAGE and tether it to the TETHER CABLE.",
+            "subtext": "",
+            "number": "3",
+            "prompts": [
+				{
+                    "type": "tool",
+					"moduleID": "storage",
+					"misc": "carabineer",
+					"rotation": 0
+				},
+                {
+                    "type": "arrow",
+					"moduleID": "fuse_box",
+					"misc": "storage",
+					"rotation": 0
+				},
+				{
+                    "type": "highlight",
+					"moduleID": "storage",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Open the FUSIBLE DISCONNECT box and secure the lid in the open position.",
+            "subtext": "CAUTION: Pull the locking tab toward STORAGE with the index finger while lifting the cover with the thumb.",
+            "number": "4",
+			"prompts": [
+				{
+                    "type": "highlight",
+					"moduleID": "fuse_box",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Remove the BLACK DISCONNECT and place it in STORAGE.",
+            "subtext": "CAUTION: Pull up with the index and middle fingers while pushing down on the FUSE ACCESS PANEL with the thumb.",
+            "number": "5",
+			"prompts": [
+				{
+                    "type": "highlight",
+					"moduleID": "fuse_box",
+					"misc": "",
+					"rotation": 0
+				},
+				{
+                    "type": "arrow",
+					"moduleID": "fuse_box",
+					"misc": "storage",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Remove the FUSE ACCESS PANEL by pulling straight up.",
+            "subtext": "",
+            "number": "6",
+			"prompts": [
+				{
+                    "type": "highlight",
+					"moduleID": "fuse_box",
+					"misc": "",
+					"rotation": 0
+				},
+                {
+                    "type": "pull",
+					"moduleID": "fuse_box",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Place the FUSE ACCESS PANEL into STORAGE.",
+            "subtext": "",
+            "number": "7",
+			"prompts": [
+				{
+                    "type": "arrow",
+					"moduleID": "fuse_box",
+					"misc": "storage",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "In Storage, locate the YELLOW FUSE PULLER.",
+            "subtext": "",
+            "number": "8",
+			"prompts": [
+				{
+                    "type": "highlight",
+					"moduleID": "storage",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Use the YELLOW FUSE PULLER to remove ONLY the RIGHT FUSE.",
+            "subtext": "CAUTION: Rock the RIGHT FUSE with the FUSE PULLER when pulling up",
+            "number": "9",
+			"prompts": []
+        },
+        {
+            "text": "Return the RIGHT FUSE and the FUSE PULLER to STORAGE.",
+            "subtext": "",
+            "number": "10",
+			"prompts": [
+				{
+                    "type": "arrow",
+					"moduleID": "fuse_box",
+					"misc": "storage",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "In STORAGE, locate the FUSE ACCESS PANEL and reinstall it into the FUSIBLE DISCONNECT box.",
+            "subtext": "",
+            "number": "11",
+			"prompts": [
+				{
+                    "type": "arrow",
+					"moduleID": "storage",
+					"misc": "fuse_box",
+					"rotation": 0
+				},
+				{
+                    "type": "highlight",
+					"moduleID": "storage",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "In STORAGE, locate the BLACK DISCONNECT and reinstall it ",
+            "subtext": "CAUTION: The BLACK DISCONNECT must read “ON” in the upper right corner to restore conductivity.",
+            "number": "12",
+			"prompts": [
+				{
+                    "type": "arrow",
+					"moduleID": "storage",
+					"misc": "fuse_box",
+					"rotation": 0
+				},
+				{
+                    "type": "highlight",
+					"moduleID": "storage",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Close the FUSIBLE DISCONNECT box cover.",
+            "subtext": "",
+            "number": "13",
+			"prompts": [
+				{
+                    "type": "highlight",
+					"moduleID": "fuse_box",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        },
+        {
+            "text": "Remove the PURPLE CARABINEER’s tether from the TETHER CABLE.",
+            "subtext": "WARNING: All tethers are under spring tension and can retract quickly.",
+            "number": "14",
+			"prompts": []
+        },
+        {
+            "text": "Use the PURPLE CARABINEER to clip and lock the FUSIBLE DISCONNECT box cover.",
+            "subtext": "",
+            "number": "15",
+			"prompts": [
+				{
+                    "type": "highlight",
+					"moduleID": "storage",
+					"misc": "",
+					"rotation": 0
+				}
+			]
+        }
+    ]
+}
