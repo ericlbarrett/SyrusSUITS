@@ -20,7 +20,7 @@ public class ProcedureManager_2 : MonoBehaviour {
 	void Start () {
 		path = Application.streamingAssetsPath + "/Procedures/";
 		LoadFileNames("/Procedures/");
-		function();
+		//function();
 		ChooseProcedure();
 	}
 	
@@ -33,19 +33,21 @@ public class ProcedureManager_2 : MonoBehaviour {
 			Debug.Log(proceduresPath[i]);
 		}
 	}
-	
 	public void ChooseProcedure() {
         OptionsMenu opts = OptionsMenu.Instance("Choose A Procedure", true);
         opts.OnSelection += LoadProcedure;
         if (procedureName.Count > 0) {
+            //procedureName.Count
+            
             for (int i = 0; i < procedureName.Count; i++) {
                 opts.AddItem(procedureName[i], i);
             }
+            opts.ResizeOptions();
         } else {
             Debug.Log("Error: No procedures currently loaded in Procedure Manager Script");
         }
     }
-	    //Loads in the procedure that should be completed
+	//Loads in the procedure that should be completed
     public void LoadProcedure(int procedureNumber) {
         currentProcedureNum = procedureNumber;
         try
@@ -73,7 +75,8 @@ public class ProcedureManager_2 : MonoBehaviour {
             Debug.Log("Error: " + proceduresPath[procedureNumber] + " JSON input. " + ex.Message);
         }
     }
-	void LoadFileNames(string dir) {
+    //Loads the all the JSON files from the Streaming Assets
+    void LoadFileNames(string dir) {
         procedureName = new List<string>();
         proceduresPath = new List<string>();
         string location = Application.streamingAssetsPath;
