@@ -186,7 +186,7 @@
 
 //     }
 
-//     // Manually override the step and jump to a new one
+//     // Manually  override the step and jump to a new one
 //     public static void SetStep(int newStepNumber) {
 //         if (newStepNumber >= 0 && newStepNumber <= Instance.procedure.steps.Count - 1)
 //         {
