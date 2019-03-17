@@ -1,0 +1,92 @@
+{
+    "name": "Aether Taskboard Version 2",
+    "length": 0.545,
+    "width": 0.6985,
+
+    "modules": [
+        {
+            "type": "storage",
+            "id": "storage",
+            "size": {"x": 0.6985, "y": 0.187},
+            "position": {"x": 0, "y": 0.362},
+            "rotation": 0
+        },
+        {
+            "type": "key_button",
+            "id": "e_stop",
+            "size": {"x": 0.06712, "y": 0.0655},
+            "position": {"x": 0.24, "y": 0.22},
+            "rotation": 0
+        },
+        {
+            "type": "fuse_box",
+            "id": "fuse_box",
+            "size": {"x": 0.13803, "y": 0.22308},
+            "position": {"x": 0.07, "y": 0.07},
+            "rotation": 0
+        },
+        {
+            "type": "breaker",
+            "id": "breaker",
+            "size": {"x": 0.02509, "y": 0.07556},
+            "position": {"x": 0.277, "y": 0.082},
+            "rotation": 0
+        },
+        {
+            "type": "battery_pack",
+            "id": "auxilary_battery",
+            "size": {"x": 0.04172, "y": 0.05011},
+            "position": {"x": 0.234, "y": 0.104},
+            "rotation": 0
+        },
+        {
+            "type": "220v_plug",
+            "id": "power_out",
+            "size": {"x": 0.07175, "y": 0.11555},
+            "position": {"x": 0.38, "y": 0.082},
+            "rotation": 0
+        },
+        {
+            "type": "110v_plug",
+            "id": "power_in",
+            "size": {"x": 0.06558, "y": 0.10359},
+            "position": {"x": 0.512, "y": 0.05},
+            "rotation": 0
+        },
+        {
+            "type": "switch",
+            "id": "power_in_switch",
+            "size": {"x": 0.05326, "y": 0.06719},
+            "position": {"x": 0.576, "y": 0.068},
+            "rotation": 0
+        },
+        {
+            "type": "light",
+            "id": "indicator_red",
+            "size": {"x": 0.07291, "y": 0.05871},
+            "position": {"x": 0.533, "y": 0.179},
+            "rotation": 0
+        },
+        {
+            "type": "light",
+            "id": "indicator_green",
+            "size": {"x": 0.07291, "y": 0.05871},
+            "position": {"x": 0.533, "y": 0.23771},
+            "rotation": 0
+        },
+        {
+            "type": "busbars",
+            "id": "busbars",
+            "size": {"x": 0.20706, "y": 0.025},
+            "position": {"x": 0.31209 , "y": 0.20956},
+            "rotation": 90
+        },
+		{
+            "type": "keys",
+            "id": "side_keys",
+            "size": {"x": 0.03172, "y": 0.04741},
+            "position": {"x": 0.6985, "y": 0.381},
+            "rotation": 0
+        }
+    ]
+}

@@ -43,7 +43,8 @@ public class ProcedureManager_2 : MonoBehaviour {
 
 
     void Start () {
-		path = Application.streamingAssetsPath + "/Procedures/";
+
+        path = Application.streamingAssetsPath + "/Procedures/";
 		LoadFileNames("/Procedures/");
 		//printProcedurePaths();
 		ChooseProcedure();

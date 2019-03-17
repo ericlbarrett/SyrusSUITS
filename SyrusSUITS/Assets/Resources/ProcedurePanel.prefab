@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 222061665965100026}
   - component: {fileID: 114026544949154276}
   - component: {fileID: 114783236788041886}
-  - component: {fileID: 114519722630217248}
   - component: {fileID: 114358201105478526}
   m_Layer: 0
   m_Name: StepButton
@@ -521,19 +520,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   borderWidth: 0
   falloffDistance: 0.001
---- !u!114 &114519722630217248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1838261014255000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ec02873042ebc74fa17b63e5bff32f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useSounds: 1
-  highlight: 0
 --- !u!114 &114531091264890842
 MonoBehaviour:
   m_ObjectHideFlags: 1
