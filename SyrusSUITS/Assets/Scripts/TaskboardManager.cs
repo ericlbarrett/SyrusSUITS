@@ -22,7 +22,7 @@ public class TaskboardManager : MonoBehaviour
     {
         if (step != null)
         {
-            Debug.Log(step);
+            //Debug.Log(step);
             currentStep = step;
         }
     }

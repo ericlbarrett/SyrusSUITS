@@ -31,15 +31,21 @@ public class ProcedureManager_2 : MonoBehaviour {
     List<string> proceduresPath;                // List of procedure system path (e.x. something.json)
     List<string> procedureName;             // List of procedure names (e.x. title from JSON)
     Procedure procedure = new Procedure();  // Procedure Class holds the information of the steps
-    public bool isProcedure = false;           // If the procedure panel has been loaded.
+    bool isProcedure = false;           // If the procedure panel has been loaded.
 
     OptionsMenu stepMenu;               // Step menu
+
+    //This is for the Procedure Panel V2
     public GameObject procedurePanel;       // Procedure Panel
-    public Text procedurBarText; // Procedure Panel Text
+    public Text previousStep; // Procedure Panel Text
+    public Text currentStep; // Procedure Panel Text
+    public Text nextStep; // Procedure Panel Text
+
+
     void Start () {
 		path = Application.streamingAssetsPath + "/Procedures/";
 		LoadFileNames("/Procedures/");
-		//function();
+		//printProcedurePaths();
 		ChooseProcedure();
 
 	}
@@ -53,7 +59,7 @@ public class ProcedureManager_2 : MonoBehaviour {
         string t = procedure.steps[Instance.stepNumber].text;
         if (t != null) HoloToolkit.Unity.TextToSpeech.AetherSpeech(t);
     }
-    void function() {
+    void printProcedurePaths() {
 		for(int i = 0; i < proceduresPath.Count; i++) {
 			Debug.Log(proceduresPath[i]);
 		}
@@ -75,23 +81,64 @@ public class ProcedureManager_2 : MonoBehaviour {
     //Toggles the procedure panel active state
     public void ToggleProcedurePanel()
     {
-        Debug.Log("True");
         procedurePanel.SetActive(!procedurePanel.activeInHierarchy);
     }
     //Change the current task information
     void changeBarTxt()
     {
-        procedurBarText.alignment = TextAnchor.UpperLeft;
-        procedurBarText.text = procedure.steps[stepNumber].number + ".) " + procedure.steps[stepNumber].text + "\n";
+        //procedurBarText.alignment = TextAnchor.UpperLeft;
+        //procedurBarText.text = procedure.steps[stepNumber].number + ".) " + procedure.steps[stepNumber].text + "\n";
+        //if (procedure.steps[stepNumber].subtext.Length > 0)
+        //{
+        //    procedurBarText.text += CreateSubText(procedure.steps[stepNumber]) + "\n";
+        //}
+
+        //current
+        currentStep.alignment = TextAnchor.UpperLeft;
+        currentStep.text = procedure.steps[stepNumber].number + ".) " + procedure.steps[stepNumber].text + "\n";
         if (procedure.steps[stepNumber].subtext.Length > 0)
         {
-            procedurBarText.text += CreateSubText(procedure.steps[stepNumber]) + "\n";
+            currentStep.text += CreateSubText(procedure.steps[stepNumber]) + "\n";
         }
+
+        //next
+        if (Instance.stepNumber + 1 <= Instance.procedure.steps.Count - 1)
+        {
+            nextStep.text = procedure.steps[stepNumber + 1].number + ".) " + procedure.steps[stepNumber + 1].text + "\n";
+            nextStep.alignment = TextAnchor.UpperLeft;
+            nextStep.text = procedure.steps[stepNumber + 1].number + ".) " + procedure.steps[stepNumber + 1].text + "\n";
+            if (procedure.steps[stepNumber + 1].subtext.Length > 0)
+            {
+                nextStep.text += CreateSubText(procedure.steps[stepNumber + 1]) + "\n";
+            }
+        }
+        else
+        {
+            nextStep.text = "";
+        }
+        //previous
+        if (Instance.stepNumber - 1 >= 0)
+        {
+            //previousStep.text = procedure.steps[stepNumber - 1].number + ".) " + procedure.steps[stepNumber - 1].text + "\n";
+            previousStep.alignment = TextAnchor.UpperLeft;
+            previousStep.text = procedure.steps[stepNumber - 1].number + ".) " + procedure.steps[stepNumber - 1].text + "\n";
+            if (procedure.steps[stepNumber - 1].subtext.Length > 0)
+            {
+                previousStep.text += CreateSubText(procedure.steps[stepNumber - 1]) + "\n";
+            }
+        }
+        else
+        {
+            previousStep.text = "";
+        }
+
+
 
     }
     // Goes forward to the next step
     public void NextStep()
     {
+        if (isProcedure)
         if (isProcedure)
         {
             //Debug.Log("next Step");
@@ -143,31 +190,6 @@ public class ProcedureManager_2 : MonoBehaviour {
         temp += s.subtext.Substring(i, s.subtext.Length - i);
         return temp;
     }
-    //Sets all the steps and subtext to the dropdown list
-    //void LoadStepWindow(List<Step> list)
-    //{
-    //    stepMenu = OptionsMenu.Instance(procedureName[currentProcedureNum], false);
-    //    stepMenu.gameObject.SetActive(true);
-    //    stepMenu.OnSelection += (int i) => {
-    //        SetStep(i);
-    //        stepMenu.gameObject.SetActive(true);
-    //    };
-    //    if (list.Count > 0)
-    //    {
-    //        int i = 0;
-    //        foreach (Step s in list)
-    //        {
-    //            stepMenu.AddItem(s.number + ".) " + s.text, i);
-    //            i++;
-    //        }
-    //        //stepMenu.ChangeListHeight(list.Count);
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Error: No steps currently loaded in Procedure Manager Script");
-    //    }
-    //    changeBarTxt();
-    //}
     // Manually override the step and jump to a new one
     public static void SetStep(int newStepNumber)
     {
