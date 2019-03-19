@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TaskboardManager : MonoBehaviour
+public class OverlayManager : MonoBehaviour
 {
 
-    private static TaskboardManager _Instance;
-    public static TaskboardManager Instance
+    private static OverlayManager _Instance;
+    public static OverlayManager Instance
     {
         get
         {
             if (_Instance == null)
             {
-                _Instance = FindObjectOfType<TaskboardManager>();
+                _Instance = FindObjectOfType<OverlayManager>();
             }
             return _Instance;
         }
