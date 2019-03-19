@@ -1127,6 +1127,63 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 549016477}
+--- !u!1 &587308820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 587308822}
+  - component: {fileID: 587308821}
+  m_Layer: 0
+  m_Name: TelemetryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &587308821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 587308820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e5c983be3415434e980a38dd66d14a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numericalData:
+    heart_bpm: 0
+    p_suit: 0
+    p_sub: 0
+    t_sub: 0
+    v_fan: 0
+    p_o2: 0
+    rate_o2: 0
+    cap_battery: 0
+    p_h2o_g: 0
+    p_h2o_l: 0
+    p_sop: 0
+    rate_sop: 0
+    t_battery: 
+    t_oxygen: 
+    t_water: 
+    create_date: 
+--- !u!4 &587308822
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 587308820}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.007976979, y: 0.0038489103, z: 0.4980749}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &685527964
 GameObject:
   m_ObjectHideFlags: 0
