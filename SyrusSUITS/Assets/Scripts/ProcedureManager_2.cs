@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class ProcedureManager_2 : MonoBehaviour {
 
-	public delegate void StepEvent(Step step);
+    public GameObject placingPanel;
+
+    public delegate void StepEvent(Step step);
     public static event StepEvent OnStepChanged;
 
     private static ProcedureManager_2 _Instance;
@@ -47,7 +49,7 @@ public class ProcedureManager_2 : MonoBehaviour {
         path = Application.streamingAssetsPath + "/Procedures/";
 		LoadFileNames("/Procedures/");
 		//printProcedurePaths();
-		ChooseProcedure();
+		//ChooseProcedure();
 
 	}
 	
@@ -219,6 +221,7 @@ public class ProcedureManager_2 : MonoBehaviour {
                 ToggleProcedurePanel();
                 changeBarTxt(); // Needs to be here to update to the first Item
                 isProcedure = true;
+                //placingPanel.loadPlacingProcedure();
             }
             //if the procedures are loaded. Then render the procedure bar
             else

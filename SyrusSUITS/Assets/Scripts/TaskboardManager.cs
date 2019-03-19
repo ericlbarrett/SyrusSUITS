@@ -36,6 +36,7 @@ public class TaskboardManager : MonoBehaviour
         LoadFileNames("/TaskboardLayouts/");
         PrintFileNames();
         ChooseTaskboard();
+        
     }
 
     // Update is called once per frame
@@ -81,7 +82,7 @@ public class TaskboardManager : MonoBehaviour
         {
             //Debug.Log(step);
             currentStep = step;
-            Debug.Log(currentStep);
+            //Debug.Log(currentStep);
         }
     }
     // Load the taskboard
@@ -99,6 +100,8 @@ public class TaskboardManager : MonoBehaviour
                 //foreach(Modules m in layout.modules)
                 //Debug.Log(m.id + " " + m.position.x + " " + m.position.y + " " + m.rotation + " " + m.size.x + " " + m.type);
                 CreateTaskboard();
+                this.GetComponent<PlacingProcedure>().PlacingProcedureOn();
+                this.GetComponent<PlacingProcedure>().m_methodToCall = GameObject.Find("ProcedureManager").gameObject.GetComponent<ProcedureManager_2>().ChooseProcedure;
             }
             else
             {
@@ -145,41 +148,34 @@ public class TaskboardManager : MonoBehaviour
         GameObject cube;
         //Material mat = Resources.Load("ModuleMat", typeof(Material)) as Material;
 
+        // whole taskboard
+        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.parent = transform;
+        cube.name = "all";
+        cube.transform.localScale = new Vector3((float)layout.width, 0.001F, (float)layout.length);
+        Vector3 halfScle = new Vector3((float)layout.width / 2, 0, -(float)layout.length / 2);
+        cube.transform.localPosition = topLeft  + halfScle;
+        cube.transform.localPosition = new Vector3(cube.transform.localPosition.x, .001f, cube.transform.localPosition.z);
+
+        
+
         foreach (Modules m in layout.modules)
         {
             cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.parent = transform;
             cube.name = m.id;
             cube.transform.localScale = new Vector3((float)m.size.x, 0.001F, (float)m.size.y);
-            Vector3 halfScle = new Vector3((float)m.size.x / 2, 0, -(float)m.size.y / 2);
-            cube.transform.localPosition = topLeft + new Vector3((float)m.position.x, .001f, -(float)m.position.y) + halfScle;
+            halfScle = new Vector3((float)m.size.x / 2, 0, -(float)m.size.y / 2);
+            cube.transform.localPosition = topLeft + new Vector3((float)m.position.x,0, -(float)m.position.y) + halfScle;
+            cube.transform.localPosition = new Vector3(cube.transform.localPosition.x, .001f, cube.transform.localPosition.z); 
 
-
-            //cube.GetComponent<Renderer>().material = mat;
-
-            //LineRenderer lr = cube.AddComponent<LineRenderer>();
-            //Vector3[] pts = new Vector3[6];
-
-            //pts[0] = new Vector3(0.25f, 0.0f, 0.5f);
-            //pts[1] = new Vector3(0.5f, 0.0f, 0.5f);
-            //pts[2] = new Vector3(0.5f, 0.0f, -0.5f);
-            //pts[3] = new Vector3(-0.5f, 0.0f, -0.5f);
-            //pts[4] = new Vector3(-0.5f, 0.0f, 0.5f);
-            //pts[5] = new Vector3(0.25f, 0.0f, 0.5f);
-
-            //lr.positionCount = 6;
-            //lr.SetPositions(pts);
-            //lr.widthMultiplier = 0.005f;
-            //lr.enabled = false;
-            //lr.useWorldSpace = false;
-            //lr.numCornerVertices = 3;
 
             objs.Add(cube);
         }
-
-        //Transform panel = transform.Find("ProcedurePanel");
-        //panel.localPosition = new Vector3(0.0f, 0.11f, layout.length / 2.0f + 0.00f);
-        //moveTaskboard();
+        transform.localPosition = new Vector3(0, 0, 0.55f);
+    //Transform panel = transform.Find("ProcedurePanel");
+    //panel.localPosition = new Vector3(0.0f, 0.11f, layout.length / 2.0f + 0.00f);
+    //moveTaskboard();
     }
 }
 
