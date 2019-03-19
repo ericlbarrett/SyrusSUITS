@@ -2,6 +2,11 @@
     "name": "NASA Taskboard",
     "length": 0.401,
     "width": 0.558,
+
+    "activator": true,
+    "activator_pos": {"x": 0, "y": 0, "z": 0},
+    "activator_target": 1,
+
     "modules": [
         {
             "type": "storage",

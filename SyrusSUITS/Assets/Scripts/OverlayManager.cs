@@ -21,7 +21,7 @@ public class OverlayManager : MonoBehaviour
     Step currentStep;
     string path;                            // Directory of where the JSON files are located
     string fileName = "taskboard.json";     // File name of the taskboard layout [ need to add option to load more ]
-    List<string> files;
+    List<string> overlayFiles;
     List<string> taskboardNames;
     List<GameObject> objs = new List<GameObject>();
 
@@ -30,10 +30,8 @@ public class OverlayManager : MonoBehaviour
     {
         ProcedureManager_2.OnStepChanged += OnStepChanged;
         Instance.path = Application.streamingAssetsPath + "/TaskboardLayouts/";
-        files = new List<string>();
-        taskboardNames = new List<string>();
 
-        LoadFileNames("/TaskboardLayouts/");
+        PreloadOverlays("/TaskboardLayouts/");
         PrintFileNames();
         ChooseTaskboard();
         
@@ -44,34 +42,30 @@ public class OverlayManager : MonoBehaviour
     {
 
     }
-    void PrintFileNames()
-    {
-        for(int i = 0; i < files.Count; i++)
-        {
-            Debug.Log(files[i]);
-        }
-    }
-    void LoadFileNames(string dir)
-    {
-        string location = Application.streamingAssetsPath;
-        try
-        {
-            string temp = location + dir;
-            foreach (string file in System.IO.Directory.GetFiles(temp))
-            {
-                string label = file.Replace(temp, "");
-                if (label.EndsWith(".json"))
-                {
-                    string contents = System.IO.File.ReadAllText(temp + label);
-                    TaskNames taskname = JsonUtility.FromJson<TaskNames>(contents);
-                    //Debug.Log(procedureNames.title);
-                    taskboardNames.Add(taskname.name);
-                    files.Add(label);
-                }
+    void PrintFileNames() {
+        if (overlayFiles != null) {
+            for(int i = 0; i < overlayFiles.Count; i++) {
+                Debug.Log(overlayFiles[i]);
             }
         }
-        catch (System.Exception ex)
-        {
+    }
+    void PreloadOverlays(string dir) {
+        overlayFiles = new List<string>();
+        taskboardNames = new List<string>();
+
+        try {
+            string location = Application.streamingAssetsPath + dir;
+            foreach (string file in System.IO.Directory.GetFiles(location)) {
+                string label = file.Replace(location, "");
+                if (label.EndsWith(".json")) {
+                    string contents = System.IO.File.ReadAllText(location + label);
+                    OverlayPreload taskname = JsonUtility.FromJson<OverlayPreload>(contents);
+
+                    taskboardNames.Add(taskname.name);
+                    overlayFiles.Add(label);
+                }
+            }
+        } catch (System.Exception ex) {
             Debug.Log("Error: JSON input. " + ex.Message);
         }
     }
@@ -90,8 +84,7 @@ public class OverlayManager : MonoBehaviour
     {
         try
         {
-            //Debug.Log(path + files[x]);
-            string temp = path + files[x];
+            string temp = path + overlayFiles[x];
             if (System.IO.File.Exists(temp))
             {
                 string contents = System.IO.File.ReadAllText(temp);
@@ -207,7 +200,17 @@ public class Vec2
 }
 
 [System.Serializable]
-public class TaskNames
+public class Vec3
 {
+    public double x;
+    public double y;
+    public double z;
+}
+
+[System.Serializable]
+public class OverlayPreload { // Contains basic information about an overlay for preloading
     public string name;
+    public bool activator;
+    public Vec3 activator_pos;
+    public int activator_target;
 }
