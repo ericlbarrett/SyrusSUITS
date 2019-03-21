@@ -145,22 +145,23 @@ public class OverlayManager : MonoBehaviour
         cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.parent = transform;
         cube.name = "all";
-        cube.transform.localScale = new Vector3((float)layout.width, 0.001F, (float)layout.length);
-        Vector3 halfScle = new Vector3((float)layout.width / 2, 0, -(float)layout.length / 2);
-        cube.transform.localPosition = topLeft  + halfScle;
-        cube.transform.localPosition = new Vector3(cube.transform.localPosition.x, .001f, cube.transform.localPosition.z);
-
-        
+        cube.transform.localScale = new Vector3((float)layout.size.x, (float)layout.size.y, (float)layout.size.z);
+        //Vector3 halfScle = new Vector3((float)layout.width / 2, 0, -(float)layout.length / 2);
+        //cube.transform.localPosition = topLeft  + halfScle;
+        //cube.transform.localPosition = new Vector3(cube.transform.localPosition.x, .001f, cube.transform.localPosition.z);
+        cube.transform.localPosition = Vector3.zero;
 
         foreach (Modules m in layout.modules)
         {
             cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.parent = transform;
             cube.name = m.id;
-            cube.transform.localScale = new Vector3((float)m.size.x, 0.001F, (float)m.size.y);
+            cube.transform.localScale = new Vector3((float)m.size.x, (float)m.size.y, (float)m.size.y);
             halfScle = new Vector3((float)m.size.x / 2, 0, -(float)m.size.y / 2);
             cube.transform.localPosition = topLeft + new Vector3((float)m.position.x,0, -(float)m.position.y) + halfScle;
-            cube.transform.localPosition = new Vector3(cube.transform.localPosition.x, .001f, cube.transform.localPosition.z); 
+            cube.transform.localPosition = new Vector3(cube.transform.localPosition.x, .001f, cube.transform.localPosition.z);
+
+            cube.transform.localRotation = Quaternion.eulerAngles(m.rotation.UnityVec());
 
 
             objs.Add(cube);
@@ -177,8 +178,7 @@ public class OverlayManager : MonoBehaviour
 public class Layout
 {
     public string name;
-    public float length;
-    public float width;
+    public Vec3 size;
     public List<Modules> modules = new List<Modules>();
 }
 
@@ -187,9 +187,9 @@ public class Modules
 {
     public string type;
     public string id;
-    public Vec2 size;
-    public Vec2 position;
-    public int rotation;
+    public Vec3 size;
+    public Vec3 position;
+    public Vec3 rotation;
 }
 
 [System.Serializable]
@@ -205,6 +205,10 @@ public class Vec3
     public double x;
     public double y;
     public double z;
+
+    public Vector3 UnityVec() {
+        return new Vector3(x, y, z);
+    }
 }
 
 [System.Serializable]
