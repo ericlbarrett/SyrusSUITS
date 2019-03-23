@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,4 +14,5 @@ public class NavigationService : MonoBehaviour {
 	void Update () {
 		
 	}
+
 }

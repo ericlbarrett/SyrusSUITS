@@ -1,0 +1,37 @@
+{
+
+  "nodes": [
+
+    {
+      "id": 1,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "adjacentNodeIDs": [ 2, 3 ]
+    },
+
+    {
+      "id": 2,
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": 1
+      },
+      "adjacentNodeIDs": [ 1 ]
+    },
+
+    {
+      "id": 3,
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 0
+      },
+      "adjacentNodeIDs": [ 1 ]
+    }
+
+  ]
+}
+
