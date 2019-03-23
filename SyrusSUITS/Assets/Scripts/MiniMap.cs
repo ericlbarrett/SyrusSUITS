@@ -10,6 +10,9 @@ public class MiniMap : MonoBehaviour {
     public List<Node> nodeMap = new List<Node>();
     public List<Node> route = new List<Node>();
 
+    float scaleFactor = 1 / 25.0f; // The scale of the minimap relative to the world scale.
+                                   // Use this when you add the LineRenderer
+
     // Use this for initialization
     void Start () {
         LoadFromJson("/NodeMaps/sampleMap_1.json");
