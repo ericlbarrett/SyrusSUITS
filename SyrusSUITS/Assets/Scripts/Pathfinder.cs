@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class Pathfinder
+    public class Pathfinder
     {
         public List<Node> nodes;
         public Node source;
@@ -14,7 +14,7 @@ namespace Assets.Scripts
         private Node adjacentNode;
 
         // Constructor
-        Pathfinder(List<Node> nodes, Node source, Node destination)
+        public Pathfinder(List<Node> nodes, Node source, Node destination)
         {
             this.nodes = nodes;
             this.source = source;
@@ -32,7 +32,7 @@ namespace Assets.Scripts
             List<Node> path = new List<Node>();
 
             currentNode = destination;
-            path.Insert(0, currentNode.previousNode);
+            path.Insert(0, currentNode);
 
             while(currentNode.previousNode != null)
             {
