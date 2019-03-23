@@ -17,41 +17,28 @@ public class OverlayManager : MonoBehaviour
             return _Instance;
         }
     }
-    Layout layout = new Layout();           // Layout Class holds the information of the taskboard 
-    Step currentStep;
+    Layout layout = new Layout();           // Layout Class holds the information of the overlay 
     string path;                            // Directory of where the JSON files are located
-    string fileName = "taskboard.json";     // File name of the taskboard layout [ need to add option to load more ]
     List<string> overlayFiles;
-    List<string> taskboardNames;
+    List<string> overlayNames;
     List<GameObject> objs = new List<GameObject>();
 
-    // Use this for initialization
-    void Start()
-    {
-        ProcedureManager_2.OnStepChanged += OnStepChanged;
-        Instance.path = Application.streamingAssetsPath + "/TaskboardLayouts/";
+    Step currentStep;
 
-        PreloadOverlays("/TaskboardLayouts/");
+    // Use this for initialization
+    void Start() {
+        ProcedureManager_2.OnStepChanged += OnStepChanged;
+        Instance.path = Application.streamingAssetsPath + "/OverlayLayouts/";
+
+        PreloadOverlays("/OverlayLayouts/");
         PrintFileNames();
         ChooseTaskboard();
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    void PrintFileNames() {
-        if (overlayFiles != null) {
-            for(int i = 0; i < overlayFiles.Count; i++) {
-                Debug.Log(overlayFiles[i]);
-            }
-        }
-    }
     void PreloadOverlays(string dir) {
         overlayFiles = new List<string>();
-        taskboardNames = new List<string>();
+        overlayNames = new List<string>();
 
         try {
             string location = Application.streamingAssetsPath + dir;
@@ -59,9 +46,12 @@ public class OverlayManager : MonoBehaviour
                 string label = file.Replace(location, "");
                 if (label.EndsWith(".json")) {
                     string contents = System.IO.File.ReadAllText(location + label);
-                    OverlayPreload taskname = JsonUtility.FromJson<OverlayPreload>(contents);
+                    OverlayPreload preload = JsonUtility.FromJson<OverlayPreload>(contents);
 
-                    taskboardNames.Add(taskname.name);
+                    // TODO: Image activator
+                    Debug.Log(preload.name + " Activator:" + preload.activator);
+
+                    overlayNames.Add(preload.name);
                     overlayFiles.Add(label);
                 }
             }
@@ -70,8 +60,15 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
-    private void OnStepChanged(Step step)
-    {
+    void PrintFileNames() {
+        if (overlayFiles != null) {
+            for (int i = 0; i < overlayFiles.Count; i++) {
+                Debug.Log(overlayFiles[i]);
+            }
+        }
+    }
+
+    private void OnStepChanged(Step step) {
         if (step != null)
         {
             //Debug.Log(step);
@@ -79,6 +76,7 @@ public class OverlayManager : MonoBehaviour
             //Debug.Log(currentStep);
         }
     }
+
     // Load the taskboard
     void LoadTaskboard(int x)
     {
@@ -98,7 +96,7 @@ public class OverlayManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Error: Unable to read " + fileName + " file, at " + temp);
+                Debug.Log("Error: Unable to read " + overlayFiles[x] + " file, at " + temp);
             }
         }
         catch (System.Exception ex)
@@ -121,23 +119,24 @@ public class OverlayManager : MonoBehaviour
 
         OptionsMenu opts = OptionsMenu.Instance("Choose A Taskboard", true);
         opts.OnSelection += LoadTaskboard;
-        if (taskboardNames.Count > 0)
+        if (overlayNames.Count > 0)
         {
-            for (int i = 0; i < taskboardNames.Count; i++)
+            for (int i = 0; i < overlayNames.Count; i++)
             {
-                opts.AddItem(taskboardNames[i], i);
+                opts.AddItem(overlayNames[i], i);
             }
             opts.ResizeOptions();
         }
         else
         {
-            Debug.Log("Error: No taskboard layouts loaded");
+            Debug.Log("Error: No Overlay layouts loaded");
         }
     }
+    
     //Create the Taskboard
     void CreateTaskboard()
     {
-        Vector3 topLeft = new Vector3(-layout.width / 2.0f, 0, layout.length / 2.0f);
+        Vector3 corner = new Vector3(-(float)layout.size.x / 2.0f, (float)layout.size.y / 2.0f, (float)layout.size.z / 2.0f);
         GameObject cube;
         //Material mat = Resources.Load("ModuleMat", typeof(Material)) as Material;
 
@@ -146,9 +145,6 @@ public class OverlayManager : MonoBehaviour
         cube.transform.parent = transform;
         cube.name = "all";
         cube.transform.localScale = new Vector3((float)layout.size.x, (float)layout.size.y, (float)layout.size.z);
-        //Vector3 halfScle = new Vector3((float)layout.width / 2, 0, -(float)layout.length / 2);
-        //cube.transform.localPosition = topLeft  + halfScle;
-        //cube.transform.localPosition = new Vector3(cube.transform.localPosition.x, .001f, cube.transform.localPosition.z);
         cube.transform.localPosition = Vector3.zero;
 
         foreach (Modules m in layout.modules)
@@ -156,20 +152,20 @@ public class OverlayManager : MonoBehaviour
             cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.parent = transform;
             cube.name = m.id;
-            cube.transform.localScale = new Vector3((float)m.size.x, (float)m.size.y, (float)m.size.y);
-            halfScle = new Vector3((float)m.size.x / 2, 0, -(float)m.size.y / 2);
-            cube.transform.localPosition = topLeft + new Vector3((float)m.position.x,0, -(float)m.position.y) + halfScle;
-            cube.transform.localPosition = new Vector3(cube.transform.localPosition.x, .001f, cube.transform.localPosition.z);
+            cube.transform.localScale = new Vector3((float)m.size.x, (float)m.size.y, (float)m.size.z);
+            Vector3 halfScle = new Vector3((float)m.size.x / 2, (float)m.size.y / 2, -(float)m.size.z / 2);
+            cube.transform.localPosition = corner + new Vector3((float)m.position.x, (float)m.position.y, -(float)m.position.z) + halfScle;
 
-            cube.transform.localRotation = Quaternion.eulerAngles(m.rotation.UnityVec());
+            cube.transform.localRotation = Quaternion.Euler(m.rotation.UnityVec());
 
-
+  
             objs.Add(cube);
         }
         transform.localPosition = new Vector3(0, 0, 0.55f);
-    //Transform panel = transform.Find("ProcedurePanel");
-    //panel.localPosition = new Vector3(0.0f, 0.11f, layout.length / 2.0f + 0.00f);
-    //moveTaskboard();
+
+        //Transform panel = transform.Find("ProcedurePanel");
+        //panel.localPosition = new Vector3(0.0f, 0.11f, layout.length / 2.0f + 0.00f);
+        //moveTaskboard();
     }
 }
 
@@ -207,7 +203,7 @@ public class Vec3
     public double z;
 
     public Vector3 UnityVec() {
-        return new Vector3(x, y, z);
+        return new Vector3((float)x, (float)y, (float)z);
     }
 }
 
