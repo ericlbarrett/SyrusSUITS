@@ -12,15 +12,44 @@ public class MiniMap : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        LoadFromJson("/NodeMaps/nodes.json");
+        LoadFromJson("/NodeMaps/sampleMap_1.json");
 
-        LogNodes();
+        List<Node> route = GetRoute(GetNodeByID(1), GetNodeByID(6));
+
+        LogRoute(route);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public List<Node> GetRoute(Node source, Node destination)
+    {
+        Pathfinder pathFinder = new Pathfinder(nodeMap, GetNodeByID(1), GetNodeByID(6));
+        pathFinder.Execute();
+
+        return pathFinder.GetShortestPath(); 
+    }
+
+    public void LogRoute(List<Node> route)
+    {
+        string output = "Route: ";
+
+        for(int i = 0; i < route.Count; i++)
+        {
+            output += route[i].id;
+
+            if (i < route.Count - 1) output += " -> ";
+        }
+
+        Debug.Log(output);
+    }
+
+    public Node GetNodeByID(int id)
+    {
+        return nodeMap.Find(x => x.id.Equals(id));
+    }
 
     void LogNodes()
     {
