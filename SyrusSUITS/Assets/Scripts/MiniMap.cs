@@ -70,6 +70,7 @@ public class MiniMap : MonoBehaviour {
     [Serializable]
     public class NodeMap
     {
+        public string title;
         public List<JsonNode> nodes;
     }
 
