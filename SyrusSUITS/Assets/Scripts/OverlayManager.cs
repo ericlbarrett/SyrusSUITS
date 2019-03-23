@@ -21,7 +21,7 @@ public class OverlayManager : MonoBehaviour
     string path;                            // Directory of where the JSON files are located
     List<string> overlayFiles;
     List<string> overlayNames;
-    List<GameObject> objs = new List<GameObject>();
+    List<GameObject> objs = new List<GameObject>(); // Module game objects
 
     Step currentStep;
 
