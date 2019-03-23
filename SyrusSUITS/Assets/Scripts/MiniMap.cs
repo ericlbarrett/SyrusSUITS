@@ -26,7 +26,7 @@ public class MiniMap : MonoBehaviour {
 
     public List<Node> GetRoute(Node source, Node destination)
     {
-        Pathfinder pathFinder = new Pathfinder(nodeMap, GetNodeByID(1), GetNodeByID(6));
+        Pathfinder pathFinder = new Pathfinder(nodeMap, source, destination);
         pathFinder.Execute();
 
         return pathFinder.GetShortestPath(); 
