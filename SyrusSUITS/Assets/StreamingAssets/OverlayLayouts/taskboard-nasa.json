@@ -1,0 +1,96 @@
+{
+    "name": "NASA Taskboard",
+    
+    "size": {"x": 0.558, "y": 0.001, "z": 0.401},
+
+    "activator": true,
+    "activator_pos": {"x": 0, "y": 0, "z": 0},
+    "activator_target": 1,
+
+    "modules": [
+        {
+            "type": "storage",
+            "id": "storage",
+            "size": {"x": 0.55882, "y": 0.001, "z": 0.10546},
+            "position": {"x": 0, "y": 0, "z": 0.31},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "key_button",
+            "id": "e_stop",
+            "size": {"x": 0.07182, "y": 0.001, "z": 0.10379},
+            "position": {"x": 0.1870, "y": 0, "z": 0.178},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "fuse_box",
+            "id": "fuse_box",
+            "size": {"x": 0.13302, "y": 0.001, "z": 0.2286},
+            "position": {"x": 0.002, "y": 0, "z": 0.038},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "breaker",
+            "id": "breaker",
+            "size": {"x": 0.0302, "y": 0.001, "z": 0.055},
+            "position": {"x": 0.214, "y": 0, "z": 0.059},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "battery_pack",
+            "id": "auxilary_battery",
+            "size": {"x": 0.032, "y": 0.001, "z": 0.069},
+            "position": {"x": 0.185, "y": 0, "z": 0.058},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "220v_plug",
+            "id": "power_out",
+            "size": {"x": 0.10901, "y": 0.001, "z": 0.10615},
+            "position": {"x": 0.286, "y": 0, "z": 0.031},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "110v_plug",
+            "id": "power_in",
+            "size": {"x": 0.05685, "y": 0.001, "z": 0.12117},
+            "position": {"x": 0.426, "y": 0, "z": 0.005},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "power_in_switch",
+            "size": {"x": 0.05891, "y": 0.001, "z": 0.06556},
+            "position": {"x": 0.487, "y": 0, "z": 0.044},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "light",
+            "id": "indicator_red",
+            "size": {"x": 0.07195, "y": 0.001, "z": 0.053495},
+            "position": {"x": 0.457, "y": 0, "z": 0.187},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "light",
+            "id": "indicator_green",
+            "size": {"x": 0.07195, "y": 0.001, "z": 0.053495},
+            "position": {"x": 0.457, "y": 0, "z": 0.240495},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "busbars",
+            "id": "busbars",
+            "size": {"x": 0.231775, "y": 0.001, "z": 0.01265},
+            "position": {"x": 0.236, "y": 0, "z": 0.165},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "keys",
+            "id": "side_keys",
+            "size": {"x": 0.03172, "y": 0.001, "z": 0.04741},
+            "position": {"x": 0.582, "y": 0, "z": 0.162},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        }
+    ]
+}
