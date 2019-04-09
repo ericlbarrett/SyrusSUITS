@@ -63,7 +63,6 @@ namespace Assets.Scripts
                 adjacentNode = GetNodeByID(adjacentNodeID);
 
                 if (!adjacentNode.visited) {
-                    adjacentNode = GetNodeByID(adjacentNodeID);
 
                     float distance = GetDistance(currentNode, adjacentNode) + currentNode.shortestDistanceFromSource;
 
@@ -71,7 +70,7 @@ namespace Assets.Scripts
                     {
                         adjacentNode.shortestDistanceFromSource = distance;
                         adjacentNode.previousNode = currentNode;
-                    }                 
+                    }     
                 }
             }
         }
@@ -82,11 +81,11 @@ namespace Assets.Scripts
             Node nextNode = GetAdjacentUnvisitedNode();
             if (nextNode != null) return nextNode;
 
-            // Then try to get any unvisted node
+            // If there's no adjacent unvisted nodes, try to get any unvisted node
             nextNode = GetAnyUnVisitedNode();
             if (nextNode != null) return nextNode;
 
-            // If no other nodes then return null
+            // If no other nodes, return null
             return null;
         }
 
@@ -127,8 +126,8 @@ namespace Assets.Scripts
         public float GetDistance(Node source, Node destination)
         {
             return Mathf.Sqrt(Mathf.Pow(destination.position.x - source.position.x, 2) +
-                          Mathf.Pow(destination.position.y - source.position.y, 2) +
-                          Mathf.Pow(destination.position.z - source.position.z, 2));
+                              Mathf.Pow(destination.position.y - source.position.y, 2) +
+                              Mathf.Pow(destination.position.z - source.position.z, 2));
         }
 
         public Node GetNodeByID(int id)
