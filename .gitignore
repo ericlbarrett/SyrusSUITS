@@ -4,6 +4,7 @@
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
+SyrusSUITS/App/
 
 # Never ignore Asset meta data
 ![Aa]ssets/**/*.meta
