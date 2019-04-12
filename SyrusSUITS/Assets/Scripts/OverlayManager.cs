@@ -77,6 +77,29 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
+    public void LoadOverlay(string name, Vector3 pos, Quaternion rot) {
+        try
+        {
+            string temp = path + name;
+            if (System.IO.File.Exists(temp))
+            {
+                string contents = System.IO.File.ReadAllText(temp);
+                Instance.layout = JsonUtility.FromJson<Layout>(contents);
+                CreateTaskboard();
+                this.GetComponent<PlacingProcedure>().PlacingProcedureOn();
+                this.GetComponent<PlacingProcedure>().m_methodToCall = GameObject.Find("ProcedureManager").gameObject.GetComponent<ProcedureManager_2>().ChooseProcedure;
+            }
+            else
+            {
+                Debug.Log("Error: Unable to read " + name + " file, at " + temp);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Error: Taskboard JSON input. " + ex.Message);
+        }
+    }
+
     // Load the taskboard
     void LoadTaskboard(int x)
     {

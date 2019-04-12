@@ -4,7 +4,7 @@ using UnityEngine;
 using Vuforia;
 using UnityEngine.UI.ProceduralImage;
 
-public class NavCalibrator : MonoBehaviour, ITrackableEventHandler {
+public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
 
 	private TrackableBehaviour mTrackableBehaviour;
 	public ProceduralImage pi;
@@ -13,6 +13,8 @@ public class NavCalibrator : MonoBehaviour, ITrackableEventHandler {
 
 	List<Vector3> vSamples;
 	List<Quaternion> qSamples;
+
+	public string overlayName;
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +39,7 @@ public class NavCalibrator : MonoBehaviour, ITrackableEventHandler {
 
 			if (pi.fillAmount >= 1.0f) {
 				charging = false;
-				NavigationService.Instance.SetOrigin(calcAvg(vSamples), calcAvg(qSamples));
+				OverlayManager.Instance.LoadOverlay(overlayName, calcAvg(vSamples), calcAvg(qSamples));
 			}
 		}
 	}

@@ -8,7 +8,7 @@ using UnityEngine;
 public class MiniMap : MonoBehaviour {
 
     public LineRenderer line;
-    float scaleFactor = 1 / 25.0f; // The scale of the minimap relative to the world scale.
+    float scaleFactor = 1 / 1.0f; // The scale of the minimap relative to the world scale.
                                   
     // Use this for initialization
     void Start () {
@@ -18,22 +18,35 @@ public class MiniMap : MonoBehaviour {
         DrawNodes(NavigationService.nodeMap);
         DrawRoute(NavigationService.route);
     }
+
+    void Awake() {
+        NavigationService.Instance.MapLoaded += OnMapLoad;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         
     }
 
+    void OnMapLoad() {
+        string modelName = NavigationService.Instance.modelName;
+        Debug.Log("Loading map: " + modelName);
+
+        GameObject map = Instantiate((GameObject)Resources.Load(modelName), Vector3.zero, Quaternion.Euler(0, 0, 90), transform);
+        map.transform.localScale = scaleFactor * map.transform.localScale;
+
+    }
+
     public void DrawRoute(List<Node> route)
     {   
-        line.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        line.material = new Material(Shader.Find("Sprites/Default"));
         line.positionCount = route.Count;
 
         Vector3[] positions = new Vector3[route.Count];
         
         for(int i = 0; i < route.Count; i++)
         {
-            line.SetPosition(i, route[i].position);
+            line.SetPosition(i, scaleFactor * route[i].position);
         }
     }
 
@@ -41,10 +54,10 @@ public class MiniMap : MonoBehaviour {
     {
         for(int i = 0; i < nodeMap.Count; i++)
         {
-            GameObject node = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            node.name = "Node " + nodeMap[i].id;
-            node.transform.position = nodeMap[i].position;
-            node.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
+            //GameObject node = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //node.name = "Node " + nodeMap[i].id;
+            //node.transform.position = nodeMap[i].position;
+            //node.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
         }
     }
 }

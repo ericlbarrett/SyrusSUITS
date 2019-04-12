@@ -28,14 +28,20 @@ public class NavigationService : MonoBehaviour {
 	Quaternion navRotation;
 
 	public bool calibrated = false;
+    public string modelName;
+
+    public delegate void MapLoadedEvent();
+    public event MapLoadedEvent MapLoaded;
+
+    void Awake() {
+        _Instance = this;
+    }
 
 	// Use this for initialization
 	void Start () {
-		_Instance = this;
-    
-        LoadFromJson("/NodeMaps/sampleMap_1.json");
+        LoadFromJson("/NodeMaps/ISS.json");
 
-        route = GetRoute(GetNodeByID(1), GetNodeByID(6));
+        route = GetRoute(GetNodeByID(1), GetNodeByID(7));
 
         LogRoute(route);
 	}
@@ -97,7 +103,10 @@ public class NavigationService : MonoBehaviour {
             string jsonContent = File.ReadAllText(filePath);
             NodeMap jsonNodeMap = JsonUtility.FromJson<NodeMap>(jsonContent);
 
+            modelName = jsonNodeMap.modelname;
             nodeMap = ConvertedJsonNodeMap(jsonNodeMap);
+
+            if (MapLoaded != null) MapLoaded();
         }
         else
         {
@@ -127,6 +136,7 @@ public class NavigationService : MonoBehaviour {
     public class NodeMap
     {
         public string title;
+        public string modelname;
         public List<JsonNode> nodes;
     }
 

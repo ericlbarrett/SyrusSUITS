@@ -1,0 +1,86 @@
+{
+  "title": "ISS",
+  "modelname": "ISS",
+  "nodes": [
+
+    {
+      "id": 1,
+      "position": {
+        "x": -0.9901,
+        "y": -0.1884,
+        "z": 0.091
+      },
+      "adjacentNodeIDs": [ 2 ]
+    },
+
+    {
+      "id": 2,
+      "position": {
+        "x": -0.9901,
+        "y": 0.063,
+        "z": 0.091
+      },
+      "adjacentNodeIDs": [ 1, 6 ]
+    },
+
+    {
+      "id": 3,
+      "position": {
+        "x": -0.537,
+        "y": 0.063,
+        "z": -0.0932
+      },
+      "adjacentNodeIDs": [ 6, 4 ]
+    },
+
+    {
+      "id": 4,
+      "position": {
+        "x": 0.023,
+        "y": 0.063,
+        "z": -0.0932
+      },
+      "adjacentNodeIDs": [ 3, 5 ]
+    },
+
+    {
+      "id": 5,
+      "position": {
+        "x": 0.023,
+        "y": 0.052,
+        "z": 0.01
+      },
+      "adjacentNodeIDs": [ 4, 7 ]
+    },
+
+    {
+      "id": 6,
+      "position": {
+        "x": -0.537,
+        "y": 0.063,
+        "z": 0.091
+      },
+      "adjacentNodeIDs": [ 2, 3 ]
+    },
+    {
+      "id": 7,
+      "position": {
+        "x": 0.251,
+        "y": 0.052,
+        "z": 0.01
+      },
+      "adjacentNodeIDs": [ 3, 6, 8 ]
+    },
+    {
+      "id": 8,
+      "position": {
+        "x": 4.712,
+        "y": 0.762,
+        "z": -1.5495
+      },
+      "adjacentNodeIDs": [ 4, 8 ]
+    }
+
+  ]
+}
+
