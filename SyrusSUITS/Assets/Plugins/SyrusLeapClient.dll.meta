@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 5d0514478bbfb8c4983712e9bb307c56
-timeCreated: 1554954250
+guid: ddf507d9fa221694e9411823b5adc83f
+timeCreated: 1555131463
 licenseType: Free
 PluginImporter:
   externalObjects: {}
@@ -107,7 +107,7 @@ PluginImporter:
         DontProcess: False
         PlaceholderPath: 
         SDK: AnySDK
-        ScriptingBackend: DotNet
+        ScriptingBackend: AnyScriptingBackend
   userData: 
   assetBundleName: 
   assetBundleVariant: 

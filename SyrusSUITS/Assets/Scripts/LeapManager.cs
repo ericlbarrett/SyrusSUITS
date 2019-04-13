@@ -9,6 +9,17 @@ using SyrusLeapClient;
 
 public class LeapManager : MonoBehaviour {
 
+    public Transform test;
+
+    // void Update () {
+    //     Camera mainCamera = Camera.main;
+    //     Vector3 leapOffset = new Vector3(0.0f, 0.08f, 0.04f);
+    //     float angle = 100.0f; // Degrees
+    //         Vector3 p = leapOffset + Quaternion.Euler(angle, 0.0f, 0.0f) * new Vector3(0, 0.1f, 0);
+    //     test.position = mainCamera.transform.position + mainCamera.transform.rotation * p;
+    //     Debug.DrawRay(mainCamera.transform.position + mainCamera.transform.rotation * leapOffset, mainCamera.transform.rotation * Quaternion.Euler(angle, 0.0f, 0.0f) * Vector3.up);
+	// }
+
 	#if !UNITY_EDITOR
 
 	ClientBTManager cbm;
@@ -16,6 +27,9 @@ public class LeapManager : MonoBehaviour {
     Camera mainCamera;
     Vector3[] points;
     GameObject[] objs;
+
+    Vector3 leapOffset = new Vector3(0.0f, 0.08f, 0.04f);
+    float angle = 110.0f; // Degrees
 
 	// Use this for initialization
 	void Start () {
@@ -40,7 +54,8 @@ public class LeapManager : MonoBehaviour {
 	void Update () {
 
         for (int i = 0; i < 9; i++) {
-            objs[i].transform.position = mainCamera.transform.position + mainCamera.transform.forward + mainCamera.transform.rotation * points[i] - 0.3f * mainCamera.transform.up;
+            Vector3 p = leapOffset + Quaternion.Euler(angle, 0.0f, 0.0f) * points[i];
+            objs[i].transform.position = mainCamera.transform.position + mainCamera.transform.rotation * p;
         }
 		
 	}
@@ -63,9 +78,8 @@ public class LeapManager : MonoBehaviour {
                             float y = BitConverter.ToSingle(packet.data, 12 * i + 4);
                             float z = BitConverter.ToSingle(packet.data, 12 * i + 8);
 
-                            points[i] = new Vector3(x / 1000.0f, y / 1000.0f, z / 1000.0f);
+                            points[i] = new Vector3(-x / 1000.0f, y / 1000.0f, z / 1000.0f);
                         }
-                        
                         
                         break;
                     }
