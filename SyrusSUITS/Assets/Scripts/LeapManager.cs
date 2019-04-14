@@ -9,17 +9,6 @@ using SyrusLeapClient;
 
 public class LeapManager : MonoBehaviour {
 
-    public Transform test;
-
-    // void Update () {
-    //     Camera mainCamera = Camera.main;
-    //     Vector3 leapOffset = new Vector3(0.0f, 0.08f, 0.04f);
-    //     float angle = 100.0f; // Degrees
-    //         Vector3 p = leapOffset + Quaternion.Euler(angle, 0.0f, 0.0f) * new Vector3(0, 0.1f, 0);
-    //     test.position = mainCamera.transform.position + mainCamera.transform.rotation * p;
-    //     Debug.DrawRay(mainCamera.transform.position + mainCamera.transform.rotation * leapOffset, mainCamera.transform.rotation * Quaternion.Euler(angle, 0.0f, 0.0f) * Vector3.up);
-	// }
-
 	#if !UNITY_EDITOR
 
 	ClientBTManager cbm;
@@ -64,6 +53,14 @@ public class LeapManager : MonoBehaviour {
         Debug.Log("Connected");
     }
 
+    private Vector3 readVector(byte[] arr, int offset) {
+        float x = BitConverter.ToSingle(arr, offset);
+        float y = BitConverter.ToSingle(arr, offset + 4);
+        float z = BitConverter.ToSingle(arr, offset + 8);
+
+        return new Vector3(-x / 1000.0f, y / 1000.0f, z / 1000.0f);
+    }
+
 	private async void Recieved(SyrusPacket packet) {
             switch (packet.id) {
                 case 24: {
@@ -74,12 +71,15 @@ public class LeapManager : MonoBehaviour {
                 case 20:
                     {
                         for (int i = 0; i < 9; i++) {
-                            float x = BitConverter.ToSingle(packet.data, 12 * i);
-                            float y = BitConverter.ToSingle(packet.data, 12 * i + 4);
-                            float z = BitConverter.ToSingle(packet.data, 12 * i + 8);
-
-                            points[i] = new Vector3(-x / 1000.0f, y / 1000.0f, z / 1000.0f);
+                            points[i] = readVector(packet.data, 12 * i);
                         }
+                        
+                        break;
+                    }
+                case 21:
+                    {
+                        Vector3 pos = readVector(packet.data, 0);
+                        Vector3 dir = readVector(packet.data, 12).normalized;
                         
                         break;
                     }
