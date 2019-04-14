@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: VuforiaConfiguration
   m_EditorClassIdentifier: 
   vuforia:
-    vuforiaLicenseKey: 
+    vuforiaLicenseKey: AWqgOjn/////AAABmV2C1ac1CEeQjtgPB7ker2CJAK8GJxsLRWxc7Ba28J7uhicx6aJPoYmAX3C1/2zXXXa1GFgNAqhOCR/svFepa85KwBbbhq40tzyumqAKePnnn164o0C13Th+WxBi0rw5KkHqo0IjIW0vBcbobIvAz718oCHT2XUVlVKiyYB0ztv4uQnit4nxgYANmKAZrSjo7TrVFjBpJHE/qSq0imVsoxoH61ExG2YMuyDtWqy0rSp/BZxFabV8VlB0DLKxt8BwBdvH0c1uH00obj0Zl5ooghLhMu0Nzks4+2Totw5eOYKjA6YxyPEZrqiAqQTLysFvIHE6dWddxYAXpjgmR+/ry/hGz4EyF6TYXmBlKItL6VNP
     ufoLicenseKey: QVY1eEZ5bi8vLy8vQUFBQUtFcEtzVTBPcUVuOWtPWGYyWlZmZmptVGM3MDdzQytocUJONThKSmQxemVZd2E3R2hXcjRRdHdVTkVhMkxMRnNQcFpVYnFGWUVMeFUwcGNLREFwTEVsWVQrWWYzZjZWbitZSEE1TGhpaVdqblNwYy9kdElOVnZMYnAvSm1qNGNwV3FyWkRXVzNOWE92Q1pwRXV2RDc2aTdPMmxxWjRQWERCTUcrSTV3RFhTSzNaZU5ud1did2xGRVpKYzU5TXhMUURBcGJ5eHFFcktrNkVyanFCckZ2YjNnY0xlNE9hWklZN1RReCs4Q0RvdlhRblBzZUlpdVYvQXNiejRSU3AyTEI2M2UwWEkzaFRSQkNSMXd6Qlk4Y0xYVVdTaUtkS0ltY3c0M2dQcVVrczlFMThFL2hSQnZFMFZmbWpXSWdKNE5LNVBnSC8vVmU5NmN0M0NZNTQyTUt5TSt2SjBsdmxnZkMxQkZ3RkE0N1RPeG4=
     delayedInitialization: 0
     cameraDeviceModeSetting: -1
@@ -43,8 +43,10 @@ MonoBehaviour:
       FieldOfView: {x: 0, y: 0, z: 0, w: 0}
       ContainsMagnet: 0
   databaseLoad:
-    dataSetsToLoad: []
-    dataSetsToActivate: []
+    dataSetsToLoad:
+    - Syrus_Targets
+    dataSetsToActivate:
+    - Syrus_Targets
   videoBackground:
     clippingMode: 0
     numDivisions: 2

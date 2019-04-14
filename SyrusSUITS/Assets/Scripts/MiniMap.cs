@@ -7,119 +7,57 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour {
 
-    public List<Node> nodeMap = new List<Node>();
-    public List<Node> route = new List<Node>();
-
-    float scaleFactor = 1 / 25.0f; // The scale of the minimap relative to the world scale.
-                                   // Use this when you add the LineRenderer
-
+    public LineRenderer line;
+    float scaleFactor = 1 / 1.0f; // The scale of the minimap relative to the world scale.
+                                  
     // Use this for initialization
     void Start () {
-        LoadFromJson("/NodeMaps/sampleMap_1.json");
 
-        List<Node> route = GetRoute(GetNodeByID(1), GetNodeByID(6));
+        line = GetComponent<LineRenderer>();
 
-        LogRoute(route);
-	}
+        DrawNodes(NavigationService.nodeMap);
+        DrawRoute(NavigationService.route);
+    }
+
+    void Awake() {
+        NavigationService.Instance.MapLoaded += OnMapLoad;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
-
-    public List<Node> GetRoute(Node source, Node destination)
-    {
-        Pathfinder pathFinder = new Pathfinder(nodeMap, source, destination);
-        pathFinder.Execute();
-
-        return pathFinder.GetShortestPath(); 
+        
     }
 
-    public void LogRoute(List<Node> route)
-    {
-        string output = "Route: ";
+    void OnMapLoad() {
+        string modelName = NavigationService.Instance.modelName;
+        Debug.Log("Loading map: " + modelName);
 
+        GameObject map = Instantiate((GameObject)Resources.Load(modelName), Vector3.zero, Quaternion.Euler(0, 0, 90), transform);
+        map.transform.localScale = scaleFactor * map.transform.localScale;
+
+    }
+
+    public void DrawRoute(List<Node> route)
+    {   
+        line.material = new Material(Shader.Find("Sprites/Default"));
+        line.positionCount = route.Count;
+
+        Vector3[] positions = new Vector3[route.Count];
+        
         for(int i = 0; i < route.Count; i++)
         {
-            output += route[i].id;
-
-            if (i < route.Count - 1) output += " -> ";
+            line.SetPosition(i, scaleFactor * route[i].position);
         }
-
-        Debug.Log(output);
     }
 
-    public Node GetNodeByID(int id)
+    public void DrawNodes(List<Node> nodeMap)
     {
-        return nodeMap.Find(x => x.id.Equals(id));
-    }
-
-    void LogNodes()
-    {
-        foreach (Node node in nodeMap)
+        for(int i = 0; i < nodeMap.Count; i++)
         {
-            Debug.Log(node.id + " (" + node.position.x + ", " + node.position.y + ", " + node.position.z + ")");
+            //GameObject node = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //node.name = "Node " + nodeMap[i].id;
+            //node.transform.position = nodeMap[i].position;
+            //node.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
         }
-    }
-
-    void LoadFromJson(string directory)
-    {
-        string filePath = Application.streamingAssetsPath + directory;
-
-        Debug.Log(filePath);
-
-        if (File.Exists(filePath))
-        {
-            string jsonContent = File.ReadAllText(filePath);
-            NodeMap jsonNodeMap = JsonUtility.FromJson<NodeMap>(jsonContent);
-
-            nodeMap = ConvertedJsonNodeMap(jsonNodeMap);
-        }
-        else
-        {
-            Debug.LogError("Cannot load data from " + filePath);
-        }
-    }
-
-    public List<Node> ConvertedJsonNodeMap(NodeMap jsonNodeMap)
-    {
-        List<Node> nodeMap = new List<Node>();
-
-        foreach(JsonNode jsonNode in jsonNodeMap.nodes)
-        {
-            Node node = new Node();
-
-            node.id = jsonNode.id;
-            node.position = new Vector3(jsonNode.position.x, jsonNode.position.y, jsonNode.position.z);
-            node.adjacentNodeIDs = jsonNode.adjacentNodeIDs;
-
-            nodeMap.Add(node);
-        }
-
-        return nodeMap;
-    }
-
-    [Serializable]
-    public class NodeMap
-    {
-        public string title;
-        public List<JsonNode> nodes;
-    }
-
-    [Serializable]
-    public class JsonNode
-    {
-        public int id;
-        public Positition position;
-        public List<int> adjacentNodeIDs;
-
-    }
-
-    [Serializable]
-    public class Positition
-    {
-        public float x;
-        public float y;
-        public float z;
     }
 }
