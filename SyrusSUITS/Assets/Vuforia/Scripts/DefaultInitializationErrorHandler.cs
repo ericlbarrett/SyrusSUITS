@@ -10,9 +10,12 @@ using UnityEngine;
 using Vuforia;
 
 /// <summary>
-///     A custom handler that registers for Vuforia initialization errors
+/// A custom handler that registers for Vuforia initialization errors
+/// 
+/// Changes made to this file could be overwritten when upgrading the Vuforia version. 
+/// When implementing custom error handler behavior, consider inheriting from this class instead.
 /// </summary>
-public class DefaultInitializationErrorHandler : MonoBehaviour
+public class DefaultInitializationErrorHandler : VuforiaMonoBehaviour
 {
     #region Vuforia_lifecycle_events
 
@@ -138,16 +141,14 @@ public class DefaultInitializationErrorHandler : MonoBehaviour
                     "Note that Universal Windows Platform (UWP) apps require " +
                     "a license key created on or after August 9th, 2016.";
                 break;
-#if (UNITY_IPHONE || UNITY_IOS)
-                case VuforiaUnity.InitError.INIT_NO_CAMERA_ACCESS:
-                    mErrorText = 
-                        "Camera Access was denied to this App. \n" + 
-                        "When running on iOS8 devices, \n" + 
-                        "users must explicitly allow the App to access the camera.\n" + 
-                        "To restore camera access on your device, go to: \n" + 
-                        "Settings > Privacy > Camera > [This App Name] and switch it ON.";
-                    break;
-    #endif
+            case VuforiaUnity.InitError.INIT_NO_CAMERA_ACCESS:
+                mErrorText = 
+                    "User denied Camera access to this app.\n" +
+                    "To restore, enable Camera access in Settings:\n" +
+                    "Settings > Privacy > Camera > " + Application.productName + "\n" +
+                    "Also verify that the Camera is enabled in:\n" +
+                    "Settings > General > Restrictions.";
+                break;
             case VuforiaUnity.InitError.INIT_DEVICE_NOT_SUPPORTED:
                 mErrorText = "Failed to initialize Vuforia because this device is not supported.";
                 break;
