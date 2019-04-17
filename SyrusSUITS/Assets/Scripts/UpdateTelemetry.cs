@@ -116,11 +116,11 @@ public class SwitchDataPoints {
 public class UpdateTelemetry : MonoBehaviour
 {
     public NumericalTelemetry numericalData;
+    public SwitchTelemetry switchData;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Hello");
         StartCoroutine(GetNumerical());
         StartCoroutine(GetSwitch());
     }
@@ -132,7 +132,6 @@ public class UpdateTelemetry : MonoBehaviour
 
     IEnumerator GetNumerical()
     {
-        Debug.Log("Hello");
         while (true)
         {
             UnityWebRequest www = UnityWebRequest.Get("https://skylab-program.herokuapp.com/api/suit/recent");
@@ -163,10 +162,11 @@ public class UpdateTelemetry : MonoBehaviour
                     numericalData.t_water = "00:00:00";
                 }
 
-                int numComponents = 15; //Number of components
+                int numAr = 15; //Number of components
 
-                SuitDataPoints[] suitDataPoints = new SuitDataPoints[numComponents];
+                SuitDataPoints[] suitDataPoints = new SuitDataPoints[numAr];
 
+                //Check later
                 setSuitData(numericalData, suitDataPoints);
             }
             yield return new WaitForSeconds(10);
@@ -187,9 +187,9 @@ public class UpdateTelemetry : MonoBehaviour
         dataPoints[9] = new SuitDataPoints("H2O Liquid Pressure", data.p_h2o_l, "psia", 14f, 16f);
         dataPoints[10] = new SuitDataPoints("Secondary Oxygen Pack Pressure", data.p_sop, "psia", 750f, 950f);
         dataPoints[11] = new SuitDataPoints("Secondary Oxygen Pack Flow Rate", data.rate_sop, "psi/min", 0.5f, 1.0f);
-        dataPoints[12] = new SuitDataPoints("Time Life Battery", data.t_battery, "hh:mm:ss", 0, 36000);
-        dataPoints[13] = new SuitDataPoints("Time Life Oxygen", data.t_oxygen, "hh:mm:ss", 0, 36000);
-        dataPoints[14] = new SuitDataPoints("Time Life Water", data.t_water, "hh:mm:ss", 0, 36000);
+        //dataPoints[12] = new SuitDataPoints("Time Life Battery", data.t_battery, "hh:mm:ss", 0f, 36000f);
+        //dataPoints[13] = new SuitDataPoints("Time Life Oxygen", data.t_oxygen, "hh:mm:ss", 0, 36000);
+        //dataPoints[14] = new SuitDataPoints("Time Life Water", data.t_water, "hh:mm:ss", 0, 36000);
     }
 
     IEnumerator GetSwitch() {
@@ -202,7 +202,7 @@ public class UpdateTelemetry : MonoBehaviour
                 string jsonString = www.downloadHandler.text;
                 jsonString = jsonString.Replace('[', ' ').Replace(']', ' ');
 
-                SwitchTelemetry switchData = JsonUtility.FromJson<SwitchTelemetry>(jsonString);
+                switchData = JsonUtility.FromJson<SwitchTelemetry>(jsonString);
                 int numSwitch = 14;
                 SwitchDataPoints[] dataPoints = new SwitchDataPoints[numSwitch];
 
