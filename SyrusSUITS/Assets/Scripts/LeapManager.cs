@@ -8,32 +8,44 @@ using SyrusLeapClient;
 #endif
 
 public class LeapManager : MonoBehaviour {
-
+    GameObject UIleft, UIright;
 	#if !UNITY_EDITOR
-
+    ///Client manager 
 	ClientBTManager cbm;
 
     Camera mainCamera;
+    //Vector for all the finger points
     Vector3[] points;
+    //array of ojects
     GameObject[] objs;
-
+    //accounts for the offset of the leap on the hololens
     Vector3 leapOffset = new Vector3(0.0f, 0.08f, 0.04f);
+    ////accounts the angle of the leap
     float angle = 110.0f; // Degrees
 
 	// Use this for initialization
 	void Start () {
+        //Defaults the UI to be Invisible
+        UIright.setActive(false);
+        UIleft.setActive(false);
+        //Server Manager Object
 		cbm = new ClientBTManager();
+        //Packets
         cbm.PacketReceived += Recieved;
+        //connected
         cbm.Connected += OnConnect;
         cbm.Initialize();
         
         mainCamera = Camera.main;
-
+        //gives indexed for each index
         points = new Vector3[9];
         objs = new GameObject[9];
 
+        //fills each vector array
         for (int i = 0; i < 9; i++) {
+            //creates a sphere
             objs[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //size of the object
             objs[i].transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
         }
         
@@ -45,6 +57,24 @@ public class LeapManager : MonoBehaviour {
         for (int i = 0; i < 9; i++) {
             Vector3 p = leapOffset + Quaternion.Euler(angle, 0.0f, 0.0f) * points[i];
             objs[i].transform.position = mainCamera.transform.position + mainCamera.transform.rotation * p;
+        }
+
+        //finds angle for area that the UI for the left hand will be visible
+        if (Vector3.angle(points[1], -mainCamera.transform.forward) < 20.0f) {
+            //sets the UI as visible when the parameters are met
+            UIleft.setActive(true);
+        }else{
+            //sets the UI as invisible when the parameters are met
+            UIleft.setActive(false);
+        }
+        
+        //finds angle for the area that the UI for the right hand will be visible
+        if(Vector3.angle(points[3], -mainCamera.transform.forward) < 20.0f){
+            //sets the UI as visible when the parameters are met
+            UIright.setActive(true);
+        }else{
+            //sets the UI as invisible when the parameters are met
+            UIright.setActive(false);
         }
 		
 	}
