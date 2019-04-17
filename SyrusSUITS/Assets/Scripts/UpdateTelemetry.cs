@@ -133,7 +133,6 @@ public class UpdateTelemetry : MonoBehaviour
     {
         while (true)
         {
-            //old server: https://gemini-program.herokuapp.com/api/suit/recent
             UnityWebRequest www = UnityWebRequest.Get("https://skylab-program.herokuapp.com/api/suit/recent");
             yield return www.SendWebRequest();
 
