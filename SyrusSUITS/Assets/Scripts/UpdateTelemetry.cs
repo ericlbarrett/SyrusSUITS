@@ -120,6 +120,7 @@ public class UpdateTelemetry : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Hello");
         StartCoroutine(GetNumerical());
         StartCoroutine(GetSwitch());
     }
@@ -131,6 +132,7 @@ public class UpdateTelemetry : MonoBehaviour
 
     IEnumerator GetNumerical()
     {
+        Debug.Log("Hello");
         while (true)
         {
             UnityWebRequest www = UnityWebRequest.Get("https://skylab-program.herokuapp.com/api/suit/recent");
@@ -148,17 +150,17 @@ public class UpdateTelemetry : MonoBehaviour
 
                 if(numericalData.t_battery[0] == '-')
                 {
-                    numericalData.t_battery == "00:00:00";
+                    numericalData.t_battery = "00:00:00";
                 }
 
                 if(numericalData.t_oxygen[0] == '-')
                 {
-                    numericalData.t_oxygen == "00:00:00";
+                    numericalData.t_oxygen = "00:00:00";
                 }
 
                 if(numericalData.t_water[0] == '-')
                 {
-                    numericalData.t_water == "00:00:00";
+                    numericalData.t_water = "00:00:00";
                 }
 
                 int numComponents = 15; //Number of components
