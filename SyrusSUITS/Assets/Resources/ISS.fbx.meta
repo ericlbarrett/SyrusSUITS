@@ -1,7 +1,9 @@
 fileFormatVersion: 2
 guid: 6d454b0d7be76414abd830b60545d3e6
+timeCreated: 1555036312
+licenseType: Free
 ModelImporter:
-  serializedVersion: 23
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     100002: polySurfa1
@@ -29,27 +31,18 @@ ModelImporter:
     2300006: polySurfa2_MeshPart1
     2300008: polySurfa3_MeshPart0
     2300010: polySurfa3_MeshPart1
-    2300012: polySurfa1
-    2300014: polySurfa2
-    2300016: polySurfa3
     3300000: polySurfa1_MeshPart0
     3300002: polySurfa1_MeshPart1
     3300004: polySurfa2_MeshPart0
     3300006: polySurfa2_MeshPart1
     3300008: polySurfa3_MeshPart0
     3300010: polySurfa3_MeshPart1
-    3300012: polySurfa1
-    3300014: polySurfa2
-    3300016: polySurfa3
     4300000: polySurfa3_MeshPart0
     4300002: polySurfa3_MeshPart1
     4300004: polySurfa2_MeshPart0
     4300006: polySurfa2_MeshPart1
     4300008: polySurfa1_MeshPart0
     4300010: polySurfa1_MeshPart1
-    4300012: polySurfa3
-    4300014: polySurfa2
-    4300016: polySurfa1
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -159,7 +152,6 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -174,7 +166,6 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -185,23 +176,16 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
-    preserveHierarchy: 0
-    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
-    blendShapeNormalImportMode: 1
-    normalSmoothingSource: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -216,6 +200,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
