@@ -114,8 +114,7 @@ public class UpdateTelemetry : MonoBehaviour
     {
         while (true)
         {
-            //old server: https://gemini-program.herokuapp.com/api/suit/recent
-            UnityWebRequest www = UnityWebRequest.Get("http://192.70.120.211:3000/api/simulation/state");  //New server from Test Week 2019
+            UnityWebRequest www = UnityWebRequest.Get("https://gemini-program.herokuapp.com/api/suit/recent");  //Placeholder
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
