@@ -120,6 +120,14 @@ public class UpdateTelemetry : MonoBehaviour
     public SwitchTelemetry switchData;
     public List<NumericalTelemetry> tDataS;
 
+    public GameObject sop_on;         //Secondary oxygen pack is active
+    public GameObject sspe;           //Spacesuit pressure emergency
+    public GameObject fan_error;      //Cooling fan failure
+    public GameObject vent_error;     //No vent flow
+    public GameObject vehicle_power;  //Receiving power through spacecraft
+    public GameObject h2o_off;        //H2O system is offline
+    public GameObject o2_off;         //O2 system is offline
+
     // Start is called before the first frame update
     void Start()
     {
@@ -130,6 +138,7 @@ public class UpdateTelemetry : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      //to add switch statement
     }
 
     IEnumerator GetNumerical()
