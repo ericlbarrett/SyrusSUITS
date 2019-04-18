@@ -169,7 +169,7 @@ public class OverlayManager : MonoBehaviour
             lr.numCornerVertices = 3;
 
             BoxMode(cube);
-            cube.SetActive(false);
+            //cube.SetActive(false);
 
             objs.Add(cube);
         }

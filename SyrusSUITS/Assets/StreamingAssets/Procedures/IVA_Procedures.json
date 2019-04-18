@@ -5,7 +5,18 @@
           "text": "Ensure that POWER EV-1 and 2 are set to Off",
           "subtext": "",
           "number": "1.1.1",
-		      "prompts": []
+		      "prompts": [
+            {
+              "type": "highlight",
+              "moduleID": "power_1",
+              "misc": ""
+            },
+            {
+              "type": "highlight",
+              "moduleID": "power_2",
+              "misc": ""
+            }
+          ]
       },
 
       {
@@ -19,168 +30,322 @@
         "text": "Ensure that WATER SUPPLY EV-1 and 2 is set to CLOSE",
         "subtext": "",
         "number": "1.1.3",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EVA1_supply",
+            "misc": ""
+          },
+          {
+            "type": "highlight",
+            "moduleID": "EVA2_supply",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Ensure that OXYGEN EV-1 and 2 are set to CLOSE",
         "subtext": "",
         "number": "1.1.4",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_1",
+            "misc": ""
+          },
+          {
+            "type": "highlight",
+            "moduleID": "EMU_2",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Depressurize the UIA O2 supply lines by switching O2 Vent to OPEN",
         "subtext": "",
         "number": "1.2.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "O2_vent",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "When UIA Supply Press is less than 23 psi, proceed.",
         "subtext": "",
         "number": "1.2.2",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_O2",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Set O2 Vent to CLOSE",
         "subtext": "",
         "number": "1.3.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "O2_vent",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Pressurize EVA 1 by checking that O2 VENT is set to CLOSED",
         "subtext": "",
         "number": "2.1.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "O2_vent",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Switch OXYGEN EV-1 to OPEN",
         "subtext": "",
         "number": "2.1.2",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_1",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "When UIA Supply Press is greater than 3000 psi and stable, proceed.",
         "subtext": "",
         "number": "2.1.3",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_O2",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Depressurize EVA 1 by switching OXYGEN EV-1 to CLOSE",
         "subtext": "",
         "number": "2.2.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_1",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Switch O2 Vent to OPEN",
         "subtext": "",
         "number": "2.2.2",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "O2_vent",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "When UIA Supply Pressure is less than 23 and stable psi, proceed.",
         "subtext": "",
         "number": "2.2.3",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_O2",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "REPEAT: Pressurize EVA 1 by checking that O2 VENT is set to CLOSED",
         "subtext": "",
         "number": "3.1.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "O2_vent",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "REPEAT: Switch OXYGEN EV-1 to OPEN",
         "subtext": "",
         "number": "3.1.2",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_1",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "REPEAT: When UIA Supply Press is greater than 3000 psi and stable, proceed.",
         "subtext": "",
         "number": "3.1.3",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_02",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "REPEAT: Depressurize EVA 1 by switching OXYGEN EV-1 to CLOSE",
         "subtext": "",
         "number": "4.2.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_1",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "REPEAT: Switch O2 Vent to OPEN",
         "subtext": "",
         "number": "4.2.2",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "O2_vent",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "REPEAT: When UIA Supply Pressure is less than 23 and stable psi, proceed.",
         "subtext": "",
         "number": "4.2.3",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_O2",
+            "misc": ""
+          }
+        ]
       },
       
       {
         "text": "Pressurize EVA 1 by checking that O2 VENT is set to CLOSED",
         "subtext": "",
         "number": "5.1.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "O2_vent",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Switch OXYGEN EV-1 to OPEN",
         "subtext": "",
         "number": "5.1.2",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_1",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "When UIA Supply Press is greater than 3000 psi and stable, proceed.",
         "subtext": "",
         "number": "5.1.3",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_O2",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Close OXYGEN by switching OXYGEN EV-1 to CLOSE",
         "subtext": "",
         "number": "5.2.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_1",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Enable EV-1 to power up EMU by checking that UIA POWER EV-1 is set to OFF",
         "subtext": "",
         "number": "6.1.1",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "power_1",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Check that UIA POWER EV-1 EMU LED is OFF",
         "subtext": "",
         "number": "6.1.2",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "power_1",
+            "misc": ""
+          }
+        ]
       },
 
       {
         "text": "Check that O2 supply press gauge is greater than 3000",
         "subtext": "",
         "number": "6.1.3",
-        "prompts": []
+        "prompts": [
+          {
+            "type": "highlight",
+            "moduleID": "EMU_O2",
+            "misc": ""
+          }
+        ]
       },
 
       {
@@ -194,7 +359,11 @@
         "text": "Switch UIA POWER EV-1 to ON",
         "subtext": "EMU must be ON battery power when UIA suit POWER is turned ON",
         "number": "6.1.5",
-        "prompts": []
+        "prompts": [{
+          "type": "highlight",
+          "moduleID": "power_1",
+          "misc": ""
+        }]
       },
 
       {
