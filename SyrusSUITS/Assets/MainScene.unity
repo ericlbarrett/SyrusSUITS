@@ -213,15 +213,40 @@ Prefab:
         type: 2}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 41002511}
+      objectReference: {fileID: 593177882}
     - target: {fileID: 114374142057588624, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
         type: 2}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 41002511}
+      objectReference: {fileID: 593177882}
     - target: {fileID: 1413827635039448, guid: bfea3f6bb5c73c9469413f1e32bf2c0d, type: 2}
       propertyPath: m_Name
       value: Primary Oxygen
+      objectReference: {fileID: 0}
+    - target: {fileID: 114374142057588624, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.6146283
+      objectReference: {fileID: 0}
+    - target: {fileID: 114374142057588624, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.26427338
+      objectReference: {fileID: 0}
+    - target: {fileID: 114374142057588624, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.6911765
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884436968279308, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.43904662
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884436968279308, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.06801471
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bfea3f6bb5c73c9469413f1e32bf2c0d, type: 2}
@@ -1550,6 +1575,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &593177882
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UI/Procedural UI Image
+  m_Shader: {fileID: 4800000, guid: 27d83044d20c5de4e9d57d35e4fda368, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!43 &630083761
 Mesh:
   m_ObjectHideFlags: 0
@@ -3562,7 +3619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f1c5417c9d7ab4b84e531f83f60a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 41002511}
+  m_Material: {fileID: 593177882}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -5296,15 +5353,45 @@ Prefab:
         type: 2}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 41002511}
+      objectReference: {fileID: 593177882}
     - target: {fileID: 114374142057588624, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
         type: 2}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 41002511}
+      objectReference: {fileID: 593177882}
     - target: {fileID: 1413827635039448, guid: bfea3f6bb5c73c9469413f1e32bf2c0d, type: 2}
       propertyPath: m_Name
       value: 'Secondary Oxygen '
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884436968279308, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.5441177
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884436968279308, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.06801471
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884436968279308, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.35367644
+      objectReference: {fileID: 0}
+    - target: {fileID: 114374142057588624, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.6691177
+      objectReference: {fileID: 0}
+    - target: {fileID: 114374142057588624, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.2017193
+      objectReference: {fileID: 0}
+    - target: {fileID: 114374142057588624, guid: bfea3f6bb5c73c9469413f1e32bf2c0d,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.6368834
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bfea3f6bb5c73c9469413f1e32bf2c0d, type: 2}
