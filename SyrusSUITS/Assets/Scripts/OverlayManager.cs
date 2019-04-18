@@ -132,6 +132,8 @@ public class OverlayManager : MonoBehaviour
     void CreateTaskboard(Vector3 pos, Quaternion rot) {
         Vector3 corner = new Vector3(-layout.size.x / 2.0f, layout.size.y / 2.0f, layout.size.z / 2.0f);
 
+        transform.localScale = new Vector3(layout.scale, layout.scale, layout.scale);
+
         transform.position = pos - rot * (corner + new Vector3(layout.activator_pos.x, layout.activator_pos.y, -layout.activator_pos.z)
                              + layout.activator_size.UnityVec() / 2.0f);
         transform.rotation = rot;
@@ -169,7 +171,7 @@ public class OverlayManager : MonoBehaviour
             lr.numCornerVertices = 3;
 
             BoxMode(cube);
-            //cube.SetActive(false);
+            cube.SetActive(false);
 
             objs.Add(cube);
         }
@@ -519,6 +521,7 @@ public class Layout
     public Vec3 panel_pos;
     public Vec3 panel_rot;
     public string fileName;
+    public float scale;
 
     public Vec3 size;
     public List<Modules> modules = new List<Modules>();
