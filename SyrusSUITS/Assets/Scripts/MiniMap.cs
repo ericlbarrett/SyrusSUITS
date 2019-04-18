@@ -7,6 +7,20 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour {
 
+    private static MiniMap _Instance;
+
+    public static MiniMap Instance
+    {
+        get
+        {
+            if (_Instance == null)
+            {
+                _Instance = FindObjectOfType<MiniMap>();
+            }
+            return _Instance;
+        }
+    }
+
     public LineRenderer line;
     float scaleFactor = 1 / 1.0f; // The scale of the minimap relative to the world scale.
                                   
@@ -15,11 +29,13 @@ public class MiniMap : MonoBehaviour {
 
         line = GetComponent<LineRenderer>();
 
-        DrawNodes(NavigationService.nodeMap);
-        DrawRoute(NavigationService.route);
+        //DrawNodes(NavigationService.nodeMap);
+        //DrawRoute(NavigationService.route);
+        //DrawNodes(NavigationService.nodeMap);
     }
 
     void Awake() {
+        _Instance = this;
         NavigationService.Instance.MapLoaded += OnMapLoad;
     }
 	
@@ -29,11 +45,11 @@ public class MiniMap : MonoBehaviour {
     }
 
     void OnMapLoad() {
-        string modelName = NavigationService.Instance.modelName;
-        Debug.Log("Loading map: " + modelName);
+        //string modelName = NavigationService.Instance.modelName;
+        //Debug.Log("Loading map: " + modelName);
 
-        GameObject map = Instantiate((GameObject)Resources.Load(modelName), Vector3.zero, Quaternion.Euler(0, 0, 90), transform);
-        map.transform.localScale = scaleFactor * map.transform.localScale;
+        //GameObject map = Instantiate((GameObject)Resources.Load(modelName), Vector3.zero, Quaternion.Euler(0, 0, 90), transform);
+        //map.transform.localScale = scaleFactor * map.transform.localScale;
 
     }
 
