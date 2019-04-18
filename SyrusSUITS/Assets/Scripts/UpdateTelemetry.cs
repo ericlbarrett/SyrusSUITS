@@ -235,47 +235,48 @@ public class UpdateTelemetry : MonoBehaviour
     }
 
     void stdDev(List<NumericalTelemetry> tDataS, int numAr){ 
-        float[] means = new float[numAr];
-        for (var dSet = 0; dSet < numAr; dSet++){
-            means[0] += tDataS[dSet].heart_bpm;
-            means[1] += tDataS[dSet].p_sub;
-            means[2] += tDataS[dSet].p_suit;
-            means[3] += tDataS[dSet].t_sub;
-            means[4] += tDataS[dSet].v_fan;
-            means[5] += tDataS[dSet].p_o2;
-            means[6] += tDataS[dSet].rate_o2;
-            means[7] += tDataS[dSet].cap_battery;
-            means[8] += tDataS[dSet].p_h2o_g;
-            means[9] += tDataS[dSet].p_h2o_l;
-            means[10] += tDataS[dSet].p_sop;
-            means[11] += tDataS[dSet].rate_sop;
+        float[] mean = new float[numAr];
+
+        for (int i = 0; i < tDataS.Count; i++){
+            mean[0] += tDataS[i].heart_bpm;
+            mean[1] += tDataS[i].p_sub;
+            mean[2] += tDataS[i].p_suit;
+            mean[3] += tDataS[i].t_sub;
+            mean[4] += tDataS[i].v_fan;
+            mean[5] += tDataS[i].p_o2;
+            mean[6] += tDataS[i].rate_o2;
+            mean[7] += tDataS[i].cap_battery;
+            mean[8] += tDataS[i].p_h2o_g;
+            mean[9] += tDataS[i].p_h2o_l;
+            mean[10] += tDataS[i].p_sop;
+            mean[11] += tDataS[i].rate_sop;
         }
        
         for (int i = 0; i < numAr; i++)
         {
-            means[i] /= tDataS.Count;
+            mean[i] /= tDataS.Count;
         }
 
         float[] variances = new float[numAr];
         float[] deviats = new float[numAr];
 
-        for (var dSet = 0; dSet < numAr; dSet++) // loop through different data sets
+        for (var dSet = 0; dSet < tDataS.Count; dSet++) // loop through different data sets
         {
-            variances[0] += ((tDataS[dSet].heart_bpm - means[0]) * (tDataS[dSet].heart_bpm - means[0]));
-            variances[1] += ((tDataS[dSet].p_sub - means[1]) * (tDataS[dSet].p_sub - means[1]));
-            variances[2] += ((tDataS[dSet].p_suit - means[2]) * (tDataS[dSet].p_suit - means[2]));
-            variances[3] += ((tDataS[dSet].t_sub - means[3]) * (tDataS[dSet].t_sub - means[3]));
-            variances[4] += ((tDataS[dSet].v_fan - means[4]) * (tDataS[dSet].v_fan - means[4]));
-            variances[5] += ((tDataS[dSet].p_o2 - means[5]) * (tDataS[dSet].p_o2 - means[5]));
-            variances[6] += ((tDataS[dSet].rate_o2 - means[6]) * (tDataS[dSet].rate_o2 - means[6]));
-            variances[7] += ((tDataS[dSet].cap_battery - means[7]) * (tDataS[dSet].cap_battery - means[7]));
-            variances[8] += ((tDataS[dSet].p_h2o_g - means[8]) * (tDataS[dSet].p_h2o_g - means[8]));
-            variances[9] += ((tDataS[dSet].p_h2o_l - means[9]) * (tDataS[dSet].p_h2o_l - means[9]));
-            variances[10] += ((tDataS[dSet].p_sop - means[10]) * (tDataS[dSet].p_sop - means[10]));
-            variances[11] += ((tDataS[dSet].rate_sop - means[11]) * (tDataS[dSet].rate_sop - means[11]));
+            variances[0] += ((tDataS[dSet].heart_bpm - mean[0]) * (tDataS[dSet].heart_bpm - mean[0]));
+            variances[1] += ((tDataS[dSet].p_sub - mean[1]) * (tDataS[dSet].p_sub - mean[1]));
+            variances[2] += ((tDataS[dSet].p_suit - mean[2]) * (tDataS[dSet].p_suit - mean[2]));
+            variances[3] += ((tDataS[dSet].t_sub - mean[3]) * (tDataS[dSet].t_sub - mean[3]));
+            variances[4] += ((tDataS[dSet].v_fan - mean[4]) * (tDataS[dSet].v_fan - mean[4]));
+            variances[5] += ((tDataS[dSet].p_o2 - mean[5]) * (tDataS[dSet].p_o2 - mean[5]));
+            variances[6] += ((tDataS[dSet].rate_o2 - mean[6]) * (tDataS[dSet].rate_o2 - mean[6]));
+            variances[7] += ((tDataS[dSet].cap_battery - mean[7]) * (tDataS[dSet].cap_battery - mean[7]));
+            variances[8] += ((tDataS[dSet].p_h2o_g - mean[8]) * (tDataS[dSet].p_h2o_g - mean[8]));
+            variances[9] += ((tDataS[dSet].p_h2o_l - mean[9]) * (tDataS[dSet].p_h2o_l - mean[9]));
+            variances[10] += ((tDataS[dSet].p_sop - mean[10]) * (tDataS[dSet].p_sop - mean[10]));
+            variances[11] += ((tDataS[dSet].rate_sop - mean[11]) * (tDataS[dSet].rate_sop - mean[11]));
         }
         //finalize variances by dividing by N (where N is number of data sets)
-        for (int i = 0; i < numAr; i++)
+        for (int i = 0; i < tDataS.Count; i++)
         {
             variances[i] /= tDataS.Count;
         }
@@ -285,7 +286,7 @@ public class UpdateTelemetry : MonoBehaviour
             deviats[i] = Mathf.Sqrt(variances[i]);
         }
 
-        if(tDataS[numAr].cap_battery > (deviats[7] + means[7]))
+        if(tDataS[tDataS.Count-1].cap_battery > (deviats[7] + mean[7]))
         {
             switchData.battery_amp_high = true;
         }
@@ -294,7 +295,7 @@ public class UpdateTelemetry : MonoBehaviour
             switchData.battery_amp_high = false;
         }
 
-        if (tDataS[numAr].cap_battery < (means[7] - deviats[7]))
+        if (tDataS[tDataS.Count-1].cap_battery < (mean[7] - deviats[7]))
         {
             switchData.battery_vdc_low = true;
         }
@@ -303,7 +304,7 @@ public class UpdateTelemetry : MonoBehaviour
             switchData.battery_vdc_low = false;
         }
 
-        if (tDataS[numAr].p_suit < (means[2] - deviats[2]))
+        if (tDataS[tDataS.Count-1].p_suit < (mean[2] - deviats[2]))
         {
             switchData.suit_pressure_low = true;
         }
@@ -312,7 +313,7 @@ public class UpdateTelemetry : MonoBehaviour
             switchData.suit_pressure_low = false;
         }
 
-        if (tDataS[numAr].p_suit > (deviats[2] + means[2]))
+        if (tDataS[tDataS.Count-1].p_suit > (deviats[2] + mean[2]))
         {
             switchData.spacesuit_pressure_high = true;
         }
@@ -321,7 +322,7 @@ public class UpdateTelemetry : MonoBehaviour
             switchData.spacesuit_pressure_high = false;
         }
 
-        if (tDataS[numAr].rate_o2 > (deviats[6] + means[6]))
+        if (tDataS[tDataS.Count-1].rate_o2 > (deviats[6] + mean[6]))
         {
             switchData.o2_high_use = true;
         }
@@ -330,7 +331,7 @@ public class UpdateTelemetry : MonoBehaviour
             switchData.o2_high_use = false;
         }
 
-        if (tDataS[numAr].p_sop < (means[10] - deviats[10]))
+        if (tDataS[tDataS.Count-1].p_sop < (mean[10] - deviats[10]))
         {
             switchData.sop_pressure_low = true;
         }
@@ -339,7 +340,7 @@ public class UpdateTelemetry : MonoBehaviour
             switchData.sop_pressure_low = false;
         }
 
-        if (tDataS[numAr].p_o2 < (means[5] - deviats[5]))
+        if (tDataS[tDataS.Count-1].p_o2 < (mean[5] - deviats[5]))
         {
             switchData.co2_high = true;
         }
