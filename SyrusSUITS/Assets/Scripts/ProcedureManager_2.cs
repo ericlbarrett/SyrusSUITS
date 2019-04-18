@@ -100,9 +100,9 @@ public class ProcedureManager_2 : MonoBehaviour {
         }
     }
     //Toggles the procedure panel active state
-    public void ToggleProcedurePanel()
+    public void ToggleProcedurePanel(bool val)
     {
-        procedurePanel.SetActive(!procedurePanel.activeInHierarchy);
+        procedurePanel.SetActive(val);
     }
     //Change the current task information
     void changeBarTxt()
@@ -236,10 +236,11 @@ public class ProcedureManager_2 : MonoBehaviour {
                 OnStepChanged(procedure.steps[stepNumber]);
                 //Debug.Log(procedure.steps[1].text);
                 //LoadStepWindow(procedure.steps);
-                ToggleProcedurePanel();
+                ToggleProcedurePanel(true);
                 Transform tr = OverlayManager.Instance.transform;
-                procedurePanel.transform.rotation = Quaternion.LookRotation(tr.forward, Vector3.up);
-                procedurePanel.transform.position = tr.position + tr.rotation * new Vector3(0, 0.35f / 2, 0.401f / 2);
+                Layout ly = OverlayManager.Instance.getLayout();
+                procedurePanel.transform.rotation = Quaternion.LookRotation(tr.forward, Vector3.up) * Quaternion.Euler(ly.panel_rot.x, ly.panel_rot.y, ly.panel_rot.z);
+                procedurePanel.transform.position = tr.position + tr.rotation * new Vector3(ly.panel_pos.x, ly.panel_pos.y, ly.panel_pos.z);
                 changeBarTxt(); // Needs to be here to update to the first Item
                 isProcedure = true;
                 //placingPanel.loadPlacingProcedure();
@@ -270,7 +271,7 @@ public class ProcedureManager_2 : MonoBehaviour {
                 OnStepChanged(procedure.steps[stepNumber]);
                 //Debug.Log(procedure.steps[1].text);
                 //LoadStepWindow(procedure.steps);
-                ToggleProcedurePanel();
+                ToggleProcedurePanel(true);
                 changeBarTxt(); // Needs to be here to update to the first Item
                 isProcedure = true;
                 //placingPanel.loadPlacingProcedure();

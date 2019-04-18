@@ -72,6 +72,7 @@ public class LeapManager : MonoBehaviour {
             objs[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             //size of the object
             objs[i].transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+            objs[i].SetActive(false);
         }
         
 	}
