@@ -8,6 +8,7 @@ using UnityEngine;
 public class NavigationService : MonoBehaviour {
 
     public static List<Node> nodeMap = new List<Node>();
+    public static List<Location> locations = new List<Location>();
     public static List<Node> route = new List<Node>();
 
     private static NavigationService _Instance;
@@ -72,6 +73,25 @@ public class NavigationService : MonoBehaviour {
         return nodeMap.Find(x => x.id.Equals(id));
     }
 
+    public Node getNodeNearUser(Vector3 userPosition)
+    {
+        float minDistance = float.MaxValue;
+        Node nearestNode = new Node();
+        foreach (Node node in nodeMap)
+        {
+            float distance = Mathf.Sqrt(Mathf.Pow(node.position.x - userPosition.x, 2) +
+                                        Mathf.Pow(node.position.y - userPosition.y, 2) +
+                                        Mathf.Pow(node.position.z - userPosition.z, 2));
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestNode = node;
+            }
+        }
+        return nearestNode;
+    }
+
     void LogNodes()
     {
         foreach (Node node in nodeMap)
@@ -94,6 +114,14 @@ public class NavigationService : MonoBehaviour {
         Debug.Log(output);
     }
 
+    void LogLocations()
+    {
+        foreach (Location location in locations)
+        {
+            Debug.Log("Name: " + location.name + ", NodeID: " + location.node.id);
+        }
+    }
+
     void LoadFromJson(string directory)
     {
         string filePath = Application.streamingAssetsPath + directory;
@@ -105,6 +133,7 @@ public class NavigationService : MonoBehaviour {
 
             modelName = jsonNodeMap.modelname;
             nodeMap = ConvertedJsonNodeMap(jsonNodeMap);
+            locations = ConvertedJsonLocations(jsonNodeMap.locations);
 
             if (MapLoaded != null) MapLoaded();
         }
@@ -132,12 +161,30 @@ public class NavigationService : MonoBehaviour {
         return nodeMap;
     }
 
+    public List<Location> ConvertedJsonLocations(List<JsonLocation> jsonLocations)
+    {
+        List<Location> locations = new List<Location>();
+
+        foreach (JsonLocation jsonLocation in jsonLocations)
+        {
+            Location location = new Location();
+
+            location.name = jsonLocation.name;
+            location.node = GetNodeByID(jsonLocation.nodeID);
+
+            locations.Add(location);
+        }
+
+        return locations;
+    }
+
     [Serializable]
     public class NodeMap
     {
         public string title;
         public string modelname;
         public List<JsonNode> nodes;
+        public List<JsonLocation> locations;
     }
 
     [Serializable]
@@ -155,5 +202,12 @@ public class NavigationService : MonoBehaviour {
         public float x;
         public float y;
         public float z;
+    }
+
+    [Serializable]
+    public class JsonLocation
+    {
+        public string name;
+        public int nodeID;
     }
 }
