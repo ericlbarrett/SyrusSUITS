@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: VuforiaConfiguration
   m_EditorClassIdentifier: 
   vuforia:
-    vuforiaLicenseKey: 
-    ufoLicenseKey: QWFuWnYxWC8vLy8vQUFBQUtHdnRsUkx0S0VpUWg5aG5CQTJQcXl5VXF4ZmtIQW5pTUgrOURzMXZLTXNiSWRrQU5oS1R4OG5YVy9lZmwwUUhIY3hyTU5jT0xzdVdkeHMrOGVwY1RxVSs3K2hFOWRWVHJkbjl1VFU3dWR4UDUwaUZlaFRhSEFxWEprSjl1eXZ6RUdGZUdqRXUxclQ0QVpDcERqRVV1SzZMY0gxUHppbnlESW5wRStET3N0Yy9TajlkNnFCamhIc0g0Z3lHVWdKeGpGRFdRc041V2IzZlV5VVNJczdWZHJHZnFRWThDV1lFeUswY096MmxUYnJRMVdIOHNoc2hUbnhrZVFJKzE2OG1SczZlTTFIeEFuMGJJemptMlpoTzR1OTVORy9uMGJSOHZsL1FlbTh6YTZuNTVycmZlZkJQSkJaa0ZsWTUvUmtqVFpxSUF0ajRUR3BGaWRyVEN4dFpKTmt0eGZGKytHUVlUS3N4RmRmZ1ljUGM=
+    vuforiaLicenseKey: AWqgOjn/////AAABmV2C1ac1CEeQjtgPB7ker2CJAK8GJxsLRWxc7Ba28J7uhicx6aJPoYmAX3C1/2zXXXa1GFgNAqhOCR/svFepa85KwBbbhq40tzyumqAKePnnn164o0C13Th+WxBi0rw5KkHqo0IjIW0vBcbobIvAz718oCHT2XUVlVKiyYB0ztv4uQnit4nxgYANmKAZrSjo7TrVFjBpJHE/qSq0imVsoxoH61ExG2YMuyDtWqy0rSp/BZxFabV8VlB0DLKxt8BwBdvH0c1uH00obj0Zl5ooghLhMu0Nzks4+2Totw5eOYKjA6YxyPEZrqiAqQTLysFvIHE6dWddxYAXpjgmR+/ry/hGz4EyF6TYXmBlKItL6VNP
+    ufoLicenseKey: QVY1eEZ5bi8vLy8vQUFBQUtFcEtzVTBPcUVuOWtPWGYyWlZmZmptVGM3MDdzQytocUJONThKSmQxemVZd2E3R2hXcjRRdHdVTkVhMkxMRnNQcFpVYnFGWUVMeFUwcGNLREFwTEVsWVQrWWYzZjZWbitZSEE1TGhpaVdqblNwYy9kdElOVnZMYnAvSm1qNGNwV3FyWkRXVzNOWE92Q1pwRXV2RDc2aTdPMmxxWjRQWERCTUcrSTV3RFhTSzNaZU5ud1did2xGRVpKYzU5TXhMUURBcGJ5eHFFcktrNkVyanFCckZ2YjNnY0xlNE9hWklZN1RReCs4Q0RvdlhRblBzZUlpdVYvQXNiejRSU3AyTEI2M2UwWEkzaFRSQkNSMXd6Qlk4Y0xYVVdTaUtkS0ltY3c0M2dQcVVrczlFMThFL2hSQnZFMFZmbWpXSWdKNE5LNVBnSC8vVmU5NmN0M0NZNTQyTUt5TSt2SjBsdmxnZkMxQkZ3RkE0N1RPeG4=
     delayedInitialization: 0
     cameraDeviceModeSetting: -1
     maxSimultaneousImageTargets: 1
@@ -24,9 +24,9 @@ MonoBehaviour:
   digitalEyewear:
     cameraOffset: 0.06
     distortionRenderingLayer: 31
-    eyewearType: 0
+    eyewearType: 1
     stereoFramework: 0
-    seeThroughConfiguration: 0
+    seeThroughConfiguration: 1
     viewerName: 
     viewerManufacturer: 
     useCustomViewer: 0
@@ -44,20 +44,16 @@ MonoBehaviour:
       ContainsMagnet: 0
   databaseLoad:
     dataSetsToLoad:
-    - VuforiaMars_Images
-    - VuforiaMars_Object_OT
-    - VuforiaMars_VuMark
+    - Syrus_Targets
     dataSetsToActivate:
-    - VuforiaMars_Images
-    - VuforiaMars_Object_OT
-    - VuforiaMars_VuMark
+    - Syrus_Targets
   videoBackground:
     clippingMode: 0
     numDivisions: 2
     videoBackgroundShader: {fileID: 15311, guid: 0000000000000000f000000000000000,
       type: 0}
     matteShader: {fileID: 15310, guid: 0000000000000000f000000000000000, type: 0}
-    videoBackgroundEnabled: 1
+    videoBackgroundEnabled: 0
   smartTerrainTracker:
     autoInitTracker: 0
     autoStartTracker: 0
@@ -74,5 +70,5 @@ MonoBehaviour:
   webcam:
     deviceNameSetInEditor: 
     flipHorizontally: 0
-    turnOffWebCam: 0
+    turnOffWebCam: 1
     renderTextureLayer: 30
