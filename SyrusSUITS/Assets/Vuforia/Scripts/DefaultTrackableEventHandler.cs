@@ -10,22 +10,17 @@ using UnityEngine;
 using Vuforia;
 
 /// <summary>
-/// A custom handler that implements the ITrackableEventHandler interface.
-///
-/// Changes made to this file could be overwritten when upgrading the Vuforia version.
-/// When implementing custom event handler behavior, consider inheriting from this class instead.
+///     A custom handler that implements the ITrackableEventHandler interface.
 /// </summary>
 public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
-    #region PROTECTED_MEMBER_VARIABLES
+    #region PRIVATE_MEMBER_VARIABLES
 
     protected TrackableBehaviour mTrackableBehaviour;
-    protected TrackableBehaviour.Status m_PreviousStatus;
-    protected TrackableBehaviour.Status m_NewStatus;
 
-    #endregion // PROTECTED_MEMBER_VARIABLES
+    #endregion // PRIVATE_MEMBER_VARIABLES
 
-    #region UNITY_MONOBEHAVIOUR_METHODS
+    #region UNTIY_MONOBEHAVIOUR_METHODS
 
     protected virtual void Start()
     {
@@ -34,13 +29,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             mTrackableBehaviour.RegisterTrackableEventHandler(this);
     }
 
-    protected virtual void OnDestroy()
-    {
-        if (mTrackableBehaviour)
-            mTrackableBehaviour.UnregisterTrackableEventHandler(this);
-    }
-
-    #endregion // UNITY_MONOBEHAVIOUR_METHODS
+    #endregion // UNTIY_MONOBEHAVIOUR_METHODS
 
     #region PUBLIC_METHODS
 
@@ -52,9 +41,6 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         TrackableBehaviour.Status previousStatus,
         TrackableBehaviour.Status newStatus)
     {
-        m_PreviousStatus = previousStatus;
-        m_NewStatus = newStatus;
-
         if (newStatus == TrackableBehaviour.Status.DETECTED ||
             newStatus == TrackableBehaviour.Status.TRACKED ||
             newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
@@ -63,7 +49,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             OnTrackingFound();
         }
         else if (previousStatus == TrackableBehaviour.Status.TRACKED &&
-                 newStatus == TrackableBehaviour.Status.NO_POSE)
+                 newStatus == TrackableBehaviour.Status.NOT_FOUND)
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
             OnTrackingLost();
@@ -79,7 +65,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
     #endregion // PUBLIC_METHODS
 
-    #region PROTECTED_METHODS
+    #region PRIVATE_METHODS
 
     protected virtual void OnTrackingFound()
     {
@@ -120,5 +106,5 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             component.enabled = false;
     }
 
-    #endregion // PROTECTED_METHODS
+    #endregion // PRIVATE_METHODS
 }

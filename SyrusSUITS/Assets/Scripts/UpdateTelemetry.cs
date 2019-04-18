@@ -7,15 +7,19 @@ using UnityEngine.Networking;
 public class NumericalTelemetry {
     public int heart_bpm;       //Heart beats per minute
     public float p_sub;         //Sub pressure
+    public float p_suit;        //Suit pressure
     public float t_sub;         //Sub temperature
     public int v_fan;           //Fan tachometer
-    public string t_eva;        //EVA time
     public float p_o2;          //Oxygen pressure
+    public float rate_o2;       //Oxygen rate
     public float cap_battery;   //Batter capacity
     public float p_h2o_g;       //H2O gas pressure
     public float p_h2o_l;       //H2O liquid pressure
     public float p_sop;         //Secondary oxygen pack pressure
     public float rate_sop;      //Oxygen rate for secondary pack
+    public string t_battery;    //Battery time remaining
+    public string t_oxygen;     //Oxygen time remaining
+    public string t_water;      //Water time remaining
 }
 
 [System.Serializable]
@@ -60,6 +64,21 @@ public class SuitDataPoints {
         this.value = value;
         this.unit = unit;
 
+        if(this.name == "Time Life Battery" || this.name == "Time Life Oxygen" || this.name == "Time Life Water")
+        {
+            string strSec = value.ToString();
+            float seconds = (float)TimeSpan.Parse(strSec).TotalSeconds;
+
+            if(seconds > max || seconds < min)
+            {
+                this.status = 3;
+            }
+            else
+            {
+                this.status = 1;
+            }
+        }
+
         float yellowPercent = 15f / 100f;
         float delta = max - min;
         float plusMinus = delta * yellowPercent;
@@ -97,6 +116,7 @@ public class SwitchDataPoints {
 public class UpdateTelemetry : MonoBehaviour
 {
     public NumericalTelemetry numericalData;
+    public SwitchTelemetry switchData;
 
     // Start is called before the first frame update
     void Start()
@@ -114,8 +134,7 @@ public class UpdateTelemetry : MonoBehaviour
     {
         while (true)
         {
-            //old server: https://gemini-program.herokuapp.com/api/suit/recent
-            UnityWebRequest www = UnityWebRequest.Get("http://192.70.120.211:3000/api/simulation/state");  //New server from Test Week 2019
+            UnityWebRequest www = UnityWebRequest.Get("https://skylab-program.herokuapp.com/api/suit/recent");
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
@@ -128,10 +147,26 @@ public class UpdateTelemetry : MonoBehaviour
                 jsonString = jsonString.Replace('[', ' ').Replace(']', ' ');
                 numericalData = JsonUtility.FromJson<NumericalTelemetry>(jsonString);
 
-                int numComponents = 10; //Number of components
+                if(numericalData.t_battery[0] == '-')
+                {
+                    numericalData.t_battery = "00:00:00";
+                }
 
-                SuitDataPoints[] suitDataPoints = new SuitDataPoints[numComponents];
+                if(numericalData.t_oxygen[0] == '-')
+                {
+                    numericalData.t_oxygen = "00:00:00";
+                }
 
+                if(numericalData.t_water[0] == '-')
+                {
+                    numericalData.t_water = "00:00:00";
+                }
+
+                int numAr = 15; //Number of components
+
+                SuitDataPoints[] suitDataPoints = new SuitDataPoints[numAr];
+
+                //Check later
                 setSuitData(numericalData, suitDataPoints);
             }
             yield return new WaitForSeconds(10);
@@ -140,21 +175,26 @@ public class UpdateTelemetry : MonoBehaviour
 
     //Sets Suit Telemetry
     public void setSuitData(NumericalTelemetry data, SuitDataPoints[] dataPoints) {
-        dataPoints[0] = new SuitDataPoints("Sub Pressure", data.p_sub, "psia", 2.0f, 4.0f);
-        dataPoints[1] = new SuitDataPoints("Sub Temperature", data.t_sub, "\u00B0F", 4f, 6f);
-        dataPoints[2] = new SuitDataPoints("Fan Tachometer", data.v_fan, "RPM", 10000f, 40000f);
-        dataPoints[3] = new SuitDataPoints("EVA Time", data.t_eva, "hh:mm:ss", 0, 36000);
-        dataPoints[4] = new SuitDataPoints("Oxygen Pressure", data.p_o2, "psia", 750f, 950f);
-        dataPoints[5] = new SuitDataPoints("Battery Capacity", data.cap_battery, "amp-hr", 0f, 30f);
-        dataPoints[6] = new SuitDataPoints("H2O Gas Pressure", data.p_h2o_g, "psia", 14f, 16f);
-        dataPoints[7] = new SuitDataPoints("H2O Liquid Pressure", data.p_h2o_l, "psia", 14f, 16f);
-        dataPoints[8] = new SuitDataPoints("Secondary Oxygen Pack Pressure", data.p_sop, "psia", 750f, 950f);
-        dataPoints[9] = new SuitDataPoints("Secondary Oxygen Pack Flow Rate", data.rate_sop, "psi/min", 0.5f, 1.0f);
+        dataPoints[0] = new SuitDataPoints("Heart Beats Per Minute", data.heart_bpm, "bpm", 85f, 90f);
+        dataPoints[1] = new SuitDataPoints("Sub Pressure", data.p_sub, "psia", 2.0f, 4.0f);
+        dataPoints[2] = new SuitDataPoints("Internal Suit Pressure", data.p_suit, "psid", 2.0f, 4.0f);
+        dataPoints[3] = new SuitDataPoints("Sub Temperature", data.t_sub, "\u00B0F", 4f, 6f);
+        dataPoints[4] = new SuitDataPoints("Fan Tachometer", data.v_fan, "RPM", 10000f, 40000f);
+        dataPoints[5] = new SuitDataPoints("Oxygen Pressure", data.p_o2, "psia", 750f, 950f);
+        dataPoints[6] = new SuitDataPoints("Oxygen Rate", data.rate_o2, "psi/min", 0.5f, 1.0f);
+        dataPoints[7] = new SuitDataPoints("Battery Capacity", data.cap_battery, "amp-hr", 0f, 30f);
+        dataPoints[8] = new SuitDataPoints("H2O Gas Pressure", data.p_h2o_g, "psia", 14f, 16f);
+        dataPoints[9] = new SuitDataPoints("H2O Liquid Pressure", data.p_h2o_l, "psia", 14f, 16f);
+        dataPoints[10] = new SuitDataPoints("Secondary Oxygen Pack Pressure", data.p_sop, "psia", 750f, 950f);
+        dataPoints[11] = new SuitDataPoints("Secondary Oxygen Pack Flow Rate", data.rate_sop, "psi/min", 0.5f, 1.0f);
+        //dataPoints[12] = new SuitDataPoints("Time Life Battery", data.t_battery, "hh:mm:ss", 0f, 36000f);
+        //dataPoints[13] = new SuitDataPoints("Time Life Oxygen", data.t_oxygen, "hh:mm:ss", 0, 36000);
+        //dataPoints[14] = new SuitDataPoints("Time Life Water", data.t_water, "hh:mm:ss", 0, 36000);
     }
 
     IEnumerator GetSwitch() {
         while (true) {
-            UnityWebRequest www = UnityWebRequest.Get("https://gemini-program.herokuapp.com/api/suitswitch/recent");    //Placeholder
+            UnityWebRequest www = UnityWebRequest.Get("http://skylab-program.herokuapp.com/api/suitswitch/recent");    //Placeholder
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError) {
                 Debug.Log(www.error);
@@ -162,7 +202,7 @@ public class UpdateTelemetry : MonoBehaviour
                 string jsonString = www.downloadHandler.text;
                 jsonString = jsonString.Replace('[', ' ').Replace(']', ' ');
 
-                SwitchTelemetry switchData = JsonUtility.FromJson<SwitchTelemetry>(jsonString);
+                switchData = JsonUtility.FromJson<SwitchTelemetry>(jsonString);
                 int numSwitch = 14;
                 SwitchDataPoints[] dataPoints = new SwitchDataPoints[numSwitch];
 
