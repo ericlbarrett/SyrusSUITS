@@ -43,6 +43,7 @@ public class ProcedureManager_2 : MonoBehaviour {
     public Text currentStep; // Procedure Panel Text
     public Text nextStep; // Procedure Panel Text
 
+    float timer;
 
     void Start () {
 
@@ -52,14 +53,27 @@ public class ProcedureManager_2 : MonoBehaviour {
 		//ChooseProcedure();
 
         LeapManager.OnGestureSwipe += SwipeGesture;
+        timer = 0;
 	}
 	
-    void SwipeGesture() {
+    void SwipeGesture(Vector3 pos, Vector3 dir) {
+        if (Vector3.Angle(Vector3.left, dir) < 40.0f) {
+            if (timer <= 0) {
+                timer = 1.0f;
+                NextStep();
+            }
+        } else if (Vector3.Angle(Vector3.right, dir) < 40.0f) {
+            if (timer <= 0) {
+                timer = 1.0f;
+                PreviousStep();
+            }
+        }
+
     }
 
 	// Update is called once per frame
 	void Update () {
-		
+		if (timer > 0) timer -= Time.deltaTime;
 	}
     public void stepSpeak()
     {
