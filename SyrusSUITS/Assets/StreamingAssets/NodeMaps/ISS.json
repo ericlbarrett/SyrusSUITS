@@ -81,6 +81,16 @@
       "adjacentNodeIDs": [ 4, 8 ]
     }
 
+  ],
+  "locations": [
+    {
+      "name": "Location 1",
+      "nodeID": 1
+    },
+    {
+      "name": "Location 2",
+      "nodeID": 7
+    }
   ]
 }
 
