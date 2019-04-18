@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -117,6 +118,15 @@ public class UpdateTelemetry : MonoBehaviour
 {
     public NumericalTelemetry numericalData;
     public SwitchTelemetry switchData;
+    public List<NumericalTelemetry> tDataS;
+
+    public GameObject sop_on;         //Secondary oxygen pack is active
+    public GameObject sspe;           //Spacesuit pressure emergency
+    public GameObject fan_error;      //Cooling fan failure
+    public GameObject vent_error;     //No vent flow
+    public GameObject vehicle_power;  //Receiving power through spacecraft
+    public GameObject h2o_off;        //H2O system is offline
+    public GameObject o2_off;         //O2 system is offline
 
     // Start is called before the first frame update
     void Start()
@@ -128,6 +138,7 @@ public class UpdateTelemetry : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      //to add switch statement
     }
 
     IEnumerator GetNumerical()
@@ -162,12 +173,14 @@ public class UpdateTelemetry : MonoBehaviour
                     numericalData.t_water = "00:00:00";
                 }
 
-                int numAr = 15; //Number of components
+                int numAr = 12; //Number of components
 
                 SuitDataPoints[] suitDataPoints = new SuitDataPoints[numAr];
 
-                //Check later
                 setSuitData(numericalData, suitDataPoints);
+
+                tDataS.Add(numericalData);
+                stdDev(tDataS, numAr);
             }
             yield return new WaitForSeconds(10);
         }
@@ -187,9 +200,6 @@ public class UpdateTelemetry : MonoBehaviour
         dataPoints[9] = new SuitDataPoints("H2O Liquid Pressure", data.p_h2o_l, "psia", 14f, 16f);
         dataPoints[10] = new SuitDataPoints("Secondary Oxygen Pack Pressure", data.p_sop, "psia", 750f, 950f);
         dataPoints[11] = new SuitDataPoints("Secondary Oxygen Pack Flow Rate", data.rate_sop, "psi/min", 0.5f, 1.0f);
-        //dataPoints[12] = new SuitDataPoints("Time Life Battery", data.t_battery, "hh:mm:ss", 0f, 36000f);
-        //dataPoints[13] = new SuitDataPoints("Time Life Oxygen", data.t_oxygen, "hh:mm:ss", 0, 36000);
-        //dataPoints[14] = new SuitDataPoints("Time Life Water", data.t_water, "hh:mm:ss", 0, 36000);
     }
 
     IEnumerator GetSwitch() {
@@ -231,5 +241,121 @@ public class UpdateTelemetry : MonoBehaviour
         dataPoints[11] = new SwitchDataPoints("O2 High Use", data.o2_high_use);
         dataPoints[12] = new SwitchDataPoints("SOP Pressure Low", data.sop_pressure_low);
         dataPoints[13] = new SwitchDataPoints("CO2 High", data.co2_high);
+    }
+
+    void stdDev(List<NumericalTelemetry> tDataS, int numAr){ 
+        float[] mean = new float[numAr];
+
+        for (int i = 0; i < tDataS.Count; i++){
+            mean[0] += tDataS[i].heart_bpm;
+            mean[1] += tDataS[i].p_sub;
+            mean[2] += tDataS[i].p_suit;
+            mean[3] += tDataS[i].t_sub;
+            mean[4] += tDataS[i].v_fan;
+            mean[5] += tDataS[i].p_o2;
+            mean[6] += tDataS[i].rate_o2;
+            mean[7] += tDataS[i].cap_battery;
+            mean[8] += tDataS[i].p_h2o_g;
+            mean[9] += tDataS[i].p_h2o_l;
+            mean[10] += tDataS[i].p_sop;
+            mean[11] += tDataS[i].rate_sop;
+        }
+       
+        for (int i = 0; i < numAr; i++)
+        {
+            mean[i] /= tDataS.Count;
+        }
+
+        float[] variances = new float[numAr];
+        float[] deviats = new float[numAr];
+
+        for (var dSet = 0; dSet < tDataS.Count; dSet++) // loop through different data sets
+        {
+            variances[0] += ((tDataS[dSet].heart_bpm - mean[0]) * (tDataS[dSet].heart_bpm - mean[0]));
+            variances[1] += ((tDataS[dSet].p_sub - mean[1]) * (tDataS[dSet].p_sub - mean[1]));
+            variances[2] += ((tDataS[dSet].p_suit - mean[2]) * (tDataS[dSet].p_suit - mean[2]));
+            variances[3] += ((tDataS[dSet].t_sub - mean[3]) * (tDataS[dSet].t_sub - mean[3]));
+            variances[4] += ((tDataS[dSet].v_fan - mean[4]) * (tDataS[dSet].v_fan - mean[4]));
+            variances[5] += ((tDataS[dSet].p_o2 - mean[5]) * (tDataS[dSet].p_o2 - mean[5]));
+            variances[6] += ((tDataS[dSet].rate_o2 - mean[6]) * (tDataS[dSet].rate_o2 - mean[6]));
+            variances[7] += ((tDataS[dSet].cap_battery - mean[7]) * (tDataS[dSet].cap_battery - mean[7]));
+            variances[8] += ((tDataS[dSet].p_h2o_g - mean[8]) * (tDataS[dSet].p_h2o_g - mean[8]));
+            variances[9] += ((tDataS[dSet].p_h2o_l - mean[9]) * (tDataS[dSet].p_h2o_l - mean[9]));
+            variances[10] += ((tDataS[dSet].p_sop - mean[10]) * (tDataS[dSet].p_sop - mean[10]));
+            variances[11] += ((tDataS[dSet].rate_sop - mean[11]) * (tDataS[dSet].rate_sop - mean[11]));
+        }
+        //finalize variances by dividing by N (where N is number of data sets)
+        for (int i = 0; i < tDataS.Count; i++)
+        {
+            variances[i] /= tDataS.Count;
+        }
+        //take the square root of values held in variances to get the final deviations
+        for (int i = 0; i < numAr; i++)
+        {
+            deviats[i] = Mathf.Sqrt(variances[i]);
+        }
+
+        if(tDataS[tDataS.Count-1].cap_battery > (deviats[7] + mean[7]))
+        {
+            switchData.battery_amp_high = true;
+        }
+        else
+        {
+            switchData.battery_amp_high = false;
+        }
+
+        if (tDataS[tDataS.Count-1].cap_battery < (mean[7] - deviats[7]))
+        {
+            switchData.battery_vdc_low = true;
+        }
+        else
+        {
+            switchData.battery_vdc_low = false;
+        }
+
+        if (tDataS[tDataS.Count-1].p_suit < (mean[2] - deviats[2]))
+        {
+            switchData.suit_pressure_low = true;
+        }
+        else
+        {
+            switchData.suit_pressure_low = false;
+        }
+
+        if (tDataS[tDataS.Count-1].p_suit > (deviats[2] + mean[2]))
+        {
+            switchData.spacesuit_pressure_high = true;
+        }
+        else
+        {
+            switchData.spacesuit_pressure_high = false;
+        }
+
+        if (tDataS[tDataS.Count-1].rate_o2 > (deviats[6] + mean[6]))
+        {
+            switchData.o2_high_use = true;
+        }
+        else
+        {
+            switchData.o2_high_use = false;
+        }
+
+        if (tDataS[tDataS.Count-1].p_sop < (mean[10] - deviats[10]))
+        {
+            switchData.sop_pressure_low = true;
+        }
+        else
+        {
+            switchData.sop_pressure_low = false;
+        }
+
+        if (tDataS[tDataS.Count-1].p_o2 < (mean[5] - deviats[5]))
+        {
+            switchData.co2_high = true;
+        }
+        else
+        {
+            switchData.co2_high = false;
+        }
     }
 }

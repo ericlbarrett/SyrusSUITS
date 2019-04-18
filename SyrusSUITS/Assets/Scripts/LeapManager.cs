@@ -9,6 +9,8 @@ using SyrusLeapClient;
 
 public class LeapManager : MonoBehaviour {
 
+    public GameObject UIleft, UIright = null;
+
     private static LeapManager _Instance;
     public static LeapManager Instance
     {
@@ -25,35 +27,50 @@ public class LeapManager : MonoBehaviour {
     public delegate void GestureTap();
     public static event GestureTap OnGestureTap;
 
-    public delegate void GestureSwipe();
+    public delegate void GestureSwipe(Vector3 pos, Vector3 dir);
     public static event GestureSwipe OnGestureSwipe;
-
+    
 	#if !UNITY_EDITOR
-
+    ///Client manager 
 	ClientBTManager cbm;
 
     Camera mainCamera;
+    //Vector for all the finger points
     Vector3[] points;
+    //array of ojects
     GameObject[] objs;
-
+    //accounts for the offset of the leap on the hololens
     Vector3 leapOffset = new Vector3(0.0f, 0.08f, 0.04f);
+
     Quaternion rotation = Quaternion.Euler(110.0f, 0.0f, 0.0f);
     Hand left, right;
 
 	// Use this for initialization
 	void Start () {
+        //Defaults the UI to be Invisible
+        UIright.SetActive(false);
+        UIleft.SetActive(false);
+        //Server Manager Object
 		cbm = new ClientBTManager();
+        //Packets
         cbm.PacketReceived += Recieved;
+        //connected
         cbm.Connected += OnConnect;
         cbm.Initialize();
         
         mainCamera = Camera.main;
-
+        //gives indexed for each index
         points = new Vector3[9];
         objs = new GameObject[9];
 
+        left = new Hand();
+        right = new Hand();
+
+        //fills each vector array
         for (int i = 0; i < 9; i++) {
+            //creates a sphere
             objs[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //size of the object
             objs[i].transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
         }
         
@@ -65,6 +82,37 @@ public class LeapManager : MonoBehaviour {
         for (int i = 0; i < 9; i++) {
             Vector3 p = leapOffset + rotation * points[i];
             objs[i].transform.position = ToUnityCoords(points[i]);//mainCamera.transform.position + mainCamera.transform.rotation * p;
+        }
+
+        left.palmPos = ToUnityCoords(points[0]);
+        left.palmNorm = ToUnityCoordsDir(points[1]);
+
+        right.palmPos = ToUnityCoords(points[2]);
+        right.palmNorm = ToUnityCoordsDir(points[3]);
+
+        //finds angle for area that the UI for the left hand will be visible
+        //Debug.Log(Vector3.Angle(left.palmNorm, -mainCamera.transform.forward));
+        if (Vector3.Angle(left.palmNorm, -mainCamera.transform.forward) < 30.0f) {
+            //sets the UI as visible when the parameters are met
+            UIleft.transform.position = left.palmPos;
+            Vector3 dir = (left.palmPos - mainCamera.transform.position).normalized;
+            UIleft.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+            UIleft.SetActive(true);
+        }else{
+            //sets Sthe UI as invisible when the parameters are met
+            UIleft.SetActive(false);
+        }
+        
+        //finds angle for the area that the UI for the right hand will be visible
+        if(Vector3.Angle(right.palmNorm, -mainCamera.transform.forward) < 30.0f){
+            //sets the UI as visible when the parameters are met
+            UIright.transform.position = right.palmPos;
+            Vector3 dir = (right.palmPos - mainCamera.transform.position).normalized;
+            UIright.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+            UIright.SetActive(true);
+        }else{
+            //sets the UI as invisible when the parameters are met
+            UIright.SetActive(false);
         }
 		
 	}
@@ -112,6 +160,7 @@ public class LeapManager : MonoBehaviour {
                         Debug.Log("Gesture: Swipe");
                         Vector3 pos = readVector(packet.data, 0);
                         Vector3 dir = readVector(packet.data, 12).normalized;
+                        if (OnGestureSwipe != null) OnGestureSwipe(pos, dir);
                         break;
                     }
             }
@@ -120,10 +169,10 @@ public class LeapManager : MonoBehaviour {
 	#endif
 
     class Hand {
-        Vector3 palmPos;
-        Vector3 palmNorm;
-        Vector3 indexTip;
-        Vector3 indexDir;
+        public Vector3 palmPos;
+        public Vector3 palmNorm;
+        public Vector3 indexTip;
+        public Vector3 indexDir;
     }
 
 }
