@@ -10,6 +10,7 @@ public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
 	public ProceduralImage pi;
 
 	bool charging = false;
+	bool done = false;
 
 	List<Vector3> vSamples;
 	List<Quaternion> qSamples;
@@ -43,6 +44,9 @@ public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
 				OverlayManager.Instance.LoadOverlay(overlayName, calcAvg(vSamples), calcAvg(qSamples));
 				vSamples.Clear();
 				qSamples.Clear();
+
+				done = true;
+				pi.gameObject.SetActive(false);
 			}
 		}
 	}
@@ -73,9 +77,11 @@ public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
         	newStatus == TrackableBehaviour.Status.TRACKED ||
         	newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED) {
 			
-			if (!NavigationService.Instance.calibrated) {
+			if (!NavigationService.Instance.calibrated && !done) {
 				pi.fillAmount = 0.0f;
 				charging = true;
+				
+				pi.gameObject.SetActive(true);
 			}
     	}
   } 
