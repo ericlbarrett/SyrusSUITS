@@ -1,0 +1,284 @@
+{
+  "title": "EVA Procedures",
+  "steps": [
+    {
+      "text": "Uninstall thermal cover by detaching flap 9",
+      "subtext": "",
+      "number": "1.1.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Uninstall thermal cover by detaching flap 7",
+      "subtext": "",
+      "number": "1.1.2",
+      "prompts": []
+    },
+
+    {
+      "text": "Uninstall thermal cover by detaching flap 2",
+      "subtext": "",
+      "number": "1.1.3",
+      "prompts": []
+    },
+
+    {
+      "text": "Uninstall thermal cover by detaching flap 10",
+      "subtext": "",
+      "number": "1.1.4",
+      "prompts": []
+    },
+
+    {
+      "text": "Uninstall thermal cover by detaching flap 4",
+      "subtext": "",
+      "number": "1.1.5",
+      "prompts": []
+    },
+
+    {
+      "text": "Uninstall thermal cover by detaching flap 8",
+      "subtext": "",
+      "number": "1.1.6",
+      "prompts": []
+    },
+
+    {
+      "text": "Uninstall thermal cover by detaching flap 6",
+      "subtext": "",
+      "number": "1.1.7",
+      "prompts": []
+    },
+
+    {
+      "text": "Demate Connector J1 (PRIMARY POWER)",
+      "subtext": "",
+      "number": "1.2.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Demate Connector J2 (Secondary POWER)",
+      "subtext": "",
+      "number": "1.2.2",
+      "prompts": []
+    },
+
+    {
+      "text": "Demate Connector J3 (1553 Ch. A)",
+      "subtext": "",
+      "number": "1.2.3",
+      "prompts": []
+    },
+
+    {
+      "text": "Demate Connector J4 (1553 Ch. B)",
+      "subtext": "",
+      "number": "1.2.4",
+      "prompts": []
+    },
+
+    {
+      "text": "Drive Dual Latch fastener 26 to SAW LATCH position (21-25 turns)",
+      "subtext": "",
+      "number": "1.3.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Drive Dual Latch fastener H3 to SAW LATCH position (21-25 turns)",
+      "subtext": "",
+      "number": "1.3.2",
+      "prompts": []
+    },
+
+    {
+      "text": "Drive Dual Latch fastener H4 to SAW LATCH position (21-25 turns)",
+      "subtext": "",
+      "number": "1.3.3",
+      "prompts": []
+    },
+
+    {
+      "text": "Unfasten housing fastener H6 (10-12 turns)",
+      "subtext": "",
+      "number": "1.4.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Unfasten housing fastener H7 (10-12 turns)",
+      "subtext": "",
+      "number": "1.4.2",
+      "prompts": []
+    },
+
+    {
+      "text": "Unfasten housing fastener H8 (10-12 turns)",
+      "subtext": "",
+      "number": "1.4.3",
+      "prompts": []
+    },
+
+    {
+      "text": "Unfasten housing fastener H9 (10-12 turns)",
+      "subtext": "",
+      "number": "1.4.4",
+      "prompts": []
+    },
+
+    {
+      "text": "Unfasten vise clamp bolt H5 (18-20 turns)",
+      "subtext": "",
+      "number": "1.5.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Unfasten Center Fastener H1 (zip nut)",
+      "subtext": "",
+      "number": "1.6.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Fasten Center Fastener H1 (zip nut)",
+      "subtext": "",
+      "number": "2.1.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Fasten Vise Clamp bolt H5 (18-20 turns)",
+      "subtext": "",
+      "number": "2.2.1",
+      "prompts": []
+    },
+    
+    {
+      "text": "Fasten housing fastener H6 (10-12 turns)",
+      "subtext": "",
+      "number": "2.3.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Fasten housing fastener H7 (10-12 turns)",
+      "subtext": "",
+      "number": "2.3.2",
+      "prompts": []
+    },
+
+    {
+      "text": "Fasten housing fastener H8 (10-12 turns)",
+      "subtext": "",
+      "number": "2.3.3",
+      "prompts": []
+    },
+
+    {
+      "text": "Fasten housing fastener H9 (10-12 turns)",
+      "subtext": "",
+      "number": "2.3.4",
+      "prompts": []
+    },
+
+    {
+      "text": "Fasten Dual Latch fastener H2 to BMRRM LATCH position (21-25 turns)",
+      "subtext": "",
+      "number": "2.4.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Fasten Dual Latch fastener H3 to BMRRM LATCH position (21-25 turns)",
+      "subtext": "",
+      "number": "2.4.2",
+      "prompts": []
+    },
+
+    {
+      "text": "Fasten Dual Latch fastener H4 to BMRRM LATCH position (21-25 turns)",
+      "subtext": "",
+      "number": "2.4.3",
+      "prompts": []
+    },
+
+    {
+      "text": "Mate Connector J4 (1553 Ch. B)",
+      "subtext": "",
+      "number": "2.5.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Mate Connector J3 (1553 Ch. A)",
+      "subtext": "",
+      "number": "2.5.2",
+      "prompts": []
+    },
+
+    {
+      "text": "Mate Connector J2 (Secondary POWER)",
+      "subtext": "",
+      "number": "2.5.3",
+      "prompts": []
+    },
+
+    {
+      "text": "Mate Connector J1 (PRIMARY POWER)",
+      "subtext": "",
+      "number": "2.5.4",
+      "prompts": []
+    },
+
+    {
+      "text": "Install thermal cover by reattaching flap 6",
+      "subtext": "",
+      "number": "2.6.1",
+      "prompts": []
+    },
+
+    {
+      "text": "Install thermal cover by reattaching flap 8",
+      "subtext": "",
+      "number": "2.6.2",
+      "prompts": []
+    },
+
+    {
+      "text": "Install thermal cover by reattaching flap 4",
+      "subtext": "",
+      "number": "2.6.3",
+      "prompts": []
+    },
+
+    {
+      "text": "Install thermal cover by reattaching flap 10",
+      "subtext": "",
+      "number": "2.6.4",
+      "prompts": []
+    },
+
+    {
+      "text": "Install thermal cover by reattaching flap 2",
+      "subtext": "",
+      "number": "2.6.5",
+      "prompts": []
+    },
+
+    {
+      "text": "Install thermal cover by reattaching flap 7",
+      "subtext": "",
+      "number": "2.6.6",
+      "prompts": []
+    },
+
+    {
+      "text": "Install thermal cover by reattaching flap 9",
+      "subtext": "",
+      "number": "2.6.7",
+      "prompts": []
+    }
+  ]
+}

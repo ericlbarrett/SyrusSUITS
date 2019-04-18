@@ -160,7 +160,7 @@ public class OverlayManager : MonoBehaviour
             objs.Add(cube);
         }
 
-        ProcedureManager_2.Instance.LoadProcedure("Disabling_Alarm_Easy2.json");
+        ProcedureManager_2.Instance.LoadProcedure(layout.procedure);
     }
 
     #region old
@@ -500,6 +500,8 @@ public class Layout
     public Vec3 activator_size;
     public int activator_target;
 
+    public string procedure;
+
     public Vec3 size;
     public List<Modules> modules = new List<Modules>();
 }
@@ -540,4 +542,6 @@ public class OverlayPreload { // Contains basic information about an overlay for
     public Vec3 activator_pos;
     public Vec3 activator_size;
     public int activator_target;
+
+    public string procedure;
 }
