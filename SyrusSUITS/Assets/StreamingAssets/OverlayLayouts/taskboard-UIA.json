@@ -1,0 +1,98 @@
+{
+    "name": "UIA",
+    
+    "size": {"x": 0.558, "y": 0.001, "z": 0.401},
+
+    "activator": true,
+    "activator_pos": {"x": 0.89, "y": 0, "z": 0.54},
+    "activator_size": {"x": 0.1016, "y": 0, "z": 0.07111},
+    "activator_target": 1,
+    "procedure": "IVA_Procedures.json",
+
+    "modules": [
+        {
+            "type": "switch",
+            "id": "power_1",
+            "size": {"x": 0.04144, "y": 0.001, "z": 0.06149},
+            "position": {"x": 0.03338, "y": 0, "z": 0.19798},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "power_2",
+            "size": {"x": 0.04144, "y": 0.001, "z": 0.04144},
+            "position": {"x": 0.43223, "y": 0, "z": 0.19683},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "EVA1_supply",
+            "size": {"x": 0.04662, "y": 0.001, "z": 0.11223},
+            "position": {"x": 0.09151, "y": 0, "z": 0.14791},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "EVA1_waste",
+            "size": {"x": 0.04662, "y": 0.001, "z": 0.11223},
+            "position": {"x": 0.16863, "y": 0, "z": 0.14849},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "EVA2_supply",
+            "size": {"x": 0.04662, "y": 0.001, "z": 0.11223},
+            "position": {"x": 0.2964, "y": 0, "z": 0.14849},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "EVA2_waste",
+            "size": {"x": 0.04662, "y": 0.001, "z": 0.11223},
+            "position": {"x": 0.37352, "y": 0, "z": 0.14849},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "port",
+            "id": "water_waste_port",
+            "size": {"x": 0.07309, "y": 0.001, "z": 0.07337},
+            "position": {"x": 0.21813, "y": 0, "z": 0.14849},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "",
+            "id": "EMU_1",
+            "size": {"x": 0.04662, "y": 0.001, "z": 0.11223},
+            "position": {"x": 0.17784, "y": 0, "z": 0.30388},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "gauge",
+            "id": "EMU_O2",
+            "size": {"x": 0.05698, "y": 0.001, "z": 0.05813},
+            "position": {"x": 0.22647, "y": 0, "z": 0.30388},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "EMU_2",
+            "size": {"x": 0.04662, "y": 0.001, "z": 0.11223},
+            "position": {"x": 0.28546, "y": 0, "z": 0.30388},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "O2_vent",
+            "size": {"x": 0.04662, "y": 0.001, "z": 0.11223},
+            "position": {"x": 0.18762, "y": 0, "z": 0.41899},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        },
+        {
+            "type": "switch",
+            "id": "depress_pump",
+            "size": {"x": 0.04142, "y": 0.001, "z": 0.06159},
+            "position": {"x": 0.26704, "y": 0, "z": 0.4259},
+            "rotation": {"x": 0, "y": 0, "z": 0}
+        }
+    ]
+}
