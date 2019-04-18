@@ -40,9 +40,13 @@ public class NavigationService : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        LoadFromJson("/NodeMaps/ISS.json");
+        LoadFromJson("/NodeMaps/nasa_test.json");
 
-        route = GetRoute(GetNodeByID(1), GetNodeByID(7));
+        //LogNodes();
+
+        //updateNodeMapPositions(nodeMap);
+
+        route = GetRoute(GetNodeByID(1), GetNodeByID(6));
 
         LogRoute(route);
 	}
@@ -52,8 +56,20 @@ public class NavigationService : MonoBehaviour {
 		
 	}
 
+    public void updateNodeMapPositions(List<Node> nodeMap)
+    {
+        Vector3 offset = RouteCalibrator.originPosition;
 
-	public void SetOrigin(Vector3 origin, Quaternion rotation) {
+        foreach(Node node in nodeMap)
+        {
+            System.Diagnostics.Debug.Write(offset);
+            node.position = node.position + offset;
+            System.Diagnostics.Debug.Write(node.position);
+        }
+    }
+
+
+    public void SetOrigin(Vector3 origin, Quaternion rotation) {
 		navOrigin = origin;
 		navRotation = rotation;
 		calibrated = true;

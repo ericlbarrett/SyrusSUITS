@@ -30,6 +30,10 @@ public class OverlayManager : MonoBehaviour
 
     Color modColor;
 
+    public Layout getLayout() {
+        return layout;
+    }
+
     // Use this for initialization
     void Start() {
         modColor = new Color(1.0f, 1.0f, 1.0f, 1.0f / 4.0f);
@@ -91,7 +95,9 @@ public class OverlayManager : MonoBehaviour
 
     public void LoadOverlay(string name, Vector3 pos, Quaternion rot) {
         if (layout != null) {
-            return;
+            if (layout.fileName == name) {
+                return;
+            }
         }
 
         try
@@ -100,6 +106,14 @@ public class OverlayManager : MonoBehaviour
             if (System.IO.File.Exists(temp))
             {
                 string contents = System.IO.File.ReadAllText(temp);
+
+                if (layout != null) {
+                    foreach (GameObject obj in objs) {
+                        Destroy(obj);
+                    }
+                    objs.Clear();
+                }
+
                 Instance.layout = JsonUtility.FromJson<Layout>(contents);
                 CreateTaskboard(pos, rot);
             }
@@ -155,7 +169,7 @@ public class OverlayManager : MonoBehaviour
             lr.numCornerVertices = 3;
 
             BoxMode(cube);
-            //cube.SetActive(false);
+            cube.SetActive(false);
 
             objs.Add(cube);
         }
@@ -501,6 +515,10 @@ public class Layout
     public int activator_target;
 
     public string procedure;
+    
+    public Vec3 panel_pos;
+    public Vec3 panel_rot;
+    public string fileName;
 
     public Vec3 size;
     public List<Modules> modules = new List<Modules>();

@@ -128,15 +128,6 @@ public class UpdateTelemetry : MonoBehaviour
     public GameObject h2o_off;        //H2O system is offline
     public GameObject o2_off;         //O2 system is offline
 
-    //Based of deviation
-    public GameObject battery_amp_high;       //>4 amp
-    public GameObject battery_vdc_low;        //<15 V
-    public GameObject suit_pressure_low;      //<2
-    public GameObject spacesuit_pressure_high;//>5 psid
-    public GameObject o2_high_use;            //1 >psi/min
-    public GameObject sop_pressure_low;       //<700 psia
-    public GameObject co2_high;               //>500 ppm
-
     // Start is called before the first frame update
     void Start()
     {

@@ -9,6 +9,10 @@
     "activator_target": 1,
     "procedure": "IVA_Procedures.json",
 
+    "panel_pos": {"x": -0.6, "y": 0, "z": 0},
+    "panel_rot": {"x": 90, "y": 0, "z": 0},
+    "fileName": "taskboard-UIA.json",
+
     "modules": [
         {
             "type": "switch",

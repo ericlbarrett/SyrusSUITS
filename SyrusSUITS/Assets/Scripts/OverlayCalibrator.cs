@@ -39,6 +39,7 @@ public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
 
 			if (pi.fillAmount >= 1.0f) {
 				charging = false;
+				Debug.Log("Loading overlay: " + overlayName);
 				OverlayManager.Instance.LoadOverlay(overlayName, calcAvg(vSamples), calcAvg(qSamples));
 				vSamples.Clear();
 				qSamples.Clear();
