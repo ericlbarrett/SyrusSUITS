@@ -2400,6 +2400,20 @@ Prefab:
       propertyPath: m_Name
       value: Sub Systems Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 114627561173370246, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Sub Pressure: 0 psi'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114019600511533952, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Sub Temp: 0 psi'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011128764819596, guid: b1602ba02220c0145811defd848654f5, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1602ba02220c0145811defd848654f5, type: 2}
   m_IsPrefabParent: 0
@@ -3999,6 +4013,20 @@ Prefab:
       propertyPath: m_Name
       value: Water Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 114627561173370246, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Liquid Pressure: 0 psi'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114019600511533952, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Gas Pressue: 0 psi'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011128764819596, guid: b1602ba02220c0145811defd848654f5, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1602ba02220c0145811defd848654f5, type: 2}
   m_IsPrefabParent: 0
@@ -5244,6 +5272,20 @@ Prefab:
       propertyPath: m_Name
       value: Suit Systems Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 114627561173370246, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Suit Pressure: 0 psi'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114019600511533952, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Fan Speed: 0 rpm'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011128764819596, guid: b1602ba02220c0145811defd848654f5, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1602ba02220c0145811defd848654f5, type: 2}
   m_IsPrefabParent: 0
@@ -5932,6 +5974,20 @@ Prefab:
       propertyPath: m_Name
       value: 'Primary Oxygen Panel '
       objectReference: {fileID: 0}
+    - target: {fileID: 114627561173370246, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Pressure: 0 psi'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114019600511533952, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Deplete Rate: 0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011128764819596, guid: b1602ba02220c0145811defd848654f5, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1602ba02220c0145811defd848654f5, type: 2}
   m_IsPrefabParent: 0
@@ -6254,6 +6310,20 @@ Prefab:
     - target: {fileID: 1999505334189752, guid: b1602ba02220c0145811defd848654f5, type: 2}
       propertyPath: m_Name
       value: Secondary Oxygen Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 114627561173370246, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Pressure: 0 psi'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114019600511533952, guid: b1602ba02220c0145811defd848654f5,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Deplete Rate: 0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011128764819596, guid: b1602ba02220c0145811defd848654f5, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1602ba02220c0145811defd848654f5, type: 2}
