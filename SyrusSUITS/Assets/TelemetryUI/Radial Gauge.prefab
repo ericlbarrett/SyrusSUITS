@@ -107,7 +107,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   borderWidth: 0
-  falloffDistance: 5
+  falloffDistance: 0.001
 --- !u!114 &114399976483018584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   borderWidth: 10
-  falloffDistance: 5
+  falloffDistance: 0.001
 --- !u!222 &222016533477299930
 CanvasRenderer:
   m_ObjectHideFlags: 1
