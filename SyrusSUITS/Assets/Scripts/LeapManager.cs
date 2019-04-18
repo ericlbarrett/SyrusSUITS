@@ -9,7 +9,7 @@ using SyrusLeapClient;
 
 public class LeapManager : MonoBehaviour {
 
-    GameObject UIleft, UIright;
+    public GameObject UIleft, UIright = null;
 
     private static LeapManager _Instance;
     public static LeapManager Instance
