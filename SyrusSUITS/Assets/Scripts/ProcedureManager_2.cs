@@ -51,8 +51,12 @@ public class ProcedureManager_2 : MonoBehaviour {
 		//printProcedurePaths();
 		//ChooseProcedure();
 
+        LeapManager.OnGestureSwipe += SwipeGesture;
 	}
 	
+    void SwipeGesture() {
+    }
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -204,6 +208,40 @@ public class ProcedureManager_2 : MonoBehaviour {
         }
     }
     //Loads in the procedure that should be completed
+
+    public void LoadProcedure(string procName) {
+        try
+        {
+            //Destroy(options);
+            string temp = path + procName;
+            if (System.IO.File.Exists(temp))
+            {
+                string contents = System.IO.File.ReadAllText(temp);
+                //Debug.Log(contents);
+                procedure = JsonUtility.FromJson<Procedure>(contents);
+                OnStepChanged(procedure.steps[stepNumber]);
+                //Debug.Log(procedure.steps[1].text);
+                //LoadStepWindow(procedure.steps);
+                ToggleProcedurePanel();
+                Transform tr = OverlayManager.Instance.transform;
+                procedurePanel.transform.rotation = Quaternion.LookRotation(tr.forward, Vector3.up);
+                procedurePanel.transform.position = tr.position + tr.rotation * new Vector3(0, 0.35f / 2, 0.401f / 2);
+                changeBarTxt(); // Needs to be here to update to the first Item
+                isProcedure = true;
+                //placingPanel.loadPlacingProcedure();
+            }
+            //if the procedures are loaded. Then render the procedure bar
+            else
+            {
+                Debug.Log("Error: Unable to read " + procName + " file, at " + temp);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Error: " + procName + " JSON input. " + ex.Message);
+        }
+    }
+
     public void LoadProcedure(int procedureNumber) {
         currentProcedureNum = procedureNumber;
         try

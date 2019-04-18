@@ -29,7 +29,7 @@ public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
 	
 	// Update is called once per frame
 	void Update () {
-		// TODO Confirmation
+		// TODO: Confirmation
 		if (charging) {
 			pi.fillAmount += Time.deltaTime / 2.0f;
 
@@ -40,6 +40,8 @@ public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
 			if (pi.fillAmount >= 1.0f) {
 				charging = false;
 				OverlayManager.Instance.LoadOverlay(overlayName, calcAvg(vSamples), calcAvg(qSamples));
+				vSamples.Clear();
+				qSamples.Clear();
 			}
 		}
 	}
