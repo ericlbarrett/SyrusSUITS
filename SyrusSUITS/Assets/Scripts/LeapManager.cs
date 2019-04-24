@@ -95,7 +95,7 @@ public class LeapManager : MonoBehaviour {
 
             //finds angle for area that the UI for the left hand will be visible
             //Debug.Log(Vector3.Angle(left.palmNorm, -mainCamera.transform.forward));
-            if (Vector3.Angle(left.palmNorm, -mainCamera.transform.forward) < 30.0f) {
+            if (Vector3.Angle(left.palmNorm, -mainCamera.transform.forward) < 40.0f) {
                 //sets the UI as visible when the parameters are met
                 UIleft.transform.position = left.palmPos;
                 Vector3 dir = (left.palmPos - mainCamera.transform.position).normalized;
@@ -107,7 +107,7 @@ public class LeapManager : MonoBehaviour {
             }
             
             //finds angle for the area that the UI for the right hand will be visible
-            if(Vector3.Angle(right.palmNorm, -mainCamera.transform.forward) < 30.0f){
+            if(Vector3.Angle(right.palmNorm, -mainCamera.transform.forward) < 40.0f){
                 //sets the UI as visible when the parameters are met
                 UIright.transform.position = right.palmPos;
                 Vector3 dir = (right.palmPos - mainCamera.transform.position).normalized;

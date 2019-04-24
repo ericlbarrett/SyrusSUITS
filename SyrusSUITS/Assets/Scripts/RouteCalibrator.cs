@@ -50,7 +50,7 @@ public class RouteCalibrator : MonoBehaviour, ITrackableEventHandler {
                 originPosition = transform.position;
                 System.Diagnostics.Debug.Write(originPosition);
                 NavigationService.Instance.updateNodeMapPositions(NavigationService.nodeMap);
-                NavigationService.route = NavigationService.Instance.GetRoute(NavigationService.Instance.GetNodeByID(1), NavigationService.Instance.GetNodeByID(6));
+                NavigationService.route = NavigationService.Instance.GetRoute(NavigationService.Instance.GetNodeByID(1), NavigationService.Instance.GetNodeByID(8));
                 MiniMap.Instance.DrawRoute(NavigationService.route);
                 vSamples.Clear();
                 qSamples.Clear();
