@@ -6,13 +6,12 @@
     "activator": true,
     "activator_pos": {"x": 0, "y": 0, "z": 0},
     "activator_size": {"x": 0.1016, "y": 0, "z": 0.07111},
-    "activator_target": 1,
-    "procedure": "EVA_Procedures.json",
+
+    "autoLoadProcedure": true,
+    "procedureFileName": "EVA_Procedures.json",
 
     "panel_pos": {"x": 0, "y": 0.175, "z": 0},
     "panel_rot": {"x": 0, "y": 0, "z": 0},
-
-    "fileName": "taskboard-BMRRM.json",
 
     "scale": 1.0,
 

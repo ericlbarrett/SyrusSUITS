@@ -17,14 +17,13 @@ public class OverlayManager : MonoBehaviour
             return _Instance;
         }
     }
-    Layout layout = null;           // Layout Class holds the information of the overlay 
-    string path;                            // Directory of where the JSON files are located
+    Layout layout = null;           // Layout Class holds the information of the overlay
+    string path;                    // Directory of where the JSON files are located
     List<string> overlayFiles;
     List<string> overlayNames;
     List<GameObject> objs = new List<GameObject>(); // Module game objects
 
     Step currentStep;
-
     public delegate void OverlayCreated();
     public static event OverlayCreated OnOverlayCreated;
 
@@ -38,18 +37,18 @@ public class OverlayManager : MonoBehaviour
     void Start() {
         modColor = new Color(1.0f, 1.0f, 1.0f, 1.0f / 4.0f);
 
-        ProcedureManager_2.OnStepChanged += OnStepChanged;
+        ProcedureManager.OnStepChanged += OnStepChanged;
         Instance.path = Application.streamingAssetsPath + "/OverlayLayouts/";
 
-        PreloadOverlays("/OverlayLayouts/");
+        PreloadOverlays();
     }
 
-    void PreloadOverlays(string dir) {
+    void PreloadOverlays() {
         overlayFiles = new List<string>();
         overlayNames = new List<string>();
 
         try {
-            string location = Application.streamingAssetsPath + dir;
+            string location = Application.streamingAssetsPath + path;
             foreach (string file in System.IO.Directory.GetFiles(location)) {
                 string label = file.Replace(location, "");
                 if (label.EndsWith(".json")) {
@@ -176,7 +175,7 @@ public class OverlayManager : MonoBehaviour
             objs.Add(cube);
         }
 
-        ProcedureManager_2.Instance.LoadProcedure(layout.procedure);
+        ProcedureManager.Instance.LoadProcedure(layout.procedure);
     }
 
     #region old
@@ -228,7 +227,7 @@ public class OverlayManager : MonoBehaviour
                 Instance.layout = JsonUtility.FromJson<Layout>(contents);
                 CreateTaskboard(Vector3.zero, Quaternion.identity);
                 this.GetComponent<PlacingProcedure>().PlacingProcedureOn();
-                this.GetComponent<PlacingProcedure>().m_methodToCall = GameObject.Find("ProcedureManager").gameObject.GetComponent<ProcedureManager_2>().ChooseProcedure;
+                this.GetComponent<PlacingProcedure>().m_methodToCall = GameObject.Find("ProcedureManager").gameObject.GetComponent<ProcedureManager>().ChooseProcedure;
             }
             else
             {
@@ -516,11 +515,11 @@ public class Layout
     public Vec3 activator_size;
     public int activator_target;
 
-    public string procedure;
+    public bool autoLoadProcedure;
+    public string procedureFileName;
     
     public Vec3 panel_pos;
     public Vec3 panel_rot;
-    public string fileName;
     public float scale;
 
     public Vec3 size;
