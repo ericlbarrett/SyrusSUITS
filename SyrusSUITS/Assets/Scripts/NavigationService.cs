@@ -16,7 +16,9 @@ public class NavigationService : MonoBehaviour {
             return _Instance;
         }
     }
-  
+
+    string path;                    // Directory where the map JSON files are located
+
     public static List<Node> nodeMap = new List<Node>();
     public static List<Location> locations = new List<Location>();
     public static List<Node> route = new List<Node>();
@@ -37,7 +39,10 @@ public class NavigationService : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        LoadFromJson("/NodeMaps/nasa_test.json");
+
+        path = Application.streamingAssetsPath + "/NodeMaps/";
+
+        LoadNodeMap("nasa_test.json");
 
         //LogNodes();
 
@@ -129,24 +134,26 @@ public class NavigationService : MonoBehaviour {
         }
     }
 
-    void LoadFromJson(string directory)
-    {
-        string filePath = Application.streamingAssetsPath + directory;
+    void LoadNodeMap(string fileName) {
+        try{
+            string dir = path + fileName;
+            if (File.Exists(dir))
+            {
+                string jsonContent = File.ReadAllText(dir);
+                NodeMap jsonNodeMap = JsonUtility.FromJson<NodeMap>(jsonContent);
 
-        if (File.Exists(filePath))
-        {
-            string jsonContent = File.ReadAllText(filePath);
-            NodeMap jsonNodeMap = JsonUtility.FromJson<NodeMap>(jsonContent);
+                modelName = jsonNodeMap.modelname;
+                nodeMap = ConvertedJsonNodeMap(jsonNodeMap);
+                locations = ConvertedJsonLocations(jsonNodeMap.locations);
 
-            modelName = jsonNodeMap.modelname;
-            nodeMap = ConvertedJsonNodeMap(jsonNodeMap);
-            locations = ConvertedJsonLocations(jsonNodeMap.locations);
-
-            if (MapLoaded != null) MapLoaded();
-        }
-        else
-        {
-            Debug.LogError("Cannot load data from " + filePath);
+                if (MapLoaded != null) MapLoaded();
+            }
+            else
+            {
+                Debug.LogError("Unable to read " + fileName + " file, at " + dir);
+            }
+        } catch (System.Exception ex) {
+            Debug.Log("Error: LoadNodeMap: " + ex.Message);
         }
     }
 

@@ -33,15 +33,7 @@ public class ProcedureManager : MonoBehaviour {
 
     int stepIndex;                  // Index of the current step
 
-    public GameObject optionsPrefab;
-	public GameObject textPrefab;
-	public GameObject buttonPrefab;
-
-    //This is for the Procedure Panel V2
-    public GameObject procedurePanel;       // Procedure Panel
-    public Text previousStep; // Procedure Panel Text
-    public Text currentStep; // Procedure Panel Text
-    public Text nextStep; // Procedure Panel Text
+    public StepPanel stepPanel;       // Procedure Panel
 
     float timer;
 
@@ -101,7 +93,6 @@ public class ProcedureManager : MonoBehaviour {
                 Layout ly = OverlayManager.Instance.getLayout();
                 procedurePanel.transform.rotation = Quaternion.LookRotation(tr.forward, Vector3.up) * Quaternion.Euler(ly.panel_rot.x, ly.panel_rot.y, ly.panel_rot.z);
                 procedurePanel.transform.position = tr.position + tr.rotation * new Vector3(ly.panel_pos.x, ly.panel_pos.y, ly.panel_pos.z);
-                changeBarTxt(); // Needs to be here to update to the first Item
             } else {
                 Debug.Log("Error: Unable to read " + fileName + " file, at " + dir);
             }
@@ -128,8 +119,6 @@ public class ProcedureManager : MonoBehaviour {
 
                 // Enable the procedure panel
                 ToggleProcedurePanel(true);
-
-                changeBarTxt(); // Needs to be here to update to the first Item
             } else {
                 Debug.Log("Error: Unable to read " + procedureFiles[procedureNumber] + " file, at " + dir);
             }
@@ -180,6 +169,25 @@ public class ProcedureManager : MonoBehaviour {
         }
     }
 
+    public Step getCurrentStep() {
+        return procedure.steps[stepIndex];
+    }
+
+    public Step getNextStep() {
+        if (stepIndex + 1 < procedure.steps.Count) {
+            return procedure.steps[stepIndex + 1];
+        } else {
+            return null;
+        }
+    }
+
+    public Step getPreviousStep() {
+        if (stepIndex > 0) {
+            return procedure.steps[stepIndex - 1];
+        } else {
+            return null;
+        }
+    }
 
 // ---------------------------------------
 
@@ -203,92 +211,6 @@ public class ProcedureManager : MonoBehaviour {
 	void Update () {
 		if (timer > 0) timer -= Time.deltaTime;
 	}
-    public void stepSpeak()
-    {
-        string t = procedure.steps[stepIndex].text;
-        if (t != null) HoloToolkit.Unity.TextToSpeech.AetherSpeech(t);
-    }
-
-    //Toggles the procedure panel active state
-    public void ToggleProcedurePanel(bool val)
-    {
-        procedurePanel.SetActive(val);
-    }
-
-    //Change the current task information
-    void changeBarTxt()
-    {
-        //procedurBarText.alignment = TextAnchor.UpperLeft;
-        //procedurBarText.text = procedure.steps[stepIndex].number + ".) " + procedure.steps[stepIndex].text + "\n";
-        //if (procedure.steps[stepIndex].subtext.Length > 0)
-        //{
-        //    procedurBarText.text += CreateSubText(procedure.steps[stepIndex]) + "\n";
-        //}
-
-        //current
-        currentStep.alignment = TextAnchor.UpperLeft;
-        currentStep.text = procedure.steps[stepIndex].number + ".) " + procedure.steps[stepIndex].text + "\n";
-        if (procedure.steps[stepIndex].subtext.Length > 0)
-        {
-            currentStep.text += CreateSubText(procedure.steps[stepIndex]) + "\n";
-        }
-
-        //next
-        if (Instance.stepIndex + 1 <= Instance.procedure.steps.Count - 1)
-        {
-            nextStep.text = procedure.steps[stepIndex + 1].number + ".) " + procedure.steps[stepIndex + 1].text + "\n";
-            nextStep.alignment = TextAnchor.UpperLeft;
-            nextStep.text = procedure.steps[stepIndex + 1].number + ".) " + procedure.steps[stepIndex + 1].text + "\n";
-            if (procedure.steps[stepIndex + 1].subtext.Length > 0)
-            {
-                nextStep.text += CreateSubText(procedure.steps[stepIndex + 1]) + "\n";
-            }
-        }
-        else
-        {
-            nextStep.text = "";
-        }
-        //previous
-        if (Instance.stepIndex - 1 >= 0)
-        {
-            //previousStep.text = procedure.steps[stepIndex - 1].number + ".) " + procedure.steps[stepIndex - 1].text + "\n";
-            previousStep.alignment = TextAnchor.UpperLeft;
-            previousStep.text = procedure.steps[stepIndex - 1].number + ".) " + procedure.steps[stepIndex - 1].text + "\n";
-            if (procedure.steps[stepIndex - 1].subtext.Length > 0)
-            {
-                previousStep.text += CreateSubText(procedure.steps[stepIndex - 1]) + "\n";
-            }
-        }
-        else
-        {
-            previousStep.text = "";
-        }
-
-
-
-    }
-
-    //Returns a string with the color warning/caution and sub text of current step
-    string CreateSubText(Step s)
-    {
-        string temp = "";
-        string firstWord = s.subtext.Split(' ')[0];
-        if (firstWord == "CAUTION:")
-        {
-            temp += "<color=red>CAUTION: </color>";
-        }
-        else if (firstWord == "WARNING:")
-        {
-            temp += "<color=red>WARNING: </color>";
-        }
-        int i = s.subtext.IndexOf(":");
-        if (i + 2 < s.subtext.Length)
-        {
-            i += 2;
-        }
-        temp += s.subtext.Substring(i, s.subtext.Length - i);
-        return temp;
-    }
 }
 
 //PROCEDURES
