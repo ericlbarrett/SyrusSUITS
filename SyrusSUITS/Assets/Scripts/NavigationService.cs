@@ -7,24 +7,21 @@ using UnityEngine;
 
 public class NavigationService : MonoBehaviour {
 
-    public static List<Node> nodeMap = new List<Node>();
-    public static List<Location> locations = new List<Location>();
-    public static List<Node> route = new List<Node>();
-
     private static NavigationService _Instance;
-  
-    public static NavigationService Instance
-    {
-        get
-        {
-            if (_Instance == null)
-            {
+    public static NavigationService Instance {
+        get {
+            if (_Instance == null) {
                 _Instance = FindObjectOfType<NavigationService>();
             }
             return _Instance;
         }
     }
   
+    public static List<Node> nodeMap = new List<Node>();
+    public static List<Location> locations = new List<Location>();
+    public static List<Node> route = new List<Node>();
+
+
 	Vector3 navOrigin;
 	Quaternion navRotation;
 
@@ -50,11 +47,6 @@ public class NavigationService : MonoBehaviour {
 
         LogRoute(route);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void updateNodeMapPositions(List<Node> nodeMap)
     {
@@ -67,7 +59,6 @@ public class NavigationService : MonoBehaviour {
             System.Diagnostics.Debug.Write(node.position);
         }
     }
-
 
     public void SetOrigin(Vector3 origin, Quaternion rotation) {
 		navOrigin = origin;
@@ -195,8 +186,7 @@ public class NavigationService : MonoBehaviour {
     }
 
     [Serializable]
-    public class NodeMap
-    {
+    public class NodeMap {
         public string title;
         public string modelname;
         public List<JsonNode> nodes;
@@ -204,8 +194,7 @@ public class NavigationService : MonoBehaviour {
     }
 
     [Serializable]
-    public class JsonNode
-    {
+    public class JsonNode {
         public int id;
         public Positition position;
         public List<int> adjacentNodeIDs;
@@ -213,16 +202,14 @@ public class NavigationService : MonoBehaviour {
     }
 
     [Serializable]
-    public class Positition
-    {
+    public class Positition {
         public float x;
         public float y;
         public float z;
     }
 
     [Serializable]
-    public class JsonLocation
-    {
+    public class JsonLocation {
         public string name;
         public int nodeID;
     }

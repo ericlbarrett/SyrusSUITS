@@ -52,6 +52,7 @@ public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
 	}
 
 
+	// Calculate the average rotation from a list
 	private Quaternion calcAvg(List<Quaternion> rotationlist) {
 		float x = 0, y = 0, z = 0, w = 0;
 		foreach (Quaternion q in rotationlist)
@@ -62,6 +63,7 @@ public class OverlayCalibrator : MonoBehaviour, ITrackableEventHandler {
 		return new Quaternion(x * k, y * k, z * k, w * k);
 	}
 
+	// Calculate the average position from a list
 	private Vector3 calcAvg(List<Vector3> pointList) {
 		Vector3 sum = Vector3.zero;
 		foreach (Vector3 v in pointList) {

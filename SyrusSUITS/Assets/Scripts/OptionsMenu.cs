@@ -26,6 +26,7 @@ public class OptionsMenu : AetherMenu {
 	public void SetTitle(string title) {
 		transform.Find("Canvas/TopPanel/TitleText").GetComponent<Text>().text = title;
 	}
+    
     //Resize Options Menu based off of items inside Content
     public void ResizeOptions( )
     {
@@ -51,6 +52,7 @@ public class OptionsMenu : AetherMenu {
         rt.sizeDelta = new Vector2(rt.sizeDelta.x, totalHeight);
 
     }
+
     //Adds an item into the Options Menu ( string , i ) i is the index (need to know for callbacks)
 	public void AddItem(string text, int i) {
         GameObject goButton = (GameObject)Instantiate(Resources.Load("Button"));

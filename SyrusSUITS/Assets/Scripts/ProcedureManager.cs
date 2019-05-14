@@ -23,19 +23,19 @@ public class ProcedureManager : MonoBehaviour {
         }
     }
 
+	string path;                    // Directory where the procedure JSON files are located
+
+    List<string> procedureFiles;    // List of procedure file names
+    List<string> procedureNames;    // List of procedure names
+
+    Procedure procedure = null;     // The currently loaded procedure
+    //Step currentStep = null;      // The current step
+
+    int stepIndex;                  // Index of the current step
+
     public GameObject optionsPrefab;
 	public GameObject textPrefab;
 	public GameObject buttonPrefab;
-	
-	int currentProcedureNum = 0; // The current procedure number
-	int stepNumber = 0;
-	string path;    // Directory of where the procedure JSON files are located
-    List<string> proceduresPath;                // List of procedure system path (e.x. something.json)
-    List<string> procedureName;             // List of procedure names (e.x. title from JSON)
-    Procedure procedure = new Procedure();  // Procedure Class holds the information of the steps
-    bool isProcedure = false;           // If the procedure panel has been loaded.
-
-    OptionsMenu stepMenu;               // Step menu
 
     //This is for the Procedure Panel V2
     public GameObject procedurePanel;       // Procedure Panel
@@ -47,15 +47,143 @@ public class ProcedureManager : MonoBehaviour {
 
     void Start () {
 
-        path = Application.streamingAssetsPath + "/Procedures/";
-		LoadFileNames("/Procedures/");
-		//printProcedurePaths();
-		//ChooseProcedure();
-
         LeapManager.OnGestureSwipe += SwipeGesture;
         timer = 0;
+
+        path = Application.streamingAssetsPath + "/Procedures/";
+		PreloadProcedures();
 	}
 	
+    // Loads the all the JSON files from the Streaming Assets
+    void PreloadProcedures() {
+        procedureFiles = new List<string>();
+        procedureNames = new List<string>();
+
+        try {
+            foreach (string file in System.IO.Directory.GetFiles(path)) {
+                string label = file.Replace(path, "");
+				if(label.EndsWith(".json")) {
+                    string contents = System.IO.File.ReadAllText(path + label);
+                    ProcedurePreload preload = JsonUtility.FromJson<ProcedurePreload>(contents);
+
+                    procedureNames.Add(preload.title);
+                    procedureFiles.Add(label);
+                }
+            }
+        }
+        catch (System.Exception ex) {
+            Debug.Log("Error: JSON input. " + ex.Message);
+        }
+    }
+
+    public void LoadProcedure(string fileName) {
+        try {
+            string dir = path + fileName;
+            if (System.IO.File.Exists(dir))
+            {
+                string contents = System.IO.File.ReadAllText(dir);
+                procedure = JsonUtility.FromJson<Procedure>(contents);
+
+                // Set the index for each step
+                for (int i = 0; i < procedure.steps.Count; i++) {
+                    procedure.steps[i].index = i;
+                }
+
+                // Trigger step changed event
+                stepIndex = 0;
+                OnStepChanged(procedure.steps[stepIndex]);
+
+                // Enable the procedure panel
+                ToggleProcedurePanel(true);
+
+
+                Transform tr = OverlayManager.Instance.transform;
+                Layout ly = OverlayManager.Instance.getLayout();
+                procedurePanel.transform.rotation = Quaternion.LookRotation(tr.forward, Vector3.up) * Quaternion.Euler(ly.panel_rot.x, ly.panel_rot.y, ly.panel_rot.z);
+                procedurePanel.transform.position = tr.position + tr.rotation * new Vector3(ly.panel_pos.x, ly.panel_pos.y, ly.panel_pos.z);
+                changeBarTxt(); // Needs to be here to update to the first Item
+            } else {
+                Debug.Log("Error: Unable to read " + fileName + " file, at " + dir);
+            }
+        } catch (System.Exception ex) {
+            Debug.Log("Error: " + fileName + " JSON input. " + ex.Message);
+        }
+    }
+
+    public void LoadProcedure(int procedureNumber) {
+        try {
+            string dir = path + procedureFiles[procedureNumber];
+            if (System.IO.File.Exists(dir)) {
+                string contents = System.IO.File.ReadAllText(dir);
+                procedure = JsonUtility.FromJson<Procedure>(contents);
+
+                // Set the index for each step
+                for (int i = 0; i < procedure.steps.Count; i++) {
+                    procedure.steps[i].index = i;
+                }
+
+                // Trigger step changed event
+                stepIndex = 0;
+                OnStepChanged(procedure.steps[stepIndex]);
+
+                // Enable the procedure panel
+                ToggleProcedurePanel(true);
+
+                changeBarTxt(); // Needs to be here to update to the first Item
+            } else {
+                Debug.Log("Error: Unable to read " + procedureFiles[procedureNumber] + " file, at " + dir);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Error: " + procedureFiles[procedureNumber] + " JSON input. " + ex.Message);
+        }
+    }
+
+    // Goes forward to the next step
+    public void NextStep() {
+        if (procedure != null) {
+            if (stepIndex < procedure.steps.Count - 1) {
+                OnStepChanged(procedure.steps[stepIndex]);
+            }
+        }
+    }
+
+    // Goes back to the previous step
+    public void PreviousStep() {
+        if (procedure != null) {
+            if (stepIndex < procedure.steps.Count - 1) {
+                OnStepChanged(procedure.steps[stepIndex]);
+            }
+        }
+    }
+
+    // Manually override the step and jump to a new one
+    public void SetStep(int newStepIndex) {
+        if (newStepIndex >= 0 && newStepIndex <= procedure.steps.Count - 1) {
+            stepIndex = newStepIndex;
+            OnStepChanged(procedure.steps[stepIndex]);
+        }
+    }
+
+    // Opens a menu to select the procedure from
+	public void ChooseProcedure() {
+        OptionsMenu opts = OptionsMenu.Instance("Choose A Procedure", true);
+        opts.OnSelection += LoadProcedure;
+        if (procedureNames.Count > 0) {
+            for (int i = 0; i < procedureNames.Count; i++) {
+                opts.AddItem(procedureNames[i], i);
+            }
+            opts.ResizeOptions();
+        } else {
+            Debug.Log("Error: No procedures currently loaded in Procedure Manager Script");
+        }
+    }
+
+
+// ---------------------------------------
+
+
     void SwipeGesture(Vector3 pos, Vector3 dir) {
         if (Vector3.Angle(Vector3.left, dir) < 40.0f) {
             if (timer <= 0) {
@@ -77,60 +205,43 @@ public class ProcedureManager : MonoBehaviour {
 	}
     public void stepSpeak()
     {
-        string t = procedure.steps[Instance.stepNumber].text;
+        string t = procedure.steps[stepIndex].text;
         if (t != null) HoloToolkit.Unity.TextToSpeech.AetherSpeech(t);
     }
-    void printProcedurePaths() {
-		for(int i = 0; i < proceduresPath.Count; i++) {
-			Debug.Log(proceduresPath[i]);
-		}
-	}
-	public void ChooseProcedure() {
-        OptionsMenu opts = OptionsMenu.Instance("Choose A Procedure", true);
-        opts.OnSelection += LoadProcedure;
-        if (procedureName.Count > 0) {
-            //procedureName.Count
-            
-            for (int i = 0; i < procedureName.Count; i++) {
-                opts.AddItem(procedureName[i], i);
-            }
-            opts.ResizeOptions();
-        } else {
-            Debug.Log("Error: No procedures currently loaded in Procedure Manager Script");
-        }
-    }
+
     //Toggles the procedure panel active state
     public void ToggleProcedurePanel(bool val)
     {
         procedurePanel.SetActive(val);
     }
+
     //Change the current task information
     void changeBarTxt()
     {
         //procedurBarText.alignment = TextAnchor.UpperLeft;
-        //procedurBarText.text = procedure.steps[stepNumber].number + ".) " + procedure.steps[stepNumber].text + "\n";
-        //if (procedure.steps[stepNumber].subtext.Length > 0)
+        //procedurBarText.text = procedure.steps[stepIndex].number + ".) " + procedure.steps[stepIndex].text + "\n";
+        //if (procedure.steps[stepIndex].subtext.Length > 0)
         //{
-        //    procedurBarText.text += CreateSubText(procedure.steps[stepNumber]) + "\n";
+        //    procedurBarText.text += CreateSubText(procedure.steps[stepIndex]) + "\n";
         //}
 
         //current
         currentStep.alignment = TextAnchor.UpperLeft;
-        currentStep.text = procedure.steps[stepNumber].number + ".) " + procedure.steps[stepNumber].text + "\n";
-        if (procedure.steps[stepNumber].subtext.Length > 0)
+        currentStep.text = procedure.steps[stepIndex].number + ".) " + procedure.steps[stepIndex].text + "\n";
+        if (procedure.steps[stepIndex].subtext.Length > 0)
         {
-            currentStep.text += CreateSubText(procedure.steps[stepNumber]) + "\n";
+            currentStep.text += CreateSubText(procedure.steps[stepIndex]) + "\n";
         }
 
         //next
-        if (Instance.stepNumber + 1 <= Instance.procedure.steps.Count - 1)
+        if (Instance.stepIndex + 1 <= Instance.procedure.steps.Count - 1)
         {
-            nextStep.text = procedure.steps[stepNumber + 1].number + ".) " + procedure.steps[stepNumber + 1].text + "\n";
+            nextStep.text = procedure.steps[stepIndex + 1].number + ".) " + procedure.steps[stepIndex + 1].text + "\n";
             nextStep.alignment = TextAnchor.UpperLeft;
-            nextStep.text = procedure.steps[stepNumber + 1].number + ".) " + procedure.steps[stepNumber + 1].text + "\n";
-            if (procedure.steps[stepNumber + 1].subtext.Length > 0)
+            nextStep.text = procedure.steps[stepIndex + 1].number + ".) " + procedure.steps[stepIndex + 1].text + "\n";
+            if (procedure.steps[stepIndex + 1].subtext.Length > 0)
             {
-                nextStep.text += CreateSubText(procedure.steps[stepNumber + 1]) + "\n";
+                nextStep.text += CreateSubText(procedure.steps[stepIndex + 1]) + "\n";
             }
         }
         else
@@ -138,14 +249,14 @@ public class ProcedureManager : MonoBehaviour {
             nextStep.text = "";
         }
         //previous
-        if (Instance.stepNumber - 1 >= 0)
+        if (Instance.stepIndex - 1 >= 0)
         {
-            //previousStep.text = procedure.steps[stepNumber - 1].number + ".) " + procedure.steps[stepNumber - 1].text + "\n";
+            //previousStep.text = procedure.steps[stepIndex - 1].number + ".) " + procedure.steps[stepIndex - 1].text + "\n";
             previousStep.alignment = TextAnchor.UpperLeft;
-            previousStep.text = procedure.steps[stepNumber - 1].number + ".) " + procedure.steps[stepNumber - 1].text + "\n";
-            if (procedure.steps[stepNumber - 1].subtext.Length > 0)
+            previousStep.text = procedure.steps[stepIndex - 1].number + ".) " + procedure.steps[stepIndex - 1].text + "\n";
+            if (procedure.steps[stepIndex - 1].subtext.Length > 0)
             {
-                previousStep.text += CreateSubText(procedure.steps[stepNumber - 1]) + "\n";
+                previousStep.text += CreateSubText(procedure.steps[stepIndex - 1]) + "\n";
             }
         }
         else
@@ -156,40 +267,7 @@ public class ProcedureManager : MonoBehaviour {
 
 
     }
-    // Goes forward to the next step
-    public void NextStep()
-    {
-        if (isProcedure)
-        if (isProcedure)
-        {
-            //Debug.Log("next Step");
-            Instance.stepNumber++;
-            if (Instance.stepNumber > Instance.procedure.steps.Count - 1)
-            {
-                //Do not let them go into the negatives
-                Instance.stepNumber = Instance.procedure.steps.Count - 1;
-            }
-            else OnStepChanged(Instance.procedure.steps[Instance.stepNumber]);
-            Instance.changeBarTxt();
-        }
-    }
 
-    //Goes back to the previous step
-    public void PreviousStep()
-    {
-        //Debug.Log("Previous Step");
-        if (isProcedure)
-        {
-            Instance.stepNumber--;
-            if (Instance.stepNumber < 0)
-            {
-                //Do not let them go into the negatives
-                Instance.stepNumber = 0;
-            }
-            else OnStepChanged(Instance.procedure.steps[Instance.stepNumber]);
-            Instance.changeBarTxt();
-        }
-    }
     //Returns a string with the color warning/caution and sub text of current step
     string CreateSubText(Step s)
     {
@@ -211,122 +289,20 @@ public class ProcedureManager : MonoBehaviour {
         temp += s.subtext.Substring(i, s.subtext.Length - i);
         return temp;
     }
-    // Manually override the step and jump to a new one
-    public static void SetStep(int newStepNumber)
-    {
-        if (newStepNumber >= 0 && newStepNumber <= Instance.procedure.steps.Count - 1)
-        {
-            Instance.stepNumber = newStepNumber;
-            OnStepChanged(Instance.procedure.steps[Instance.stepNumber]);
-            Instance.changeBarTxt();
-        }
-    }
-    //Loads in the procedure that should be completed
-
-    public void LoadProcedure(string procName) {
-        try
-        {
-            //Destroy(options);
-            string temp = path + procName;
-            if (System.IO.File.Exists(temp))
-            {
-                string contents = System.IO.File.ReadAllText(temp);
-                //Debug.Log(contents);
-                procedure = JsonUtility.FromJson<Procedure>(contents);
-                OnStepChanged(procedure.steps[stepNumber]);
-                //Debug.Log(procedure.steps[1].text);
-                //LoadStepWindow(procedure.steps);
-                ToggleProcedurePanel(true);
-                Transform tr = OverlayManager.Instance.transform;
-                Layout ly = OverlayManager.Instance.getLayout();
-                procedurePanel.transform.rotation = Quaternion.LookRotation(tr.forward, Vector3.up) * Quaternion.Euler(ly.panel_rot.x, ly.panel_rot.y, ly.panel_rot.z);
-                procedurePanel.transform.position = tr.position + tr.rotation * new Vector3(ly.panel_pos.x, ly.panel_pos.y, ly.panel_pos.z);
-                changeBarTxt(); // Needs to be here to update to the first Item
-                isProcedure = true;
-                //placingPanel.loadPlacingProcedure();
-            }
-            //if the procedures are loaded. Then render the procedure bar
-            else
-            {
-                Debug.Log("Error: Unable to read " + procName + " file, at " + temp);
-            }
-        }
-        catch (System.Exception ex)
-        {
-            Debug.Log("Error: " + procName + " JSON input. " + ex.Message);
-        }
-    }
-
-    public void LoadProcedure(int procedureNumber) {
-        currentProcedureNum = procedureNumber;
-        try
-        {
-            //Destroy(options);
-            string temp = path + proceduresPath[procedureNumber];
-            if (System.IO.File.Exists(temp))
-            {
-                string contents = System.IO.File.ReadAllText(temp);
-                //Debug.Log(contents);
-                procedure = JsonUtility.FromJson<Procedure>(contents);
-                OnStepChanged(procedure.steps[stepNumber]);
-                //Debug.Log(procedure.steps[1].text);
-                //LoadStepWindow(procedure.steps);
-                ToggleProcedurePanel(true);
-                changeBarTxt(); // Needs to be here to update to the first Item
-                isProcedure = true;
-                //placingPanel.loadPlacingProcedure();
-            }
-            //if the procedures are loaded. Then render the procedure bar
-            else
-            {
-                Debug.Log("Error: Unable to read " + proceduresPath[procedureNumber] + " file, at " + temp);
-            }
-        }
-        catch (System.Exception ex)
-        {
-            Debug.Log("Error: " + proceduresPath[procedureNumber] + " JSON input. " + ex.Message);
-        }
-    }
-    //Loads the all the JSON files from the Streaming Assets
-    void LoadFileNames(string dir) {
-        procedureName = new List<string>();
-        proceduresPath = new List<string>();
-        string location = Application.streamingAssetsPath;
-        try
-        {
-            string temp = location + dir;
-            foreach (string file in System.IO.Directory.GetFiles(temp))
-            {
-                string label = file.Replace(temp, ""); // file (e.x. = procedure1.JSON)
-				if( label.EndsWith(".json"))
-                {
-                    string contents = System.IO.File.ReadAllText(temp + label);
-                    ProcedureNames procedureNames = JsonUtility.FromJson<ProcedureNames>(contents);
-                    // Debug.Log(procedureNames.title);
-                    procedureName.Add(procedureNames.title);
-                    proceduresPath.Add(label);
-                }
-            }
-        }
-        catch (System.Exception ex)
-        {
-            Debug.Log("Error: JSON input. " + ex.Message);
-        }
-    }
 }
-
 
 //PROCEDURES
 [System.Serializable]
-public class Procedure
-{
+public class Procedure {
     public string title; //Name of procedure
     public List<Step> steps = new List<Step>();
 }
 
 [System.Serializable]
-public class Step
-{
+public class Step {
+
+    public int index; // Index from the list, not read from JSON
+
     public string text;     // Text to display
     public string subtext;  // Sub Text with CAUTION || DANGER
     public string number;   // Number of which step this is
@@ -341,10 +317,8 @@ public class Prompt {
     public float rotation;
 }
 
-// Query the Procedure names out from the JSON
 [System.Serializable]
-public class ProcedureNames
-{
+public class ProcedurePreload {
     public string title;
 }
 

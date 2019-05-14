@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OverlayManager : MonoBehaviour
-{
+public class OverlayManager : MonoBehaviour {
 
     private static OverlayManager _Instance;
-    public static OverlayManager Instance
-    {
-        get
-        {
-            if (_Instance == null)
-            {
+    public static OverlayManager Instance {
+        get {
+            if (_Instance == null) {
                 _Instance = FindObjectOfType<OverlayManager>();
             }
             return _Instance;
         }
     }
-    Layout layout = null;           // Layout Class holds the information of the overlay
-    string path;                    // Directory of where the JSON files are located
-    List<string> overlayFiles;
-    List<string> overlayNames;
+
+    string path;                    // Directory where the overlay JSON files are located
+
+    List<string> overlayFiles;      // List of overlay file names
+    List<string> overlayNames;      // List of overlay names
+
+    Layout layout = null;           // The currently loaded layout
+    
+    
     List<GameObject> objs = new List<GameObject>(); // Module game objects
 
     Step currentStep;
@@ -29,8 +30,8 @@ public class OverlayManager : MonoBehaviour
 
     Color modColor;
 
-    public Layout getLayout() {
-        return layout;
+    void Awake() {
+        _Instance = this;
     }
 
     // Use this for initialization
@@ -38,7 +39,7 @@ public class OverlayManager : MonoBehaviour
         modColor = new Color(1.0f, 1.0f, 1.0f, 1.0f / 4.0f);
 
         ProcedureManager.OnStepChanged += OnStepChanged;
-        Instance.path = Application.streamingAssetsPath + "/OverlayLayouts/";
+        path = Application.streamingAssetsPath + "/OverlayLayouts/";
 
         PreloadOverlays();
     }
@@ -48,11 +49,10 @@ public class OverlayManager : MonoBehaviour
         overlayNames = new List<string>();
 
         try {
-            string location = Application.streamingAssetsPath + path;
-            foreach (string file in System.IO.Directory.GetFiles(location)) {
-                string label = file.Replace(location, "");
+            foreach (string file in System.IO.Directory.GetFiles(path)) {
+                string label = file.Replace(path, "");
                 if (label.EndsWith(".json")) {
-                    string contents = System.IO.File.ReadAllText(location + label);
+                    string contents = System.IO.File.ReadAllText(path + label);
                     OverlayPreload preload = JsonUtility.FromJson<OverlayPreload>(contents);
 
                     if (preload.activator) {
@@ -76,7 +76,7 @@ public class OverlayManager : MonoBehaviour
 		calib.overlayName = overlayName;
     }
 
-    private void BoxMode(GameObject obj) {
+    void BoxMode(GameObject obj) {
         LineRenderer lr = obj.GetComponent<LineRenderer>();
         lr.enabled = true;
 
@@ -84,7 +84,7 @@ public class OverlayManager : MonoBehaviour
         mr.enabled = false;
     }
 
-    private void SolidMode(GameObject obj) {
+    void SolidMode(GameObject obj) {
         LineRenderer lr = obj.GetComponent<LineRenderer>();
         lr.enabled = false;
 
@@ -92,20 +92,18 @@ public class OverlayManager : MonoBehaviour
         mr.enabled = true;
     }
 
-    public void LoadOverlay(string name, Vector3 pos, Quaternion rot) {
-        if (layout != null) {
-            if (layout.fileName == name) {
-                return;
-            }
+    public void LoadOverlay(string fileName, Vector3 pos, Quaternion rot) {
+        // Check if this overlay is already loaded
+        if (layout != null && layout.fileName == fileName) {
+            return;
         }
 
-        try
-        {
-            string temp = path + name;
-            if (System.IO.File.Exists(temp))
-            {
-                string contents = System.IO.File.ReadAllText(temp);
+        try {
+            string dir = path + fileName;
+            if (System.IO.File.Exists(dir)) { // Check if the file exists
+                string contents = System.IO.File.ReadAllText(dir);
 
+                // If there was a previous layout loaded, unload it
                 if (layout != null) {
                     foreach (GameObject obj in objs) {
                         Destroy(obj);
@@ -113,17 +111,20 @@ public class OverlayManager : MonoBehaviour
                     objs.Clear();
                 }
 
-                Instance.layout = JsonUtility.FromJson<Layout>(contents);
+                layout = JsonUtility.FromJson<Layout>(contents); // Load from JSON
+                layout.fileName = fileName; // Set the file name
                 CreateTaskboard(pos, rot);
-            }
-            else
-            {
-                Debug.Log("Error: Unable to read " + name + " file, at " + temp);
+
+                if (layout.autoLoadProcedure) {
+                    ProcedureManager.Instance.LoadProcedure(layout.procedureFileName);
+                }
+
+            } else {
+                Debug.Log("Error: Unable to read " + fileName + " file, at " + dir);
             }
         }
-        catch (System.Exception ex)
-        {
-            Debug.Log("Error: Taskboard JSON input. " + ex.Message);
+        catch (System.Exception ex) {
+            Debug.Log("Error: LoadOverlay: " + ex.Message);
         }
     }
 
@@ -174,8 +175,11 @@ public class OverlayManager : MonoBehaviour
 
             objs.Add(cube);
         }
+    }
 
-        ProcedureManager.Instance.LoadProcedure(layout.procedure);
+    // Return the layout
+    public Layout getLayout() {
+        return layout;
     }
 
     #region old
@@ -504,31 +508,30 @@ public class OverlayManager : MonoBehaviour
     #endregion
 }
 
-//TASKBOARD LAYOUT
+//Overlay Layout
 [System.Serializable]
-public class Layout
-{
+public class Layout {
+    public string fileName; // File name of layout, not loaded by JSON
+
     public string name;
 
     public bool activator;
     public Vec3 activator_pos;
     public Vec3 activator_size;
-    public int activator_target;
 
     public bool autoLoadProcedure;
     public string procedureFileName;
     
     public Vec3 panel_pos;
     public Vec3 panel_rot;
-    public float scale;
-
+    
     public Vec3 size;
+    public float scale;
     public List<Modules> modules = new List<Modules>();
 }
 
 [System.Serializable]
-public class Modules
-{
+public class Modules {
     public string type;
     public string id;
     public Vec3 size;
@@ -537,15 +540,13 @@ public class Modules
 }
 
 [System.Serializable]
-public class Vec2
-{
+public class Vec2 {
     public double x;
     public double y;
 }
 
 [System.Serializable]
-public class Vec3
-{
+public class Vec3 {
     public float x;
     public float y;
     public float z;
