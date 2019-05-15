@@ -84,4 +84,9 @@ public class StepPanel : MonoBehaviour {
         return temp;
     }
 
+    public static StepPanel Instance() {
+		GameObject stepPanelObj = (GameObject)Instantiate(Resources.Load("Prefabs/StepPanel"));
+		StepPanel stepPanel = stepPanelObj.GetComponent<StepPanel>();
+		return stepPanel;
+	}
 }

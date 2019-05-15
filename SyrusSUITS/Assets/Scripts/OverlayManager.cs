@@ -182,6 +182,22 @@ public class OverlayManager : MonoBehaviour {
         return layout;
     }
 
+    public Vector3 getPanelPosition() {
+        if (layout != null) {
+            return transform.position + transform.rotation * new Vector3(layout.panel_pos.x, layout.panel_pos.y, layout.panel_pos.z);
+        } else {
+            return Vector3.zero;
+        }
+    }
+
+    public Quaternion getPanelRotation() {
+        if (layout != null) {
+            return Quaternion.LookRotation(transform.forward, Vector3.up) * Quaternion.Euler(layout.panel_rot.x, layout.panel_rot.y, layout.panel_rot.z);
+        } else {
+            return Quaternion.identity;
+        }
+    }
+
     #region old
 
     //Create the Taskboard

@@ -37,6 +37,10 @@ public class ProcedureManager : MonoBehaviour {
 
     float timer;
 
+    void Awake() {
+        _Instance = this;
+    }
+
     void Start () {
 
         LeapManager.OnGestureSwipe += SwipeGesture;
@@ -86,13 +90,12 @@ public class ProcedureManager : MonoBehaviour {
                 OnStepChanged(procedure.steps[stepIndex]);
 
                 // Enable the procedure panel
-                ToggleProcedurePanel(true);
+                if (stepPanel == null) {
+                    stepPanel = StepPanel.Instance();
+                }
 
-
-                Transform tr = OverlayManager.Instance.transform;
-                Layout ly = OverlayManager.Instance.getLayout();
-                procedurePanel.transform.rotation = Quaternion.LookRotation(tr.forward, Vector3.up) * Quaternion.Euler(ly.panel_rot.x, ly.panel_rot.y, ly.panel_rot.z);
-                procedurePanel.transform.position = tr.position + tr.rotation * new Vector3(ly.panel_pos.x, ly.panel_pos.y, ly.panel_pos.z);
+                stepPanel.transform.rotation = OverlayManager.Instance.getPanelRotation();
+                stepPanel.transform.position = OverlayManager.Instance.getPanelPosition();
             } else {
                 Debug.Log("Error: Unable to read " + fileName + " file, at " + dir);
             }
@@ -118,7 +121,12 @@ public class ProcedureManager : MonoBehaviour {
                 OnStepChanged(procedure.steps[stepIndex]);
 
                 // Enable the procedure panel
-                ToggleProcedurePanel(true);
+                if (stepPanel == null) {
+                    stepPanel = StepPanel.Instance();
+                }
+
+                stepPanel.transform.rotation = OverlayManager.Instance.getPanelRotation();
+                stepPanel.transform.position = OverlayManager.Instance.getPanelPosition();
             } else {
                 Debug.Log("Error: Unable to read " + procedureFiles[procedureNumber] + " file, at " + dir);
             }
