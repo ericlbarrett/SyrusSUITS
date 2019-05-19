@@ -24,6 +24,14 @@ public class StepPanel : MonoBehaviour {
         if (t != null) HoloToolkit.Unity.TextToSpeech.AetherSpeech(t);
     }
 
+    public void NextStep() {
+        ProcedureManager.Instance.NextStep();
+    }
+
+    public void PreviousStep() {
+        ProcedureManager.Instance.PreviousStep();
+    }
+
 	//Change the current task information
     void updateText() {
         // Current Step

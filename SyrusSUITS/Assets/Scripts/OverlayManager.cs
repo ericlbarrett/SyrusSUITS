@@ -21,8 +21,8 @@ public class OverlayManager : MonoBehaviour {
 
     Layout layout = null;           // The currently loaded layout
     
-    
-    List<GameObject> objs = new List<GameObject>(); // Module game objects
+    List<GameObject> objs = new List<GameObject>();  // Module game objects
+    List<Prompt> loadedPrompts = new List<Prompt>(); // List of loaded prompts
 
     Step currentStep;
     public delegate void OverlayCreated();
@@ -282,9 +282,268 @@ public class OverlayManager : MonoBehaviour {
 
     #endregion
 
+    #region PromptLoading
+
+    private void LoadArrow(Prompt prompt) {
+        Transform module1 = transform.Find(prompt.moduleID);
+        Transform module2 = transform.Find(prompt.misc);
+
+        if (module1 != null && module2 != null)
+        {
+            module1.gameObject.SetActive(true);
+            module2.gameObject.SetActive(true);
+            GameObject arrowObj = new GameObject();
+            arrowObj.name = "Arrow " + prompt.moduleID + " to " + prompt.misc;
+            arrowObj.transform.SetParent(transform);
+            Arrow arrow = arrowObj.AddComponent<Arrow>();
+            arrow.beg = module1.position;
+            arrow.end = module2.position;
+            arrow.transform.position = arrow.transform.position + new Vector3(0.0f, 0.01f, 0.0f);
+        }
+        else
+        {
+            //Debug.LogError("Step #" + step.number + ": Couldn't find module by ID");
+        }
+    }
+
+    private void LoadPush(Prompt prompt) {
+        Transform module = transform.Find(prompt.moduleID);
+
+        if (module != null)
+        {
+            module.gameObject.SetActive(true);
+            GameObject arrowObj = new GameObject();
+            arrowObj.name = "Push " + prompt.moduleID;
+            arrowObj.transform.SetParent(transform);
+            arrowObj.transform.position = module.position;
+            PushArrow arrow = arrowObj.AddComponent<PushArrow>();
+            arrow.end = 0.01f;
+            arrow.beg = 0.05f;
+            arrow.transform.position = arrow.transform.position + new Vector3(0.0f, 0.01f, 0.0f);
+        }
+        else
+        {
+            //Debug.LogError("Step #" + step.number + ": Couldn't find module by ID");
+        }
+    }
+
+    private void LoadPull(Prompt prompt) {
+        Transform module = transform.Find(prompt.moduleID);
+
+        if (module != null)
+        {
+            module.gameObject.SetActive(true);
+            GameObject arrowObj = new GameObject();
+            arrowObj.name = "Pull " + prompt.moduleID;
+            arrowObj.transform.SetParent(transform);
+            arrowObj.transform.position = module.position;
+            PushArrow arrow = arrowObj.AddComponent<PushArrow>();
+            arrow.end = 0.05f;
+            arrow.beg = 0.01f;
+            arrow.transform.position = arrow.transform.position + new Vector3(0.0f, 0.01f, 0.0f);
+        }
+        else
+        {
+            //Debug.LogError("Step #" + step.number + ": Couldn't find module by ID");
+        }
+    }
+
+    private void LoadHighlight(Prompt prompt) {
+        Transform module = transform.Find(prompt.moduleID);
+        if (module != null)
+        {
+            module.gameObject.SetActive(true);
+            Color propCol = Color.green;
+            propCol.a = 1.0f / 4.0f;
+            module.gameObject.GetComponent<Renderer>().material.color = propCol;
+        }
+        else
+        {
+            //Debug.LogError("Step #" + step.number + ": Couldn't find module by ID");
+        }
+    }
+
+    private void LoadCircle(Prompt prompt) {
+        Transform module = transform.Find(prompt.moduleID);
+
+        if (module != null)
+        {
+            module.gameObject.SetActive(true);
+            float dirMod = 1.0f;
+            if (prompt.misc == "clockwise") dirMod = 1.0f;
+            if (prompt.misc == "counterclockwise") dirMod = -1.0f;
+
+            GameObject circleObj = new GameObject();
+            circleObj.name = "Circle " + prompt.moduleID;
+            circleObj.transform.SetParent(transform);
+            circleObj.AddComponent<Circle>().speed = dirMod * 45.0f;
+
+            Mesh mesh = Resources.Load("Circle", typeof(Mesh)) as Mesh;
+            Material mat = Resources.Load("PromptMat", typeof(Material)) as Material;
+            circleObj.AddComponent<MeshRenderer>().material = mat;
+            circleObj.AddComponent<MeshFilter>().mesh = mesh;
+
+
+            // Find the smallest dimension of the module
+            float smallestDim = module.localScale.x;
+            if (module.localScale.z < smallestDim) smallestDim = module.localScale.z;
+
+
+            circleObj.transform.localScale = new Vector3(dirMod * smallestDim, smallestDim, smallestDim);
+            circleObj.transform.position = module.position + new Vector3(0.0f, 0.01f, 0.0f);
+        }
+        else
+        {
+            //Debug.LogError("Step #" + step.number + ": Couldn't find module by ID");
+        }
+    }
+
+    #endregion
+
+    #region PromptClearing
+
+    private void ClearArrow(Prompt prompt) {
+        Transform module1 = transform.Find(prompt.moduleID);
+        Transform module2 = transform.Find(prompt.misc);
+
+        if (module1 != null && module2 != null)
+        {
+            module1.gameObject.SetActive(false);
+            module2.gameObject.SetActive(false);
+        }
+        Transform arrow = transform.Find("Arrow " + prompt.moduleID + " to " + prompt.misc);
+        if (arrow != null)
+        {
+            Destroy(arrow.gameObject);
+        }
+        else
+        {
+            Debug.LogError("Step #" + currentStep.number + ": Couldn't find arrow for deletion");
+        }
+    }
+
+    private void ClearPush(Prompt prompt) {
+        Transform arrow = transform.Find("Push " + prompt.moduleID);
+
+        Transform module = transform.Find(prompt.moduleID);
+        if (module != null)
+        {
+            module.gameObject.SetActive(false);
+        }
+
+        if (arrow != null)
+        {
+            Destroy(arrow.gameObject);
+        }
+        else
+        {
+            Debug.LogError("Step #" + currentStep.number + ": Couldn't find push arrow for deletion");
+        }
+    }
+
+    private void ClearPull(Prompt prompt) {
+        Transform arrow = transform.Find("Pull " + prompt.moduleID);
+                                
+        Transform module = transform.Find(prompt.moduleID);
+        if (module != null)
+        {
+            module.gameObject.SetActive(false);
+        }
+
+        if (arrow != null)
+        {
+            Destroy(arrow.gameObject);
+        }
+        else
+        {
+            Debug.LogError("Step #" + currentStep.number + ": Couldn't find pull arrow for deletion");
+        }
+    }
+
+    private void ClearHighlight(Prompt prompt) {
+        Transform module = transform.Find(prompt.moduleID);
+        if (module != null)
+        {
+            module.gameObject.GetComponent<Renderer>().material.color = modColor;
+            module.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("Step #" + currentStep.number + ": Couldn't find module by ID " + prompt.moduleID + " for unhighlighting");
+        }
+    }
+
+    private void ClearCircle(Prompt prompt) {
+        Transform circle = transform.Find("Circle " + prompt.moduleID);
+        Transform module = transform.Find(prompt.moduleID);
+
+        if (module != null)
+        {
+            module.gameObject.SetActive(false);
+        }
+
+        if (circle != null)
+        {
+            Destroy(circle.gameObject);
+        }
+        else
+        {
+            Debug.LogError("Step #" + currentStep.number + ": Couldn't find circle for deletion");
+        }
+    }
+
+    #endregion
+
     #region Prompts
 
+    private void LoadPrompt(Prompt prompt) {
+        switch (prompt.type) {
+            case "arrow": LoadArrow(prompt); break;
+            case "push": LoadPush(prompt); break;
+            case "pull": LoadPull(prompt); break;
+            case "highlight": LoadHighlight(prompt); break;
+            case "circle": LoadCircle(prompt); break;
+        }
+        loadedPrompts.Add(prompt);
+    }
+
+    private void ClearPrompt(Prompt prompt) {
+        switch (prompt.type) {
+            case "arrow": ClearArrow(prompt); break;
+            case "push": ClearPush(prompt); break;
+            case "pull": ClearPull(prompt); break;
+            case "highlight": ClearHighlight(prompt); break;
+            case "circle": ClearCircle(prompt); break;
+        }
+        //loadedPrompts.Add(prompt);
+    }
+
+    private void ClearPrompts() {
+        foreach (Prompt prompt in loadedPrompts) {
+            ClearPrompt(prompt);
+        }
+        loadedPrompts.Clear();
+    }
+
     private void OnStepChanged(Step step) {
+
+        // Clear the older prompts
+        ClearPrompts();
+
+        Debug.Log("Load: " + loadedPrompts.Count);
+
+        // Add each new prompt
+        foreach (Prompt prompt in step.prompts) {
+            LoadPrompt(prompt);
+        }
+
+        Debug.Log("Load2: " + loadedPrompts.Count);
+
+        currentStep = step;
+    }
+
+
+    private void OnStepChangeds(Step step) {
         // Remove the prompts from the previous step
         if (currentStep != null)
         {

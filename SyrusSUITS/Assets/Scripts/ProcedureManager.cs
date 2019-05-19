@@ -141,6 +141,7 @@ public class ProcedureManager : MonoBehaviour {
     public void NextStep() {
         if (procedure != null) {
             if (stepIndex < procedure.steps.Count - 1) {
+                stepIndex++;
                 OnStepChanged(procedure.steps[stepIndex]);
             }
         }
@@ -149,7 +150,8 @@ public class ProcedureManager : MonoBehaviour {
     // Goes back to the previous step
     public void PreviousStep() {
         if (procedure != null) {
-            if (stepIndex < procedure.steps.Count - 1) {
+            if (stepIndex > 0) {
+                stepIndex--;
                 OnStepChanged(procedure.steps[stepIndex]);
             }
         }
