@@ -3,9 +3,17 @@
 
     "size": {"x": 0.6985, "y": 0.001, "z": 0.545},
 
-    "activator": false,
-    "activator_pos": {"x": 0, "y": 0, "z": 0},
-    "activator_target": 1,
+    "activator": true,
+    "activator_pos": {"x": 0.055, "y": 0, "z": 0.415},
+    "activator_size": {"x": 0.1016, "y": 0, "z": 0.07111},
+
+    "autoLoadProcedure": true,
+    "procedureFileName": "Disabling_Alarm_Easy2.json",
+
+    "panel_pos": {"x": 0, "y": 0.35, "z": 0.2725},
+    "panel_rot": {"x": 0, "y": 0, "z": 0},
+
+    "scale": 1.0,
 
     "modules": [
         {
